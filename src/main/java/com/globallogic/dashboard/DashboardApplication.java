@@ -23,21 +23,26 @@ public class DashboardApplication implements ApplicationRunner {
 
 
 
-//
-//  @Override
-//    public void run(ApplicationArguments args) throws Exception {
-//        loadingService.uploadDataAndPersist();
-// }
+
+
 
     public static void main(String[] args) throws GeneralSecurityException, IOException {
         SpringApplication.run(DashboardApplication.class, args);
-        VacationDataLoader vacationDataLoader =new VacationDataLoader();
-        vacationDataLoader.loadVacationData();
-
+//        GoogleDataLoader googleDataLoader = new GoogleDataLoader();
+//        googleDataLoader.loadData();
+        //VacationDataLoader vacationDataLoader =new VacationDataLoader();
+        //vacationDataLoader.loadVacationData();
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
+        GoogleDataLoader googleDataLoader = new GoogleDataLoader();
+        googleDataLoader.loadData();
+        loadingService.uploadDataAndPersist();
+        loadingService.uploadVacationDataAndPersist();
     }
+//    @Override
+//    public void run(ApplicationArguments args) throws Exception {
+//
+//    }
 }

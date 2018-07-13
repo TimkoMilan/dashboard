@@ -62,7 +62,6 @@ public class GoogleDataLoader implements DataLoader {
             throw new DataLoadingException("Error while loading properties", e);
         }
 
-
         //TODO properties row from datasheet
 
         String position = prop.getProperty("position");
@@ -70,25 +69,13 @@ public class GoogleDataLoader implements DataLoader {
         String billingValue = prop.getProperty("billingValue");
         String focus = prop.getProperty("focus");
         String sheetId = prop.getProperty("spreadsheetId");
-        String idProject = prop.getProperty("idProject");
-        String projectName = prop.getProperty("projectName");
-        String projectFocus = prop.getProperty("projectFocus");
-        String start = prop.getProperty("start");
-        String end = prop.getProperty("end");
-        String sprintName = prop.getProperty("sprintName");
-        String storyPointTakken = prop.getProperty("storyPointTakken");
-        String storyPointClossed = prop.getProperty("storyPointClossed");
-        String members = prop.getProperty("members");
-        String sprint = prop.getProperty("sprint");
-        String username = prop.getProperty("username");
 
-        log.trace("focus {}", username);
 
         List<MemberCreateDto> memberCreateDtos = new ArrayList<>();
         try {
             final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
             final String spreadsheetId = sheetId;
-            final String range = "Class Data!A2:E";
+            final String range = "A2:E";
             Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                     .setApplicationName(APPLICATION_NAME)
                     .build();
@@ -96,7 +83,6 @@ public class GoogleDataLoader implements DataLoader {
                     .get(spreadsheetId, range)
                     .execute();
             List<List<Object>> values = response.getValues();
-            System.out.println("work it ");
             if (values == null || values.isEmpty()) {
                 System.out.println("No data found.");
             } else {
@@ -110,6 +96,7 @@ public class GoogleDataLoader implements DataLoader {
                     memberCreateDto.setFocus((String) row.get(Integer.parseInt(focus)));
 
                     memberCreateDtos.add(memberCreateDto);
+                    log.info(memberCreateDto.getName()+memberCreateDto.getPosition()+memberCreateDto.getBillingValue());
                 }
             }
         } catch (Exception e) {
@@ -121,8 +108,9 @@ public class GoogleDataLoader implements DataLoader {
 
     @Override
     public List<VacationCreateDto> loadVacationData() {
-        return null;
+        return new ArrayList<>();
     }
+
 }
 
 

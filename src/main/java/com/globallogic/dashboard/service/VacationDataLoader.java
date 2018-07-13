@@ -1,6 +1,10 @@
 package com.globallogic.dashboard.service;
 
+import com.globallogic.dashboard.model.Member;
+import com.globallogic.dashboard.model.Vacation;
+import com.globallogic.dashboard.repository.VacationRepository;
 import com.globallogic.dashboard.service.util.PropertyUtil;
+import com.globallogic.dashboard.to.MemberCreateDto;
 import com.globallogic.dashboard.to.VacationCreateDto;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -17,13 +21,16 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 import org.apache.commons.lang3.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
-
-public class VacationDataLoader {
+//@Primary
+@Component
+public class VacationDataLoader implements DataLoader{
 
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -34,9 +41,6 @@ public class VacationDataLoader {
 
     private static final Logger log = LoggerFactory.getLogger(VacationDataLoader.class);
     public static final String CONFIG_PROPERTIES = "config.properties";
-
-    public VacationDataLoader() {
-    }
 
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
@@ -51,6 +55,12 @@ public class VacationDataLoader {
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
+
+    @Override
+    public List<MemberCreateDto> loadData() {
+        return null;
+    }
+    @Override
     public List<VacationCreateDto> loadVacationData() {
 
 
@@ -93,41 +103,37 @@ public class VacationDataLoader {
                 log.info("No data found.");
             } else {
                 for (List row : values) {
-                    VacationCreateDto vacationCreateDto = new VacationCreateDto();
                     if (!row.isEmpty()) {
-                        vacationCreateDto.setMemberName((String) row.get(0));
-                        String start = null, end = null;
-                        int iterPerPerson = 0;
-                        for (int i = 2; i < row.size(); i++) {
-                            if (!row.isEmpty() && row.get(i).equals("1")) {
+                        String startCell = null, endCell = null;
+                        String name  = (String)row.get(0);
+                        for (int i = 2; i < row.size(); i++) { //user
+                            if (!row.isEmpty() && row.get(i).equals("1")) { //is a vacation
                                 String monthForCellId = MonthUtil.getMonthForCellId(rangeMetas, i + 1);
                                 String monthDay = (String) days.get(i);
-                                if (start == null) {
-                                    start = monthDay;
-//                                    log.info("Setting start{} for {}", start, vacationCreateDto.getMemberName());
-                                    vacationCreateDto.setStart(start);
+                                if (startCell == null) {
+                                    startCell = monthDay;
                                 }
-//                                log.info("Current :{}", row.get(i));
                                 if (((i + 1) < row.size() && !row.get(i + 1).equals("1"))|| (i + 1) == row.size()) {
-                                    end = monthDay;
-                                    vacationCreateDto.setEnd(end);
-//                                    log.info(vacationCreateDto.toString());
-                                    start = null;
-                                    vacationCreateDtos.add(vacationCreateDto);
-                                }
+                                    endCell = monthDay;
+                                    vacationCreateDtos.add(createDto(name, monthForCellId,startCell, endCell));
+                                    startCell = null;
+                                }//sets start / end
                             }
                         }
                     }
-
                 }
             }
-
         } catch (Exception e) {
             throw new DataLoadingException("Errror while processing data.", e);
         }
 
         return vacationCreateDtos;
 
+    }
+
+    private VacationCreateDto createDto(String name, String month, String start, String end){
+        Vacation v = new Vacation(name, month, start, end);
+        return new VacationCreateDto(v);
     }
 
 
@@ -163,7 +169,6 @@ public class VacationDataLoader {
             return Objects.hash(monthName, range);
         }
     }
-
 
 }
 

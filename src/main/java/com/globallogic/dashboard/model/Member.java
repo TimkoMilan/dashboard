@@ -22,6 +22,7 @@ public class Member implements Serializable {
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
+
     @OneToMany(mappedBy = "member")
     private Set<Vacation> vacations;
 

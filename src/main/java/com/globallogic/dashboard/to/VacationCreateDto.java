@@ -1,7 +1,8 @@
 package com.globallogic.dashboard.to;
 
+import com.globallogic.dashboard.model.Vacation;
+
 import java.io.Serializable;
-import java.util.Date;
 
 public class VacationCreateDto implements Serializable {
 
@@ -9,8 +10,25 @@ public class VacationCreateDto implements Serializable {
 
     private String end;
 
+    private String month;
+
     private String memberName;
 
+    public VacationCreateDto(Vacation vacation){
+        this.memberName = vacation.getMember().getName();
+        this.month = vacation.getMonth();
+        this.start = vacation.getStart();
+        this.end = vacation.getEnd();
+    }
+
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
 
     public String getStart() {
         return start;
