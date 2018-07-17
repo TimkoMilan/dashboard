@@ -13,22 +13,13 @@ public class Vacation {
     @GeneratedValue
     private Long id;
 
-    private String start;
+    private Date start;
 
-    private String end;
+    private Date end;
 
-    private String month;
 
-    public Vacation(){}
-
-    public Vacation(String name, String month, String start, String end){
-        this.member = new Member();
-        this.member.setName(name);
-        this.month = month;
-        this.start = start;
-        this.end = end;
+    public Vacation() {
     }
-
 
     @ManyToOne
     private Member member;
@@ -37,27 +28,19 @@ public class Vacation {
         return id;
     }
 
-    public String getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public Date getEnd() {
         return end;
     }
 
-    public String getMonth() {
-        return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    public void setEnd(String end) {
+    public void setEnd(Date end) {
         this.end = end;
     }
 

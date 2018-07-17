@@ -13,6 +13,17 @@ public class MemberCreateDto implements Serializable {
 
     private String focus;
 
+    private String searchString;
+
+
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
 
     public String getName() {
         return name;

@@ -1,5 +1,7 @@
 package com.globallogic.dashboard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -18,6 +20,9 @@ public class Member implements Serializable {
     private String billingValue;
 
     private String focus;
+
+    @JsonIgnore
+    private String searchString;
 
     @ManyToOne
     @JoinColumn(name = "team_id")
@@ -81,5 +86,13 @@ public class Member implements Serializable {
 
     public void setVacations(Set<Vacation> vacations) {
         this.vacations = vacations;
+    }
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
     }
 }

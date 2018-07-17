@@ -22,15 +22,14 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 
 
 //todo rozdelit na 2 triedy
@@ -113,23 +112,10 @@ public class GoogleDataLoader implements DataLoader {
         }
     }
 
-    public List<com.globallogic.dashboard.to.MemberCreateDto> loadData() {
-        Properties prop = null;
-        try {
-            prop = PropertyUtil.loadProperties(CONFIG_PROPERTIES);
-        } catch (IOException e) {
-            throw new RuntimeException("Error while loading properties", e);
-        }
 
-        //TODO properties row from datasheet
 
-        String position = prop.getProperty("position");
-        String name = prop.getProperty("name");
-        String billingValue = prop.getProperty("billingValue");
-        String focus = prop.getProperty("focus");
-        String sheetId = prop.getProperty("spreadsheetId");
 
-        return null;
+    public void loadData() {
+
     }
-
 }

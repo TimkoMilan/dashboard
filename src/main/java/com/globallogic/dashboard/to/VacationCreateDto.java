@@ -3,12 +3,13 @@ package com.globallogic.dashboard.to;
 import com.globallogic.dashboard.model.Vacation;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class VacationCreateDto implements Serializable {
 
-    private String start;
+    private Date start;
 
-    private String end;
+    private Date end;
 
     private String month;
 
@@ -16,7 +17,6 @@ public class VacationCreateDto implements Serializable {
 
     public VacationCreateDto(Vacation vacation){
         this.memberName = vacation.getMember().getName();
-        this.month = vacation.getMonth();
         this.start = vacation.getStart();
         this.end = vacation.getEnd();
     }
@@ -30,19 +30,19 @@ public class VacationCreateDto implements Serializable {
         this.month = month;
     }
 
-    public String getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public Date getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(Date end) {
         this.end = end;
     }
 

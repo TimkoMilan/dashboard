@@ -32,7 +32,7 @@ public class MonthEventListener implements EventListener {
             end = ((FinishEvent) event).getEnd();
             monthDtos.add(new MonthDto(monthName, Range.between(start, end + DECEMBER_OFFSET), data));
             for (MonthDto monthDto : monthDtos) {
-                System.out.println(monthDto);
+                //System.out.println(monthDto);
             }
         } else data.add(event.getPayload());
     }

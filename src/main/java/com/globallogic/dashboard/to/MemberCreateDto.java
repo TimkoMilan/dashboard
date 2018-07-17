@@ -14,6 +14,7 @@ public class MemberCreateDto implements Serializable {
     private String focus;
 
 
+
     public String getName() {
         return name;
     }

@@ -2,10 +2,12 @@ package com.globallogic.dashboard.event;
 
 import com.globallogic.dashboard.MonthUtil;
 import com.globallogic.dashboard.VacationDto;
+import com.globallogic.dashboard.model.Member;
+import com.globallogic.dashboard.repository.MemberRepository;
 import com.globallogic.dashboard.service.DataLoader;
-import com.globallogic.dashboard.to.MemberCreateDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +49,7 @@ public class VacationEventListener implements EventListener,DataLoader {
     }
 
     @Override
-    public List<MemberCreateDto> loadData() {
-        return null;
+    public void loadData() {
     }
 
     @Override

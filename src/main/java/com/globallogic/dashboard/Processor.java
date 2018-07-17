@@ -52,14 +52,14 @@ public class Processor<T> {
     }
 
     private void fireStartEvent(int iter, String value) {
-        log.info("Start event fired for iter: {} with value: {}.", iter, value);
+       // log.info("Start event fired for iter: {} with value: {}.", iter, value);
         StartEvent startEvent = new StartEvent(iter);
         startEvent.setPayload(value);
         fireEvent(startEvent);
     }
 
     private void fireEndEvent(int iter, Object context) {
-        log.info("End event fired for iter: {}.", iter);
+//        log.info("End event fired for iter: {}.", iter);
         EndEvent endEvent = new EndEvent(iter);
         endEvent.setContext(context);
         fireEvent(endEvent);
