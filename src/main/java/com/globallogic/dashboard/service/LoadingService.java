@@ -4,4 +4,5 @@ public interface LoadingService {
     void uploadDataAndPersist();
 
     void uploadVacationDataAndPersist();
+
 }
