@@ -27,14 +27,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
 
-//todo rozdelit na 2 triedy
-//1- nacita members
-//2- nacita vacations
 @Component
 public class GoogleDataLoader implements DataLoader {
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
@@ -60,7 +56,6 @@ public class GoogleDataLoader implements DataLoader {
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
-
     @Override
     public List<VacationDto> loadVacationData() {
         final String monthRange = "D1:ND1"; //todo as Value in property files
@@ -82,7 +77,6 @@ public class GoogleDataLoader implements DataLoader {
             List<Object> days = service.spreadsheets().values()
                     .get(spreadsheetId, daysRange)
                     .execute().getValues().get(0);
-
 
             List<List<Object>> listVacations = service.spreadsheets().values()
                     .get(spreadsheetId, vacationRange)
@@ -112,10 +106,12 @@ public class GoogleDataLoader implements DataLoader {
         }
     }
 
-
-
-
     public void loadData() {
+
+        final String teamRange = "A3:B42";
+
+        
+
 
     }
 }

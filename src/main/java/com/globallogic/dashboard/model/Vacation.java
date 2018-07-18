@@ -1,5 +1,7 @@
 package com.globallogic.dashboard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,6 +24,7 @@ public class Vacation {
     }
 
     @ManyToOne
+    @JsonIgnore //TODO update either to DTo, or create unidirectional mapping
     private Member member;
 
     public Long getId() {

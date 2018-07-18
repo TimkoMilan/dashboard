@@ -11,10 +11,11 @@ public final class MemberUtil {
         member.setFocus(memberCreateDto.getFocus());
         member.setPosition(memberCreateDto.getPosition());
         member.setBillingValue(memberCreateDto.getBillingValue());
-        String searchname= ((memberCreateDto.getName()).toLowerCase()).trim();
+        String searchname= ((memberCreateDto.getName()).toLowerCase()).replace(" ","");
         member.setSearchString(searchname);
         return  member;
 
     }
+
 
 }

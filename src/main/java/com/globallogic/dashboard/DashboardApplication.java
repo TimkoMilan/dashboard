@@ -1,7 +1,6 @@
 package com.globallogic.dashboard;
 
 
-import com.globallogic.dashboard.old.GoogleDataLoader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

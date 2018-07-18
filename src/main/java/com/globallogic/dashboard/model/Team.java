@@ -14,7 +14,7 @@ public class Team implements Serializable {
     private String projectName;
 
     private String focus;
-
+    
     @OneToMany(mappedBy = "team")
     private Set<Member> members;
 

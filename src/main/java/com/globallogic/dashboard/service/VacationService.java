@@ -1,10 +1,13 @@
 package com.globallogic.dashboard.service;
 
 import com.globallogic.dashboard.VacationDto;
+import com.globallogic.dashboard.event.VacationEventListener;
 import com.globallogic.dashboard.model.Member;
 import com.globallogic.dashboard.model.Vacation;
 import com.globallogic.dashboard.repository.MemberRepository;
 import com.globallogic.dashboard.repository.VacationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,11 +24,16 @@ public class VacationService {
 
     private DataLoader dataLoader;
 
+    private static final Logger log = LoggerFactory.getLogger(VacationEventListener.class);
+
+
     public VacationService(MemberRepository memberRepository, VacationRepository vacationRepository, DataLoader dataLoader) {
         this.memberRepository = memberRepository;
         this.vacationRepository = vacationRepository;
         this.dataLoader = dataLoader;
     }
+
+
 
     public List<VacationDto> getAllVacations() {
         List<VacationDto> vacationDtos = dataLoader.loadVacationData();
@@ -34,14 +42,17 @@ public class VacationService {
             Member mamber = memberRepository.findMemberByNameIsLike(name);
             Vacation v = new Vacation();
             v.setMember(mamber);
-            v.setStart(v.getStart());
-            v.setEnd(v.getEnd());
+            v.setStart(vacationDto.getFrom());
+            v.setEnd(vacationDto.getTo());
             vacationRepository.save(v);
         }
         return vacationDtos;
     }
 
     public List<Vacation> getVacationByName(String name) {
-        return vacationRepository.findVacationsByMember_Name(name);
+        vacationRepository.findVacationsByMember_SearchString(name);
+        return vacationRepository.findVacationsByMember_SearchString(name);
+
     }
+
 }

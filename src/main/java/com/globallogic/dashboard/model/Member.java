@@ -21,7 +21,6 @@ public class Member implements Serializable {
 
     private String focus;
 
-    @JsonIgnore
     private String searchString;
 
     @ManyToOne
