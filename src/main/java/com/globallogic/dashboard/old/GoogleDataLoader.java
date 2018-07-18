@@ -7,7 +7,10 @@ import com.globallogic.dashboard.evaluator.VacationEndDataEvaluator;
 import com.globallogic.dashboard.evaluator.VacationStartDataEvaluator;
 import com.globallogic.dashboard.event.MonthEventListener;
 import com.globallogic.dashboard.event.VacationEventListener;
+import com.globallogic.dashboard.model.Team;
 import com.globallogic.dashboard.service.DataLoader;
+import com.globallogic.dashboard.service.TeamService;
+import com.globallogic.dashboard.to.TeamCreateDto;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -27,6 +30,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,6 +46,14 @@ public class GoogleDataLoader implements DataLoader {
 
     private static final Logger log = LoggerFactory.getLogger(GoogleDataLoader.class);
     public static final String CONFIG_PROPERTIES = "config.properties";
+
+
+
+    private TeamService teamService;
+
+    public GoogleDataLoader(TeamService teamService) {
+        this.teamService = teamService;
+    }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
 
@@ -106,12 +118,32 @@ public class GoogleDataLoader implements DataLoader {
         }
     }
 
-    public void loadData() {
+    public List<Team> loadData() throws GeneralSecurityException, IOException {
 
         final String teamRange = "A3:B42";
+        final String spreadsheetId = "1kD1UO68ceFnMnVU0u_TBkLf32k9BdSAqLu-3_PawDxk";
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
-        
+        Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+        ValueRange response = service.spreadsheets().values()
+                .get(spreadsheetId, teamRange)
+                .execute();
+        List<List<Object>> values = response.getValues();
 
-
+        if (values == null || values.isEmpty()) {
+            log.error("No data found ");
+        } else {
+            for (List row : values) {
+                TeamCreateDto teamCreateDto = new TeamCreateDto();
+                if (!row.get(0).equals("")) {
+                    String teamName = (String) row.get(0);
+                    teamCreateDto.setProjectName(teamName);
+                    teamService.saveTeam(teamCreateDto);
+                }
+            }
+        }
+        return null;
     }
 }

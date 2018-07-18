@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Processor<T> {
+
     private StartDataEvaluator<T> startDataEvaluator;
     private EndDataEvaluator<T> endDataEvaluator;
     private Set<EventListener> eventListeners = new HashSet<>();
