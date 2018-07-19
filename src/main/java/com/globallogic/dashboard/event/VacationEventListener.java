@@ -2,7 +2,6 @@ package com.globallogic.dashboard.event;
 
 import com.globallogic.dashboard.MonthUtil;
 import com.globallogic.dashboard.VacationDto;
-import com.globallogic.dashboard.model.Team;
 import com.globallogic.dashboard.service.DataLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +46,7 @@ public class VacationEventListener implements EventListener,DataLoader {
     }
 
     @Override
-    public List<Team> loadData() {
+    public void loadData() {
         return null;
     }
 

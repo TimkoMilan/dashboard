@@ -1,7 +1,5 @@
 package com.globallogic.dashboard.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -77,7 +75,6 @@ public class Member implements Serializable {
     public void setTeam(Team team) {
         this.team = team;
     }
-
 
     public Set<Vacation> getVacations() {
         return vacations;

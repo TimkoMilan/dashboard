@@ -11,31 +11,41 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
-public class MemberService {
+public class MemberService { //todo interface
 
     private static final Logger log = LoggerFactory.getLogger(VacationEventListener.class);
 
     private MemberRepository memberRepository;
 
-    public MemberService(MemberRepository memberRepository){
+    public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
-    public Member createMember(MemberCreateDto memberCreateDto){
+
+    //todo return dto
+    public Member createMember(MemberCreateDto memberCreateDto) {
         String name = memberCreateDto.getName();
-        if (memberRepository.findMemberByNameIsLike(name)==null){
+        if (memberRepository.findMemberByNameIsLike(name) == null) {
             Member member = MemberUtil.fromCreate(memberCreateDto);
             return memberRepository.save(member);
-        }else
-        log.error("User already exist");
+        } else
+            log.error("User already exist");
         return memberRepository.findMemberByNameIsLike(name);
     }
 
-    public List<Member> getAllMembers(){
+
+    //todo return dto
+    public List<Member> getAllMembers() {
         return memberRepository.findAll();
+    }
+
+    //todo return dto
+    public Optional<Member> findById(Long id) {
+        return memberRepository.findById(id);
     }
 
 }

@@ -13,7 +13,7 @@ public class TeamUtil {
 
     public static Team createTeamFromTeamCreateDto(TeamCreateDto teamCreateDto) {
         Team team = new Team();
-        team.setProjectName(teamCreateDto.getProjectName());
+        team.setProjectName(teamCreateDto.getName());
         return team;
     }
 

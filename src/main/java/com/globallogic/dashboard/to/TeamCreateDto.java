@@ -3,16 +3,16 @@ package com.globallogic.dashboard.to;
 public class TeamCreateDto {
 
 
-    private String projectName;
+    private String name;
     private String focus;
 
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFocus() {
