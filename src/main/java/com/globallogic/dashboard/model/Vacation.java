@@ -6,10 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Vacation {
+public class Vacation implements Serializable {
 
     @Id
     @GeneratedValue
@@ -20,9 +21,6 @@ public class Vacation {
     private Date end;
 
     private boolean isHalfDay;
-
-    public Vacation() {
-    }
 
     @ManyToOne
     @JsonIgnore

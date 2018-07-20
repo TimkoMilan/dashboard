@@ -18,8 +18,6 @@ import java.util.Optional;
 @Transactional
 public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
-    private TeamFacade teamFacade;
-    private static final Logger log = LoggerFactory.getLogger(VacationEventListener.class);
 
 
     public TeamServiceImpl(TeamRepository teamRepository) {

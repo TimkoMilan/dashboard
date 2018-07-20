@@ -24,9 +24,6 @@ public class VacationService {
 
     private DataLoader dataLoader;
 
-    private static final Logger log = LoggerFactory.getLogger(VacationEventListener.class);
-
-
     public VacationService(MemberRepository memberRepository, VacationRepository vacationRepository, DataLoader dataLoader) {
         this.memberRepository = memberRepository;
         this.vacationRepository = vacationRepository;

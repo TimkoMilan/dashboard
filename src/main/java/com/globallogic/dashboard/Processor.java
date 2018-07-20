@@ -4,8 +4,6 @@ import com.globallogic.dashboard.evaluator.EndDataEvaluator;
 import com.globallogic.dashboard.evaluator.EvaluatorContext;
 import com.globallogic.dashboard.evaluator.StartDataEvaluator;
 import com.globallogic.dashboard.event.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,8 +14,6 @@ public class Processor<T> {
     private StartDataEvaluator<T> startDataEvaluator;
     private EndDataEvaluator<T> endDataEvaluator;
     private Set<EventListener> eventListeners = new HashSet<>();
-    private static final Logger log = LoggerFactory.getLogger(Processor.class);
-
 
     public Processor(StartDataEvaluator<T> startDataEvaluator, EndDataEvaluator<T> endDataEvaluator) {
         this.startDataEvaluator = startDataEvaluator;

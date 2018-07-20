@@ -1,6 +1,9 @@
 package com.globallogic.dashboard.old;
 
-import com.globallogic.dashboard.*;
+import com.globallogic.dashboard.MonthDto;
+import com.globallogic.dashboard.MonthUtil;
+import com.globallogic.dashboard.Processor;
+import com.globallogic.dashboard.VacationDto;
 import com.globallogic.dashboard.evaluator.MonthEndDataEvaluator;
 import com.globallogic.dashboard.evaluator.MonthStartDataEvaluator;
 import com.globallogic.dashboard.evaluator.VacationEndDataEvaluator;
@@ -30,7 +33,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Component
@@ -52,13 +54,13 @@ public class GoogleDataLoader implements DataLoader {
         this.teamService = teamService;
     }
 
-    private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
+    private static Credential getCredentials(final NetHttpTransport httpTransport) throws IOException {
 
         InputStream in = GoogleDataLoader.class.getResourceAsStream(CLIENT_SECRET_DIR);
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(CREDENTIALS_FOLDER)))
                 .setAccessType("offline")
                 .build();
@@ -111,11 +113,12 @@ public class GoogleDataLoader implements DataLoader {
             return vacationEventListener.getVacationDtos();
 
         } catch (Exception e) {
-            throw new RuntimeException("Error while processing data.", e);
+            throw new RuntimeException("Error while processing data.", e); //todo specific exception
         }
     }
 
     public void loadData() {
+        throw new UnsupportedOperationException("load data is not implemented yet.");
     }
 
 

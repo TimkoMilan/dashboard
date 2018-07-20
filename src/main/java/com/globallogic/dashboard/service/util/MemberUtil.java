@@ -4,6 +4,9 @@ import com.globallogic.dashboard.model.Member;
 import com.globallogic.dashboard.to.MemberCreateDto;
 
 public final class MemberUtil {
+    private MemberUtil() {
+    }
+
     public static Member fromCreate(MemberCreateDto memberCreateDto){
 
         Member member = new Member();

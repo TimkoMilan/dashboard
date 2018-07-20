@@ -10,12 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class VacationEventListener implements EventListener<String>, DataLoader {
+public class VacationEventListener implements EventListener<String>{
     private int start;
     private int end;
     boolean isHalfDay = false;
 
-    private static final Logger log = LoggerFactory.getLogger(VacationEventListener.class);
 
     private List<VacationDto> vacationDtos = new ArrayList<>();
 
@@ -52,16 +51,6 @@ public class VacationEventListener implements EventListener<String>, DataLoader 
 
     public List<VacationDto> getVacationDtos() {
         return vacationDtos;
-    }
-
-    @Override
-    public void loadData() {
-        return;
-    }
-
-    @Override
-    public List<VacationDto> loadVacationData() {
-        return null;
     }
 
 

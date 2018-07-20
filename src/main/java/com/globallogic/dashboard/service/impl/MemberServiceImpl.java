@@ -32,7 +32,7 @@ public class MemberServiceImpl implements Memberservice {
             return memberRepository.save(member);
         } else
             log.error("User already exist");
-        return (Member) memberRepository.findMemberByNameIsLike(name);
+        return memberRepository.findMemberByNameIsLike(name);
     }
 
     @Override
