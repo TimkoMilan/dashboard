@@ -39,20 +39,24 @@ public class VacationService {
         List<VacationDto> vacationDtos = dataLoader.loadVacationData();
         for (VacationDto vacationDto : vacationDtos) {
             String name = vacationDto.getName();
-            Member mamber = memberRepository.findMemberByNameIsLike(name);
+            Member mamber = (Member) memberRepository.findMemberByNameIsLike(name);
             Vacation v = new Vacation();
             v.setMember(mamber);
             v.setStart(vacationDto.getFrom());
             v.setEnd(vacationDto.getTo());
+            v.setHalfDay(vacationDto.isHalfDay());
             vacationRepository.save(v);
         }
         return vacationDtos;
     }
 
     public List<Vacation> getVacationByName(String name) {
-        vacationRepository.findVacationsByMember_SearchString(name);
+        name =name.replace(" ","").toLowerCase();
         return vacationRepository.findVacationsByMember_SearchString(name);
 
+    }
+    public List<Vacation> getVacationByTeam(Long teamid){
+        return vacationRepository.findVacationsByMember_TeamId(teamid);
     }
 
 }

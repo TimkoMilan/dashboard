@@ -30,13 +30,13 @@ public class Processor<T> {
     }
 
     public void process(List<Object> rowData) {
-        EvaluatorContext<T> evaluatorContext = new EvaluatorContext<>(null);
+        EvaluatorContext evaluatorContext = new EvaluatorContext<>(rowData);
         boolean started = false;
-        for (int i = 0; i < rowData.size(); i++) { //not using foreach, as i need iter
+        for (int i = 0; i < rowData.size(); i++) {
             String currentData = (String) rowData.get(i);
             if (started && endDataEvaluator.isEndData(currentData, evaluatorContext)) {
                 started = false;
-                fireEndEvent(i - 1, rowData);
+                fireEndEvent(i - 1, currentData, rowData);
             }
             if (!started && startDataEvaluator.isStartData(currentData, evaluatorContext)) {
                 started = true;
@@ -47,21 +47,21 @@ public class Processor<T> {
         int end = Math.max(rowData.size() - 1, 0);
         if (started) {
             FinishEvent event = new FinishEvent(end);
+            event.setPayload(rowData.get(end).toString());
             event.setContext(rowData);
             fireEvent(event);
         }
     }
 
     private void fireStartEvent(int iter, String value) {
-       // log.info("Start event fired for iter: {} with value: {}.", iter, value);
         StartEvent startEvent = new StartEvent(iter);
         startEvent.setPayload(value);
         fireEvent(startEvent);
     }
 
-    private void fireEndEvent(int iter, Object context) {
-//        log.info("End event fired for iter: {}.", iter);
+    private void fireEndEvent(int iter, String currentData, Object context) {
         EndEvent endEvent = new EndEvent(iter);
+        endEvent.setPayload(currentData);
         endEvent.setContext(context);
         fireEvent(endEvent);
     }

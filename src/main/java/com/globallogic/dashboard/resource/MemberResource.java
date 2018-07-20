@@ -1,7 +1,7 @@
 package com.globallogic.dashboard.resource;
 
 import com.globallogic.dashboard.model.Member;
-import com.globallogic.dashboard.service.MemberService;
+import com.globallogic.dashboard.service.Memberservice;
 import com.globallogic.dashboard.to.MemberCreateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import java.util.List;
 public class MemberResource {
 
     @Autowired
-    private MemberService memberService;
+    private Memberservice memberService;
 
     @PostMapping
     public Member createMember (MemberCreateDto memberCreateDto){

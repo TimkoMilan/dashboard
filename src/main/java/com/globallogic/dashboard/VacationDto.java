@@ -7,6 +7,7 @@ public class VacationDto implements Serializable{
     private String name;
     private Date from;
     private Date to;
+    private boolean isHalfDay;
 
     public VacationDto() {
     }
@@ -23,10 +24,19 @@ public class VacationDto implements Serializable{
         return to;
     }
 
-    public VacationDto(String name, Date from, Date to) {
+    public boolean isHalfDay() {
+        return isHalfDay;
+    }
+
+    public void setHalfDay(boolean halfDay) {
+        isHalfDay = halfDay;
+    }
+
+    public VacationDto(String name, Date from, Date to,boolean isHalfDay) {
         this.name = name;
         this.from = from;
         this.to = to;
+        this.isHalfDay = isHalfDay;
     }
 
     @Override
@@ -35,6 +45,7 @@ public class VacationDto implements Serializable{
                 "name='" + name + '\'' +
                 ", from=" + from +
                 ", to=" + to +
+                ", isHalfDay=" + isHalfDay +
                 '}';
     }
 }

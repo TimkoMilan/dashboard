@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-public class VacationEventListener implements EventListener,DataLoader {
+public class VacationEventListener implements EventListener, DataLoader {
     private int start;
     private int end;
-    private String monthName;
+    boolean isHalfDay = false;
+
     private static final Logger log = LoggerFactory.getLogger(VacationEventListener.class);
 
     private List<VacationDto> vacationDtos = new ArrayList<>();
@@ -26,18 +26,27 @@ public class VacationEventListener implements EventListener,DataLoader {
     }
 
     public void fireEvent(Event event) {
+        List context = (List) event.getContext();
         if (event instanceof StartEvent) {
             start = ((StartEvent) event).getStart();
-            monthName = event.getPayload();
+            isHalfDay = isHalfDay(event.getPayload());
         } else if (event instanceof EndEvent) {
+            String userName = context.get(0).toString();
             end = ((EndEvent) event).getEnd();
-            List context = (List) event.getContext();
-            vacationDtos.add(new VacationDto(context.get(0).toString(), monthUtil.monthById(start - 2), monthUtil.monthById(end - 2)));
+            vacationDtos.add(new VacationDto(userName, monthUtil.monthById(start - 2), monthUtil.monthById(end - 2), isHalfDay));
         } else if (event instanceof FinishEvent) {
-            List context = (List) event.getContext();
+            String userName = context.get(0).toString();
             end = ((FinishEvent) event).getEnd();
-            vacationDtos.add(new VacationDto(context.get(0).toString(), monthUtil.monthById(start - 2), monthUtil.monthById(end - 2)));
+            vacationDtos.add(new VacationDto(userName, monthUtil.monthById(start - 2), monthUtil.monthById(end - 2), isHalfDay));
         }
+
+    }
+
+    private boolean isHalfDay(String rowdata) {
+        if (rowdata.equals("0.5")) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -47,7 +56,7 @@ public class VacationEventListener implements EventListener,DataLoader {
 
     @Override
     public void loadData() {
-        return null;
+        return;
     }
 
     @Override

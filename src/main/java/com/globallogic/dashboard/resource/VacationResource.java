@@ -27,6 +27,12 @@ public class VacationResource {
 
     @GetMapping("/{name}")
     public List<Vacation> getVacationByMember(@PathVariable(value = "name")String name){
+        System.out.println(name);
         return vacationService.getVacationByName(name);
     }
+    @GetMapping("/byteam{teamid}")
+    public List<Vacation>getVacationBzTeam(@PathVariable(value = "teamid")Long teamid){
+        return vacationService.getVacationByTeam(teamid);
+    }
+
 }

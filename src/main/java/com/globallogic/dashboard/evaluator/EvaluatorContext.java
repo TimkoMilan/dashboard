@@ -1,17 +1,19 @@
 package com.globallogic.dashboard.evaluator;
 
-public class EvaluatorContext<T> {
-    T data;
+import java.util.List;
 
-    public EvaluatorContext(T data) {
+public class EvaluatorContext<T> {
+    List<T> data;
+
+    public EvaluatorContext(List<T> data) {
         this.data = data;
     }
 
-    public T getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }

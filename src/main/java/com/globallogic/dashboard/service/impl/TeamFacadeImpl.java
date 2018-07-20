@@ -2,7 +2,7 @@ package com.globallogic.dashboard.service.impl;
 
 import com.globallogic.dashboard.model.Member;
 import com.globallogic.dashboard.model.Team;
-import com.globallogic.dashboard.service.MemberService;
+import com.globallogic.dashboard.service.Memberservice;
 import com.globallogic.dashboard.service.TeamFacade;
 import com.globallogic.dashboard.service.TeamService;
 import com.globallogic.dashboard.to.TeamCreateDto;
@@ -17,10 +17,10 @@ import java.util.Optional;
 @Transactional
 public class TeamFacadeImpl implements TeamFacade {
     private TeamService teamService;
-    private MemberService memberService;
+    private Memberservice memberService;
 
 
-    public TeamFacadeImpl(TeamService teamService, MemberService memberService) {
+    public TeamFacadeImpl(TeamService teamService, Memberservice memberService) {
         this.teamService = teamService;
         this.memberService = memberService;
     }

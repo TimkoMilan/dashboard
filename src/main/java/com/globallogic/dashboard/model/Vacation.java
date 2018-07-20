@@ -19,12 +19,13 @@ public class Vacation {
 
     private Date end;
 
+    private boolean isHalfDay;
 
     public Vacation() {
     }
 
     @ManyToOne
-    @JsonIgnore //TODO update either to DTo, or create unidirectional mapping
+    @JsonIgnore
     private Member member;
 
     public Long getId() {
@@ -54,4 +55,14 @@ public class Vacation {
     public void setMember(Member member) {
         this.member = member;
     }
+
+    public boolean isHalfDay() {
+        return isHalfDay;
+    }
+
+    public void setHalfDay(boolean halfDay) {
+        isHalfDay = halfDay;
+    }
+
+
 }
