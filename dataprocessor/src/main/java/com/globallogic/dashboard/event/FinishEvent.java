@@ -1,6 +1,6 @@
 package com.globallogic.dashboard.event;
 
-public class FinishEvent  extends Event {
+public class FinishEvent<T>  extends Event<T> {
     private int end;
 
     public FinishEvent(int end) {

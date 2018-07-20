@@ -59,9 +59,7 @@ public class ProcessorTest {
         MonthUtil monthUtil = new MonthUtil(monthData);
         monthUtil.setDays(days);
         VacationEventListener vacationEventListener = new VacationEventListener(monthUtil);
-        vacationProcessor
-                .withEventListener(vacationEventListener)
-                .withEventListener(new LoggingListener());
+        vacationProcessor.withEventListener(vacationEventListener);
 
         vacationProcessor.process(Arrays.asList(vacationData));
 

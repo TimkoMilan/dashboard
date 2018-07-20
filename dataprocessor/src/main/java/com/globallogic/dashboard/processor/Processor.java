@@ -13,14 +13,14 @@ public class Processor<T> {
 
     private StartDataEvaluator<T> startDataEvaluator;
     private EndDataEvaluator<T> endDataEvaluator;
-    private Set<EventListener> eventListeners = new HashSet<>();
+    private Set<EventListener<T>> eventListeners = new HashSet<>();
 
     public Processor(StartDataEvaluator<T> startDataEvaluator, EndDataEvaluator<T> endDataEvaluator) {
         this.startDataEvaluator = startDataEvaluator;
         this.endDataEvaluator = endDataEvaluator;
     }
 
-    public Processor withEventListener(EventListener eventListener) {
+    public Processor withEventListener(EventListener<T> eventListener) {
         eventListeners.add(eventListener);
         return this;
     }
@@ -39,12 +39,12 @@ public class Processor<T> {
                 started = true;
                 fireStartEvent(i, currentData);
             }
-            fireEvent(new Event(currentData));
+            fireEvent(new Event<>(currentData));
         }
         int end = Math.max(rowData.size() - 1, 0);
         if (started) {
-            FinishEvent event = new FinishEvent(end);
-            event.setPayload(rowData.get(end).toString());
+            FinishEvent<T> event = new FinishEvent<>(end);
+            event.setPayload(rowData.get(end));
             event.setContext(rowData);
             fireEvent(event);
         }
@@ -59,20 +59,20 @@ public class Processor<T> {
 
 
     private void fireStartEvent(int iter, T value) {
-        StartEvent startEvent = new StartEvent(iter);
+        StartEvent<T> startEvent = new StartEvent<>(iter);
         startEvent.setPayload(value);
         fireEvent(startEvent);
     }
 
     private void fireEndEvent(int iter, T currentData, Object context) {
-        EndEvent endEvent = new EndEvent(iter);
+        EndEvent<T> endEvent = new EndEvent<>(iter);
         endEvent.setPayload(currentData);
         endEvent.setContext(context);
         fireEvent(endEvent);
     }
 
-    private void fireEvent(Event event) {
-        for (EventListener eventListener : eventListeners) {
+    private void fireEvent(Event<T> event) {
+        for (EventListener<T> eventListener : eventListeners) {
             eventListener.fireEvent(event);
         }
     }

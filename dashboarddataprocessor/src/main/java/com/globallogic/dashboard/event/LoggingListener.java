@@ -3,7 +3,7 @@ package com.globallogic.dashboard.event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoggingListener implements EventListener {
+public class LoggingListener implements EventListener<Void> {
     private static final Logger log = LoggerFactory.getLogger(LoggingListener.class);
 
     @Override
