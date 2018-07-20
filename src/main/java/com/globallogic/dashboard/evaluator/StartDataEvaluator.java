@@ -1,5 +1,5 @@
 package com.globallogic.dashboard.evaluator;
 
 public interface StartDataEvaluator<T> {
-    boolean isStartData(String currentData, EvaluatorContext<T> rowContext);
+    boolean isStartData(T currentData, EvaluatorContext<T> rowContext);
 }

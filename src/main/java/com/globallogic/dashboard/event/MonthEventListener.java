@@ -6,7 +6,7 @@ import org.apache.commons.lang3.Range;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonthEventListener implements EventListener {
+public class MonthEventListener implements EventListener<String> {
     public static final int DECEMBER_OFFSET = 30;
     private int start;
     private int end;
@@ -20,7 +20,7 @@ public class MonthEventListener implements EventListener {
         return monthDtos;
     }
 
-    public void fireEvent(Event event) {
+    public void fireEvent(Event<String> event) {
         if (event instanceof StartEvent) {
             data = new ArrayList<>();
             start = ((StartEvent) event).getStart();

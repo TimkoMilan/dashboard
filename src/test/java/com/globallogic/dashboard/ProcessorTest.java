@@ -7,29 +7,33 @@ import com.globallogic.dashboard.evaluator.VacationStartDataEvaluator;
 import com.globallogic.dashboard.event.LoggingListener;
 import com.globallogic.dashboard.event.MonthEventListener;
 import com.globallogic.dashboard.event.VacationEventListener;
+import com.globallogic.dashboard.to.VacationCreateDto;
+import org.hamcrest.collection.IsCollectionWithSize;
+import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
 public class ProcessorTest {
 
-    public static final String[] monthData = {"", "", "",
-            "January", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-            "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-            "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31",
-            "February", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-            "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-            "21", "22", "23", "24", "25", "26", "27", "28",
-            "March", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-            "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-            "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31",
+    public static final String[] monthData = {
+            "January", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "",
+            "February", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "",
+            "March", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "",
     };
 
     //first 3 are offset
     public static final String[] vacationData = {
-            "","","","", "1", "1", "1", "", "", "", "", "", "",
+            "", "", "0.5", "", "1", "1", "1", "", "", "", "", "", "",
             "", "", "1", "", "", "", "", "", "", "",
             "", "", "", "", "", "", "", "", "", "", "",
             "", "", "", "", "", "", "", "", "", "",
@@ -43,18 +47,33 @@ public class ProcessorTest {
 
     @Test
     public void testProcessor() {
-        Processor<Integer> monthProcessor = new Processor<>(new MonthStartDataEvaluator(), new MonthEndDataEvaluator());
+        Processor<String> monthProcessor = new Processor<>(new MonthStartDataEvaluator(), new MonthEndDataEvaluator());
         MonthEventListener monthEventListener = new MonthEventListener();
         monthProcessor.withEventListener(monthEventListener);
         monthProcessor.process(Arrays.asList(monthData));
         List<MonthDto> monthDtos = monthEventListener.getMonthDtos();
 
-        Processor<Boolean> vacationProcessor = new Processor<>(new VacationStartDataEvaluator(), new VacationEndDataEvaluator());
+        List<Object> days = new ArrayList<>();
+
+        for (int i = 0; i < 92; i++) {
+            days.add(i);
+        }
+
+        Processor<String> vacationProcessor = new Processor<>(new VacationStartDataEvaluator(), new VacationEndDataEvaluator());
+        MonthUtil monthUtil = new MonthUtil(monthDtos);
+        monthUtil.setDays(days);
+        VacationEventListener vacationEventListener = new VacationEventListener(monthUtil);
         vacationProcessor
-                .withEventListener(new VacationEventListener(new MonthUtil(monthDtos)))
+                .withEventListener(vacationEventListener)
                 .withEventListener(new LoggingListener());
 
         vacationProcessor.process(Arrays.asList(vacationData));
+
+        List<VacationDto> vacationDtos = vacationEventListener.getVacationDtos();
+
+        Assert.assertEquals(vacationEventListener.getVacationDtos().size() ,5);
+
+
     }
 
 

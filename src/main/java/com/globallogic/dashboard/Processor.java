@@ -29,12 +29,13 @@ public class Processor<T> {
         return this;
     }
 
-    public void process(List<Object> rowData) {
-        EvaluatorContext evaluatorContext = new EvaluatorContext<>(rowData);
+    public void process(List<T> rowData) {
+        EvaluatorContext<T> evaluatorContext = new EvaluatorContext<>(rowData);
         boolean started = false;
         for (int i = 0; i < rowData.size(); i++) {
-            String currentData = (String) rowData.get(i);
-            if (started && endDataEvaluator.isEndData(currentData, evaluatorContext)) {
+            T currentData = rowData.get(i);
+            T previousData = resolvePreviousData(rowData, i);
+            if (started && endDataEvaluator.isEndData(currentData, previousData, evaluatorContext)) {
                 started = false;
                 fireEndEvent(i - 1, currentData, rowData);
             }
@@ -53,13 +54,21 @@ public class Processor<T> {
         }
     }
 
-    private void fireStartEvent(int iter, String value) {
+    private T resolvePreviousData(List<T> rowData, int i) {
+        if (i > 0) {
+            return rowData.get(i - 1);
+        }
+        return null;
+    }
+
+
+    private void fireStartEvent(int iter, T value) {
         StartEvent startEvent = new StartEvent(iter);
         startEvent.setPayload(value);
         fireEvent(startEvent);
     }
 
-    private void fireEndEvent(int iter, String currentData, Object context) {
+    private void fireEndEvent(int iter, T currentData, Object context) {
         EndEvent endEvent = new EndEvent(iter);
         endEvent.setPayload(currentData);
         endEvent.setContext(context);

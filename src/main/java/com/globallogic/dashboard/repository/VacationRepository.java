@@ -1,7 +1,6 @@
 package com.globallogic.dashboard.repository;
 
 import com.globallogic.dashboard.model.Vacation;
-import com.globallogic.dashboard.old.VacationTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

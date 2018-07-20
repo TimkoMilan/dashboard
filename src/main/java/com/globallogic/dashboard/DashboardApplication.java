@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class DashboardApplication /*implements ApplicationRunner*/ {
+public class DashboardApplication implements ApplicationRunner {
 
     @Autowired
     private DataLoader dataLoader;
@@ -19,8 +19,8 @@ public class DashboardApplication /*implements ApplicationRunner*/ {
         SpringApplication.run(DashboardApplication.class, args);
     }
 
-//    @Override
-//    public void run(ApplicationArguments args) throws Exception {
-//        dataLoader.loadData();
-//    }
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        dataLoader.loadData();
+    }
 }

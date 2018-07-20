@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -43,7 +44,6 @@ public class GoogleDataLoader implements DataLoader {
 
     private static final Logger log = LoggerFactory.getLogger(GoogleDataLoader.class);
     public static final String CONFIG_PROPERTIES = "config.properties";
-
 
 
     private TeamService teamService;
@@ -92,21 +92,21 @@ public class GoogleDataLoader implements DataLoader {
                     .execute().getValues();
 
 
-            Processor<Integer> monthProcessor = new Processor<>(new MonthStartDataEvaluator(), new MonthEndDataEvaluator());
+            Processor<String> monthProcessor = new Processor<>(new MonthStartDataEvaluator(), new MonthEndDataEvaluator());
             MonthEventListener monthEventListener = new MonthEventListener();
             monthProcessor.withEventListener(monthEventListener);
-            List<Object> rowData = monthRow.getValues().get(0);
-            monthProcessor.process(rowData);
+            List<String> stringRowata = DataLoaderUtil.toListOfStrings(monthRow.getValues().get(0));
+            monthProcessor.process(stringRowata);
             List<MonthDto> monthDtos = monthEventListener.getMonthDtos();
 
             MonthUtil mu = new MonthUtil(monthDtos);
             mu.setDays(days);
 
-            Processor<Boolean> vacationProcessor = new Processor<>(new VacationStartDataEvaluator(), new VacationEndDataEvaluator());
+            Processor<String> vacationProcessor = new Processor<>(new VacationStartDataEvaluator(), new VacationEndDataEvaluator());
             VacationEventListener vacationEventListener = new VacationEventListener(mu);
             vacationProcessor.withEventListener(vacationEventListener);
             for (List<Object> vacation : listVacations) {
-                vacationProcessor.process(vacation);
+                vacationProcessor.process(DataLoaderUtil.toListOfStrings(vacation));
             }
             return vacationEventListener.getVacationDtos();
 
@@ -115,7 +115,7 @@ public class GoogleDataLoader implements DataLoader {
         }
     }
 
-    public void loadData(){
+    public void loadData() {
     }
 
 

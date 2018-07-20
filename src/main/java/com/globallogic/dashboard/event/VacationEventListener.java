@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class VacationEventListener implements EventListener, DataLoader {
+public class VacationEventListener implements EventListener<String>, DataLoader {
     private int start;
     private int end;
     boolean isHalfDay = false;
@@ -25,7 +25,7 @@ public class VacationEventListener implements EventListener, DataLoader {
         this.monthUtil = monthUtil;
     }
 
-    public void fireEvent(Event event) {
+    public void fireEvent(Event<String> event) {
         List context = (List) event.getContext();
         if (event instanceof StartEvent) {
             start = ((StartEvent) event).getStart();

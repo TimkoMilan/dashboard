@@ -1,22 +1,22 @@
 package com.globallogic.dashboard.event;
 
-public class Event {
-    private String payload;
+public class Event <T>{
+    private T payload;
     private Object context;
 
 
-    public Event(String payload) {
+    public Event(T payload) {
         this.payload = payload;
     }
 
     public Event() {
     }
 
-    public String getPayload() {
+    public T getPayload() {
         return payload;
     }
 
-    public void setPayload(String payload) {
+    public void setPayload(T payload) {
         this.payload = payload;
     }
 
