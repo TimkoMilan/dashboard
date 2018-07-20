@@ -1,6 +1,5 @@
-package com.globallogic.dashboard.service;
+package com.globallogic.dashboard.loader;
 
-import com.globallogic.dashboard.VacationDto;
 import com.globallogic.dashboard.event.VacationData;
 
 import java.io.IOException;

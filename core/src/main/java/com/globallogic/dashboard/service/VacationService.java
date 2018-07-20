@@ -1,11 +1,11 @@
 package com.globallogic.dashboard.service;
 
 import com.globallogic.dashboard.event.VacationData;
+import com.globallogic.dashboard.loader.DataLoader;
 import com.globallogic.dashboard.model.Member;
 import com.globallogic.dashboard.model.Vacation;
 import com.globallogic.dashboard.repository.MemberRepository;
 import com.globallogic.dashboard.repository.VacationRepository;
-import com.globallogic.dashboard.VacationDto;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

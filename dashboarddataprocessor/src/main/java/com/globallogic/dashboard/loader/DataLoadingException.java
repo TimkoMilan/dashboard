@@ -1,4 +1,4 @@
-package com.globallogic.dashboard.service;
+package com.globallogic.dashboard.loader;
 
 public class DataLoadingException extends RuntimeException {
     public DataLoadingException(String message) {

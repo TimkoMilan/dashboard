@@ -6,8 +6,6 @@ import com.globallogic.dashboard.evaluator.VacationEndDataEvaluator;
 import com.globallogic.dashboard.evaluator.VacationStartDataEvaluator;
 import com.globallogic.dashboard.event.*;
 import com.globallogic.dashboard.processor.Processor;
-import com.globallogic.dashboard.service.DataLoader;
-import com.globallogic.dashboard.service.TeamService;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -22,7 +20,6 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +28,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-@Component
 public class GoogleDataLoader implements DataLoader {
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -43,12 +39,6 @@ public class GoogleDataLoader implements DataLoader {
     private static final Logger log = LoggerFactory.getLogger(GoogleDataLoader.class);
     public static final String CONFIG_PROPERTIES = "config.properties";
 
-
-    private TeamService teamService;
-
-    public GoogleDataLoader(TeamService teamService) {
-        this.teamService = teamService;
-    }
 
     private static Credential getCredentials(final NetHttpTransport httpTransport) throws IOException {
 
@@ -109,7 +99,7 @@ public class GoogleDataLoader implements DataLoader {
             return vacationEventListener.getVacationData();
 
         } catch (Exception e) {
-            throw new RuntimeException("Error while processing data.", e); //todo specific exception
+            throw new DataLoadingException("Error while processing data.", e);
         }
     }
 
