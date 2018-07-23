@@ -6,7 +6,12 @@
     <groupId>com.globallogic</groupId>
     <artifactId>dashboard</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>dataprocessor</module>
+        <module>core</module>
+        <module>dashboarddataprocessor</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>dashboard</name>
     <description>Demo project for Spring Boot</description>
