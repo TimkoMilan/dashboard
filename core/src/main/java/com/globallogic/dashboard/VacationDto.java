@@ -20,6 +20,8 @@ public class VacationDto implements Serializable{
         return from;
     }
 
+
+
     public Date getTo() {
         return to;
     }
@@ -30,6 +32,18 @@ public class VacationDto implements Serializable{
 
     public void setHalfDay(boolean halfDay) {
         isHalfDay = halfDay;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFrom(Date from) {
+        this.from = from;
+    }
+
+    public void setTo(Date to) {
+        this.to = to;
     }
 
     public VacationDto(String name, Date from, Date to,boolean isHalfDay) {

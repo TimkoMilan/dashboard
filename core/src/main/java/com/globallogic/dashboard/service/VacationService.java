@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.service;
 
+import com.globallogic.dashboard.VacationDto;
 import com.globallogic.dashboard.event.VacationData;
 import com.globallogic.dashboard.loader.DataLoader;
 import com.globallogic.dashboard.model.Member;
@@ -9,7 +10,10 @@ import com.globallogic.dashboard.repository.VacationRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 //todo create facade
 @Service
@@ -54,4 +58,16 @@ public class VacationService {
         return vacationRepository.findVacationsByMember_TeamId(teamid);
     }
 
+    public List<VacationDto> getVacationbyMonth(Date startDate, Date endDate) {
+        List<Vacation> vacation = vacationRepository.findVacationsByStartIsBetween(startDate, endDate);
+        return vacation.stream().map(vacation1 -> {
+            VacationDto vacationDto = new VacationDto();
+            vacationDto.setFrom(vacation1.getStart());
+            vacationDto.setTo(vacation1.getEnd());
+            vacationDto.setHalfDay(vacation1.isHalfDay());
+            return vacationDto;
+        }).collect(Collectors.toList());
+
+
+    }
 }
