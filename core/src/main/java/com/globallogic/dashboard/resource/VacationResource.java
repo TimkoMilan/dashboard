@@ -30,7 +30,7 @@ public class VacationResource {
     public List<Vacation> getVacationByMember(@PathVariable(value = "name")String name){
         return vacationService.getVacationByName(name);
     }
-    @GetMapping("/byteam{teamid}")
+    @GetMapping("/team/{teamid}")
     public List<Vacation>getVacationByTeam(@PathVariable(value = "teamid")Long teamid){
         return vacationService.getVacationByTeam(teamid);
     }
