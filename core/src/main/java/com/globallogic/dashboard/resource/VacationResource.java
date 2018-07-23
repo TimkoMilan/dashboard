@@ -36,8 +36,8 @@ public class VacationResource {
     }
 
     @GetMapping("/date")
-    public List<VacationDto>getVacationByMonth(@RequestParam(value = "startDate") Date startDate,
-                                               @RequestParam(value = "endDate")Date endDate){
+    public List<VacationDto>getVacationByMonth(@RequestParam(value = "startDate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                               @RequestParam(value = "endDate")@DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate){
 
         return vacationService.getVacationbyMonth(startDate,endDate);
     }
