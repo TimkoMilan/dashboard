@@ -21,13 +21,12 @@ public class TeamResource {
     private TeamFacade teamFacade;
 
 
-    @PostMapping("/newteam")
-    public Team createNewTeam(TeamCreateDto teamCreateDto){
+    public Team createNewTeam(TeamCreateDto teamCreateDto) {
         return teamService.saveTeam(teamCreateDto);
     }
 
-    @PostMapping
-    public Team insertMemberToTeam(UpdateMemberDto updateMemberDto){
+    @PostMapping("member/add")
+    public Team insertMemberToTeam(UpdateMemberDto updateMemberDto) {
         return teamFacade.addNewMemberToTeam(updateMemberDto);
     }
 }
