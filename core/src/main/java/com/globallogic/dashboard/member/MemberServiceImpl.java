@@ -19,6 +19,7 @@ public class MemberServiceImpl implements Memberservice {
     private MemberRepository memberRepository;
 
 
+
     @Override
     public Member createMember(MemberCreateDto memberCreateDto) {
         String name = memberCreateDto.getName();
@@ -31,7 +32,7 @@ public class MemberServiceImpl implements Memberservice {
     }
 
     @Override
-    public List<Member> getAllMembers()  {
+    public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }
 

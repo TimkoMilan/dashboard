@@ -5,10 +5,10 @@ import java.util.Optional;
 
 public interface Memberservice {
 
-    public Member createMember(MemberCreateDto memberCreateDto);
+     Member createMember(MemberCreateDto memberCreateDto);
 
-    public List<Member> getAllMembers();
+     List<Member> getAllMembers();
 
-    public Optional<Member> findById(Long id);
+     Optional<Member> findById(Long id);
 
 }

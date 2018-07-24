@@ -1,10 +1,7 @@
 package com.globallogic.dashboard.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,6 +11,9 @@ public class MemberResource {
 
     @Autowired
     private Memberservice memberService;
+    @Autowired
+    private MemberFacadeImpl memberFacade;
+
 
     @PostMapping
     public Member createMember (MemberCreateDto memberCreateDto){
@@ -23,6 +23,11 @@ public class MemberResource {
      @GetMapping
     public List<Member> getAllMember(){
         return memberService.getAllMembers();
+     }
+
+     @PutMapping("/{memberId}/team/assign/{teamId}")
+     public void assignToTeam( Long memberId, Long teamId){
+         memberFacade.assignToTeam(memberId,teamId);
      }
 
 }

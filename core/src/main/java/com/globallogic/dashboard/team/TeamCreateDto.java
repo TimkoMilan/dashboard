@@ -1,6 +1,8 @@
 package com.globallogic.dashboard.team;
 
-public class TeamCreateDto {
+import java.io.Serializable;
+
+public class TeamCreateDto implements Serializable {
 
 
     private String name;

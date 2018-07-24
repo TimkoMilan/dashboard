@@ -1,8 +1,5 @@
 package com.globallogic.dashboard.member;
 
-import com.globallogic.dashboard.member.Member;
-import com.globallogic.dashboard.member.MemberCreateDto;
-
 public final class MemberUtil {
     private MemberUtil() {
     }

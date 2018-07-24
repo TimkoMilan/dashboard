@@ -1,6 +1,8 @@
 package com.globallogic.dashboard.member;
 
-public class MemberUpdateDto {
+import java.io.Serializable;
+
+public class MemberUpdateDto implements Serializable {
 
     private Long id;
     private String memberName;
