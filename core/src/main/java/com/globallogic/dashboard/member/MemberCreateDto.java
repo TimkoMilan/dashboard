@@ -1,4 +1,4 @@
-package com.globallogic.dashboard.to;
+package com.globallogic.dashboard.member;
 
 import java.io.Serializable;
 

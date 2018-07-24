@@ -1,8 +1,5 @@
-package com.globallogic.dashboard.resource;
+package com.globallogic.dashboard.member;
 
-import com.globallogic.dashboard.model.Member;
-import com.globallogic.dashboard.service.Memberservice;
-import com.globallogic.dashboard.to.MemberCreateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

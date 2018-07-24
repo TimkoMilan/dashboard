@@ -1,4 +1,7 @@
-package com.globallogic.dashboard.model;
+package com.globallogic.dashboard.member;
+
+import com.globallogic.dashboard.team.Team;
+import com.globallogic.dashboard.vacation.Vacation;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,6 +1,5 @@
-package com.globallogic.dashboard.repository;
+package com.globallogic.dashboard.user;
 
-import com.globallogic.dashboard.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

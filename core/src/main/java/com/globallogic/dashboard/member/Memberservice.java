@@ -1,7 +1,4 @@
-package com.globallogic.dashboard.service;
-
-import com.globallogic.dashboard.model.Member;
-import com.globallogic.dashboard.to.MemberCreateDto;
+package com.globallogic.dashboard.member;
 
 import java.util.List;
 import java.util.Optional;
