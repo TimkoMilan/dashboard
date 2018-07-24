@@ -1,7 +1,4 @@
-package com.globallogic.dashboard.service;
-
-import com.globallogic.dashboard.model.Team;
-import com.globallogic.dashboard.to.TeamCreateDto;
+package com.globallogic.dashboard.team;
 
 import java.util.Optional;
 

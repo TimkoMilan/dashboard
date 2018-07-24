@@ -1,6 +1,6 @@
-package com.globallogic.dashboard.to;
+package com.globallogic.dashboard.member;
 
-public class UpdateMemberDto {
+public class MemberUpdateDto {
 
     private Long id;
     private String memberName;

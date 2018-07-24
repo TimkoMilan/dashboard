@@ -1,4 +1,4 @@
-package com.globallogic.dashboard.to;
+package com.globallogic.dashboard.sprint;
 
 import java.util.Date;
 

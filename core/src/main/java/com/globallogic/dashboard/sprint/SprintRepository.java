@@ -1,6 +1,6 @@
-package com.globallogic.dashboard.repository;
+package com.globallogic.dashboard.sprint;
 
-import com.globallogic.dashboard.model.Sprint;
+import com.globallogic.dashboard.sprint.Sprint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

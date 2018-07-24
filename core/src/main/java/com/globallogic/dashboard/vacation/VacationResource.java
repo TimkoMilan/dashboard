@@ -1,10 +1,6 @@
-package com.globallogic.dashboard.resource;
+package com.globallogic.dashboard.vacation;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.globallogic.dashboard.VacationDto;
 import com.globallogic.dashboard.event.VacationData;
-import com.globallogic.dashboard.model.Vacation;
-import com.globallogic.dashboard.service.VacationService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,4 @@
-package com.globallogic.dashboard;
-
-import com.globallogic.dashboard.model.Team;
-import com.globallogic.dashboard.to.TeamCreateDto;
+package com.globallogic.dashboard.team;
 
 public class TeamUtil {
     private TeamUtil() {

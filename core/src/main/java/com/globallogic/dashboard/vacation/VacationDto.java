@@ -1,4 +1,4 @@
-package com.globallogic.dashboard;
+package com.globallogic.dashboard.vacation;
 
 import java.io.Serializable;
 import java.util.Date;

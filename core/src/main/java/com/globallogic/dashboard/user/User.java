@@ -1,4 +1,4 @@
-package com.globallogic.dashboard.model;
+package com.globallogic.dashboard.user;
 
 import javax.persistence.*;
 import java.io.Serializable;

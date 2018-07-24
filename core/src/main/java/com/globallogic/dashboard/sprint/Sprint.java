@@ -1,4 +1,4 @@
-package com.globallogic.dashboard.model;
+package com.globallogic.dashboard.sprint;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
