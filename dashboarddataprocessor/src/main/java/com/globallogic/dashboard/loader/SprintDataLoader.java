@@ -76,17 +76,35 @@ public class SprintDataLoader {
                 sprintData.put(i, sprintName);
                 sprintData.put(i + 1, sprintName);
             }
+
+        if (dataValues == null || dataValues.isEmpty()) {
+            log.info("No data");
+        } else {
+            for (List rows : dataValues) {
+                String teamName= (String) rows.get(0);
+                    for (int i =1 ;i<rows.size();i+=2){
+
+                            if (!rows.get(i).equals("")){
+                            String taken = (String) rows.get(i);
+                            String completed = (String) rows.get(i+1);
+                            log.info(" Team "+teamName+" taken "+taken+" completed "+completed+" sprint "+sprintData.get(i));
+
+                            SprintData sprintData1 = new SprintData();
+                            sprintData1.setName(teamName);
+                            sprintData1.setTaken(taken);
+                            sprintData1.setCompleted(completed);
+                            sprintData1.setTeam(sprintData.get(i));
+
+
+                            }
+                    }
+
+
+            }
         }
 
 
-//        if (dataValues == null || dataValues.isEmpty()) {
-//            log.info("No data");
-//        } else {
-//            for (List row : dataValues)
-//                log.info((String) row.get(0));
-//
-//
-//        }
+        }
         return null;
     }
 
