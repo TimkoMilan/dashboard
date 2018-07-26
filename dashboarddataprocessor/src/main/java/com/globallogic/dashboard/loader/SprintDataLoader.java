@@ -20,10 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SprintDataLoader {
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
@@ -67,6 +64,8 @@ public class SprintDataLoader {
         List<List<Object>> values = response.getValues();
         List<List<Object>> dataValues = dataResponse.getValues();
 
+        List<SprintData> sprintDataList = new ArrayList<>();
+
         if (values == null || values.isEmpty()) {
         } else {
             List<Object> row = values.get(0);
@@ -77,30 +76,29 @@ public class SprintDataLoader {
                 sprintData.put(i + 1, sprintName);
             }
 
-        if (dataValues == null || dataValues.isEmpty()) {
+            if (dataValues == null || dataValues.isEmpty()) {
             log.info("No data");
         } else {
             for (List rows : dataValues) {
                 String teamName= (String) rows.get(0);
-                    for (int i =1 ;i<rows.size();i+=2){
+                for (int i =1 ;i<rows.size();i+=2){
+                        if (!rows.get(i).equals("")){
+                                String taken = (String) rows.get(i);
+                                String completed = (String) rows.get(i+1);
+                                //log.info(" Team "+teamName+" taken "+taken+" completed "+completed+" sprint "+sprintData.get(i));
+                                SprintData sprintData1 = new SprintData();
+                                sprintData1.setName(teamName);
+                                sprintData1.setTaken(taken);
+                                sprintData1.setCompleted(completed);
+                                sprintData1.setTeam(sprintData.get(i));
 
-                            if (!rows.get(i).equals("")){
-                            String taken = (String) rows.get(i);
-                            String completed = (String) rows.get(i+1);
-                            log.info(" Team "+teamName+" taken "+taken+" completed "+completed+" sprint "+sprintData.get(i));
-
-                            SprintData sprintData1 = new SprintData();
-                            sprintData1.setName(teamName);
-                            sprintData1.setTaken(taken);
-                            sprintData1.setCompleted(completed);
-                            sprintData1.setTeam(sprintData.get(i));
-
-
+                            sprintDataList.add(sprintData1);
                             }
                     }
 
 
             }
+
         }
 
 

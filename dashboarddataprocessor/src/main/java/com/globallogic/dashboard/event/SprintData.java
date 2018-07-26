@@ -6,9 +6,24 @@ public class SprintData {
 
     private String name;
     private String Team;
-    private Long taken;
-    private Long completed;
+    private String taken;
+    private String completed;
 
+    public String getTaken() {
+        return taken;
+    }
+
+    public void setTaken(String taken) {
+        this.taken = taken;
+    }
+
+    public String getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(String completed) {
+        this.completed = completed;
+    }
 
     public String getTeam() {
         return Team;
@@ -18,21 +33,7 @@ public class SprintData {
         Team = team;
     }
 
-    public Long getTaken() {
-        return taken;
-    }
 
-    public void setTaken(String taken) {
-        this.taken = taken;
-    }
-
-    public Long getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(String completed) {
-        this.completed = completed;
-    }
 
     public String getName() {
         return name;
@@ -46,6 +47,9 @@ public class SprintData {
     public String toString() {
         return "SprintData{" +
                 "name='" + name + '\'' +
+                ", Team='" + Team + '\'' +
+                ", taken='" + taken + '\'' +
+                ", completed='" + completed + '\'' +
                 '}';
     }
 }

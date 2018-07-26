@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 public class DataLoaderUtil {
     private DataLoaderUtil() {
-        //as its util
     }
 
     public static List<String> toListOfStrings(List<Object> list) {
