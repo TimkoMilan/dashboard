@@ -29,6 +29,9 @@ import java.util.List;
 
 
 public class GoogleDataLoader implements DataLoader {
+
+    private GoogleDataLoaderConfig googleDataLoaderConfig;
+
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String CREDENTIALS_FOLDER = "src/main/resources/credentials";
@@ -39,6 +42,9 @@ public class GoogleDataLoader implements DataLoader {
     private static final Logger log = LoggerFactory.getLogger(GoogleDataLoader.class);
     public static final String CONFIG_PROPERTIES = "config.properties";
 
+    public GoogleDataLoader(GoogleDataLoaderConfig googleDataLoaderConfig) {
+        this.googleDataLoaderConfig = googleDataLoaderConfig;
+    }
 
     private static Credential getCredentials(final NetHttpTransport httpTransport) throws IOException {
 
@@ -55,13 +61,18 @@ public class GoogleDataLoader implements DataLoader {
 
     @Override
     public List<VacationData> loadVacationData() {
-        final String monthRange = "D1:ND1"; //todo as Value in property files
-        final String daysRange = "D2:ND2";
-        final String vacationRange = "B3:ND56"; //todo next rows as well
 
+        String spreadSheetIdconfig = googleDataLoaderConfig.getSpreadsheetId();
+        String monthRangeconfig = googleDataLoaderConfig.getMonthRange();
+        String dayRangeconfig = googleDataLoaderConfig.getDaysRange();
+        String vacationRangeconfig = googleDataLoaderConfig.getVacationRange();
+
+        final String monthRange = monthRangeconfig;
+        final String daysRange =  dayRangeconfig;
+        final String vacationRange =vacationRangeconfig;
         try {
             final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            final String spreadsheetId = "1kD1UO68ceFnMnVU0u_TBkLf32k9BdSAqLu-3_PawDxk";
+            final String spreadsheetId = spreadSheetIdconfig;
 
             Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                     .setApplicationName(APPLICATION_NAME)
@@ -96,6 +107,10 @@ public class GoogleDataLoader implements DataLoader {
             for (List<Object> vacation : listVacations) {
                 vacationProcessor.process(DataLoaderUtil.toListOfStrings(vacation));
             }
+
+
+
+
             return vacationEventListener.getVacationData();
 
         } catch (Exception e) {

@@ -24,12 +24,10 @@ public class VacationResource {
     }
 
     @GetMapping("member/{name}")
-    //todo DTO
     public List<VacationDto> getVacationByMember(@PathVariable(value = "name")String name){
         return vacationService.getVacationByMemberName(name);
     }
     @GetMapping("/team/{teamid}")
-    //todo DTO
     public List<VacationDto>getVacationByTeam(@PathVariable(value = "teamid")Long teamid){
         return vacationService.getVacationByTeam(teamid);
     }

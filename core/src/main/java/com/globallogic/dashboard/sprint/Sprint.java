@@ -1,10 +1,13 @@
 package com.globallogic.dashboard.sprint;
 
+import com.google.common.collect.Range;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Sprint implements Serializable {
@@ -19,7 +22,17 @@ public class Sprint implements Serializable {
 
     private String name;
 
+    private Range<Integer> range;
 
+
+
+    public Range<Integer> getRange() {
+        return range;
+    }
+
+    public void setRange(Range<Integer> range) {
+        this.range = range;
+    }
 
     public Long getId() {
         return id;
@@ -52,4 +65,6 @@ public class Sprint implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

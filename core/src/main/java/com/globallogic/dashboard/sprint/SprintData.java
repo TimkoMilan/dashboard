@@ -1,12 +1,10 @@
 package com.globallogic.dashboard.sprint;
 
-import com.globallogic.dashboard.member.Member;
+import com.globallogic.dashboard.team.Team;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class SprintData implements Serializable {
@@ -19,12 +17,12 @@ public class SprintData implements Serializable {
 
     private Long storyPointsClosed;
 
-    @OneToOne
-    private Member member;
+    @OneToMany
+    private Set<Team> team;
 
 
+    @ManyToOne//todo joincolumn
     private Sprint sprint;
-
 
     public Long getId() {
         return id;
@@ -50,12 +48,12 @@ public class SprintData implements Serializable {
         this.storyPointsClosed = storyPointsClosed;
     }
 
-    public Member getMember() {
-        return member;
+    public Set<Team> getTeam() {
+        return team;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setTeam(Set<Team> team) {
+        this.team = team;
     }
 
     public Sprint getSprint() {

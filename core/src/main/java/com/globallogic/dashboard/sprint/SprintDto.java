@@ -2,7 +2,7 @@ package com.globallogic.dashboard.sprint;
 
 import java.util.Date;
 
-public class SprintCreateDto {
+public class SprintDto {
 
     private Date start;
 
@@ -28,7 +28,7 @@ public class SprintCreateDto {
         this.end = end;
     }
 
-    public String getName() {
+    public String getName(Object o) {
         return name;
     }
 

@@ -41,7 +41,7 @@ public class MonthUtil {
                 return instance.getTime();
             }
         }
-        throw new RuntimeException("No month found for id:" + id); //todo specifc excedption
+        throw new DataProcessorException("No month found for id:" + id);
     }
 
     private Date createExceptionDataAndThrow(Integer id, MonthData monthData, Exception e) {
@@ -53,6 +53,6 @@ public class MonthUtil {
                 dayInfo += "id is bigger than days size: " + days.size();
             }
         }
-        throw new RuntimeException("error for id:" + id + " and month value:" + monthData.getMonth() + dayInfo, e);//todo specifc excedption
+        throw new DataProcessorException("error for id:" + id + " and month value:" + monthData.getMonth() + dayInfo, e);
     }
 }

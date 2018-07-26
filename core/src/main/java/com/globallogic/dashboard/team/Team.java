@@ -1,8 +1,12 @@
 package com.globallogic.dashboard.team;
 
 import com.globallogic.dashboard.member.Member;
+import com.globallogic.dashboard.sprint.SprintData;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -20,6 +24,16 @@ public class Team implements Serializable {
     @OneToMany(mappedBy = "team")
     private Set<Member> members;
 
+    @OneToMany
+    private Set<SprintData> sprintData;
+
+    public Set<SprintData> getSprintData() {
+        return sprintData;
+    }
+
+    public void setSprintData(Set<SprintData> sprintData) {
+        this.sprintData = sprintData;
+    }
 
     public Set<Member> getMembers() {
         return members;

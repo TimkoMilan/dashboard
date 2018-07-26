@@ -1,13 +1,11 @@
 package com.globallogic.dashboard.member;
 
-import com.globallogic.dashboard.team.Team;
-
 import java.io.Serializable;
 
 public class MemberDto implements Serializable {
     private String name;
     private String SearchString;
-    private Team team;
+    private Long teamId;
 
 
     public String getName() {
@@ -26,13 +24,11 @@ public class MemberDto implements Serializable {
         SearchString = searchString;
     }
 
-    public Team getTeam() {
-        return team;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
-
-
 }

@@ -24,8 +24,9 @@ public class Config {
     }
 
     @Bean
-    public DataLoader dataLoader() {
-        return new GoogleDataLoader();
+    public DataLoader dataLoader(GoogleDataLoaderConfigSpring googleDataLoaderConfigSpring) {
+        return new GoogleDataLoader(googleDataLoaderConfigSpring);
     }
+
 
 }
