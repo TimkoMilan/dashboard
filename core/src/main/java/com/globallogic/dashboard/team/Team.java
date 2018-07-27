@@ -1,12 +1,9 @@
 package com.globallogic.dashboard.team;
 
 import com.globallogic.dashboard.member.Member;
-import com.globallogic.dashboard.sprint.SprintData;
+import com.globallogic.dashboard.sprint.SprintDataModel;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -17,7 +14,7 @@ public class Team implements Serializable {
     @GeneratedValue
     private Long id;
 
-    private String projectName;
+    private String name;
 
     private String focus;
     
@@ -25,14 +22,11 @@ public class Team implements Serializable {
     private Set<Member> members;
 
     @OneToMany
-    private Set<SprintData> sprintData;
+    private Set<SprintDataModel> sprintDatumModels;
 
-    public Set<SprintData> getSprintData() {
-        return sprintData;
-    }
 
-    public void setSprintData(Set<SprintData> sprintData) {
-        this.sprintData = sprintData;
+    public void setSprintDatumModels(Set<SprintDataModel> sprintDatumModels) {
+        this.sprintDatumModels = sprintDatumModels;
     }
 
     public Set<Member> getMembers() {
@@ -47,12 +41,12 @@ public class Team implements Serializable {
         return id;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFocus() {

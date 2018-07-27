@@ -1,13 +1,12 @@
 package com.globallogic.dashboard.event;
 
-import org.apache.commons.lang3.Range;
-
 public class SprintData {
 
     private String name;
     private String Team;
     private String taken;
     private String completed;
+
 
     public String getTaken() {
         return taken;
@@ -25,15 +24,9 @@ public class SprintData {
         this.completed = completed;
     }
 
-    public String getTeam() {
-        return Team;
-    }
-
     public void setTeam(String team) {
         Team = team;
     }
-
-
 
     public String getName() {
         return name;
@@ -51,5 +44,10 @@ public class SprintData {
                 ", taken='" + taken + '\'' +
                 ", completed='" + completed + '\'' +
                 '}';
+    }
+
+
+    public String getTeam() {
+        return Team;
     }
 }

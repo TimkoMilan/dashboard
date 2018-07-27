@@ -7,22 +7,22 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class SprintData implements Serializable {
+public class SprintDataModel implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private Long storyPointsTaken;
+    private String storyPointsTaken;
 
-    private Long storyPointsClosed;
+    private String storyPointsClosed;
 
-    @OneToMany
-    private Set<Team> team;
+    @ManyToOne
+    private Team team;
 
-
-    @ManyToOne//todo joincolumn
+    @OneToOne
     private Sprint sprint;
+
 
     public Long getId() {
         return id;
@@ -32,27 +32,23 @@ public class SprintData implements Serializable {
         this.id = id;
     }
 
-    public Long getStoryPointsTaken() {
+    public String getStoryPointsTaken() {
         return storyPointsTaken;
     }
 
-    public void setStoryPointsTaken(Long storyPointsTaken) {
+    public void setStoryPointsTaken(String storyPointsTaken) {
         this.storyPointsTaken = storyPointsTaken;
     }
 
-    public Long getStoryPointsClosed() {
+    public String getStoryPointsClosed() {
         return storyPointsClosed;
     }
 
-    public void setStoryPointsClosed(Long storyPointsClosed) {
+    public void setStoryPointsClosed(String storyPointsClosed) {
         this.storyPointsClosed = storyPointsClosed;
     }
 
-    public Set<Team> getTeam() {
-        return team;
-    }
-
-    public void setTeam(Set<Team> team) {
+    public void setTeam(Team team) {
         this.team = team;
     }
 
@@ -62,5 +58,8 @@ public class SprintData implements Serializable {
 
     public void setSprint(Sprint sprint) {
         this.sprint = sprint;
+    }
+
+    public void setTeam(Set<Team> team) {
     }
 }

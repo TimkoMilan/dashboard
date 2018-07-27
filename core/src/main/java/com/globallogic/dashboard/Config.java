@@ -2,6 +2,8 @@ package com.globallogic.dashboard;
 
 import com.globallogic.dashboard.loader.DataLoader;
 import com.globallogic.dashboard.loader.GoogleDataLoader;
+import com.globallogic.dashboard.loader.SprintDataLoader;
+import com.globallogic.dashboard.loader.SprintLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -27,6 +29,9 @@ public class Config {
     public DataLoader dataLoader(GoogleDataLoaderConfigSpring googleDataLoaderConfigSpring) {
         return new GoogleDataLoader(googleDataLoaderConfigSpring);
     }
-
+    @Bean
+    public SprintLoader sprintLoader(){
+        return new SprintDataLoader();
+    }
 
 }

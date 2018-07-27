@@ -6,7 +6,7 @@ public class TeamUtil {
 
     public static Team createTeamFromTeamCreateDto(TeamCreateDto teamCreateDto) {
         Team team = new Team();
-        team.setProjectName(teamCreateDto.getName());
+        team.setName(teamCreateDto.getName());
         return team;
     }
 

@@ -2,9 +2,7 @@ package com.globallogic.dashboard.sprint;
 
 import com.google.common.collect.Range;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -24,10 +22,22 @@ public class Sprint implements Serializable {
 
     private Range<Integer> range;
 
+    @OneToOne
+    private SprintDataModel sprintDataModel;
+
+
 
 
     public Range<Integer> getRange() {
         return range;
+    }
+
+    public SprintDataModel getSprintDataModel() {
+        return sprintDataModel;
+    }
+
+    public void setSprintDataModel(SprintDataModel sprintDataModel) {
+        this.sprintDataModel = sprintDataModel;
     }
 
     public void setRange(Range<Integer> range) {

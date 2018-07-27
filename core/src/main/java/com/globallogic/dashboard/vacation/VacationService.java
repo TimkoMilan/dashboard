@@ -1,10 +1,7 @@
 package com.globallogic.dashboard.vacation;
 
 import com.globallogic.dashboard.event.VacationData;
-import com.globallogic.dashboard.loader.DataLoader;
-import com.globallogic.dashboard.member.Member;
 import com.globallogic.dashboard.member.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,7 +14,6 @@ import java.util.stream.Collectors;
 public class VacationService {
 
     private MemberRepository memberRepository;
-
     private VacationRepository vacationRepository;
     private VacationFacade vacationFacade;
 

@@ -10,5 +10,5 @@ public interface DataLoader {
 
     void loadData() throws GeneralSecurityException, IOException;
 
-    List<VacationData> loadVacationData();
+     List<VacationData> loadVacationData();
 }

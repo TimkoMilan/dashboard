@@ -5,7 +5,7 @@ import com.globallogic.dashboard.team.Team;
 import java.io.Serializable;
 
 
-public class SprintDataCreateDto implements Serializable {
+public class SprintDataDto implements Serializable {
 
     private Long storyPointsTaken;
 
@@ -15,7 +15,16 @@ public class SprintDataCreateDto implements Serializable {
 
     private Team team;
 
+    private Sprint sprint;
 
+
+    public Sprint getSprint() {
+        return sprint;
+    }
+
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
+    }
 
     public Team getTeam() {
         return team;
@@ -48,4 +57,6 @@ public class SprintDataCreateDto implements Serializable {
     public void setSprintDto(SprintDto sprintDto) {
         this.sprintDto = sprintDto;
     }
+
+
 }

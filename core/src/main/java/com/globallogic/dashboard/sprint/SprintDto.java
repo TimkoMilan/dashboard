@@ -1,15 +1,15 @@
 package com.globallogic.dashboard.sprint;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SprintDto {
+public class SprintDto implements Serializable {
 
     private Date start;
 
     private Date end;
 
     private String name;
-
 
 
     public Date getStart() {

@@ -22,7 +22,7 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
-public class SprintDataLoader {
+public class SprintDataLoader implements SprintLoader{
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String CREDENTIALS_FOLDER = "src/main/resources/credentials";
@@ -66,49 +66,33 @@ public class SprintDataLoader {
 
         List<SprintData> sprintDataList = new ArrayList<>();
 
-        if (values == null || values.isEmpty()) {
-        } else {
+        if (!(values == null || values.isEmpty())) {
             List<Object> row = values.get(0);
             Map<Integer, String> sprintData = new HashMap<>();
             for (int i = 0; i <= row.size(); i += 2) {
                 String sprintName = (String) row.get(i);
                 sprintData.put(i, sprintName);
                 sprintData.put(i + 1, sprintName);
-            }
-
-            if (dataValues == null || dataValues.isEmpty()) {
-            log.info("No data");
-        } else {
-            for (List rows : dataValues) {
-                String teamName= (String) rows.get(0);
-                for (int i =1 ;i<rows.size();i+=2){
+        }
+            if (!(dataValues == null || dataValues.isEmpty())) {
+                for (List rows : dataValues) {
+                    String teamName= (String) rows.get(0);
+                    for (int i =1 ;i<rows.size();i+=2){
                         if (!rows.get(i).equals("")){
-                                String taken = (String) rows.get(i);
-                                String completed = (String) rows.get(i+1);
-                                //log.info(" Team "+teamName+" taken "+taken+" completed "+completed+" sprint "+sprintData.get(i));
-                                SprintData sprintData1 = new SprintData();
-                                sprintData1.setName(teamName);
-                                sprintData1.setTaken(taken);
-                                sprintData1.setCompleted(completed);
-                                sprintData1.setTeam(sprintData.get(i));
+                            String taken = (String) rows.get(i);
+                            String completed = (String) rows.get(i+1);
+                            SprintData sprintData1 = new SprintData();
+                            sprintData1.setName((sprintData.get(i)));
+                            sprintData1.setTaken(taken);
+                            sprintData1.setCompleted(completed);
+                            sprintData1.setTeam(teamName);
 
                             sprintDataList.add(sprintData1);
-                            }
+                        }
                     }
-
-
+                }
             }
-
         }
-
-
-        }
-        return null;
+        return sprintDataList;
     }
-
-    public static void main(String[] args) throws GeneralSecurityException, IOException {
-        SprintDataLoader sprintDataLoader = new SprintDataLoader();
-        sprintDataLoader.loadSprintData();
-   }
-
 }

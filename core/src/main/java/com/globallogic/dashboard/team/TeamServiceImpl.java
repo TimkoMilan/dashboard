@@ -20,10 +20,10 @@ public class TeamServiceImpl implements TeamService {
         Team team = TeamUtil.createTeamFromTeamCreateDto(teamCreateDto);
         String teamName = teamCreateDto.getName();
         team.setFocus(teamCreateDto.getFocus());
-        if (teamRepository.findTeamByProjectName(teamName)==null){
+        if (teamRepository.findTeamByName(teamName)==null){
             return teamRepository.save(team);
         }
-        return teamRepository.findTeamByProjectName(teamName);
+        return teamRepository.findTeamByName(teamName);
     }
 
     @Override
