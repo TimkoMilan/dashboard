@@ -4,6 +4,8 @@ import com.globallogic.dashboard.event.VacationData;
 import com.globallogic.dashboard.loader.DataLoader;
 import com.globallogic.dashboard.member.Member;
 import com.globallogic.dashboard.member.MemberRepository;
+import com.globallogic.dashboard.sprint.SprintDataRepository;
+import com.globallogic.dashboard.sprint.SprintRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,12 +19,15 @@ public class VacationFacadeImpl implements VacationFacade {
     private DataLoader dataLoader;
     private VacationRepository vacationRepository;
     private MemberRepository memberRepository;
+    private SprintRepository sprintRepository;
+    private SprintDataRepository sprintDataRepository;
 
 
-    public VacationFacadeImpl(DataLoader dataLoader, VacationRepository vacationRepository, MemberRepository memberRepository) {
+    public VacationFacadeImpl(DataLoader dataLoader, VacationRepository vacationRepository, MemberRepository memberRepository, SprintRepository sprintRepository) {
         this.dataLoader = dataLoader;
         this.vacationRepository = vacationRepository;
         this.memberRepository = memberRepository;
+        this.sprintRepository = sprintRepository;
     }
 
     @Override
@@ -42,6 +47,13 @@ public class VacationFacadeImpl implements VacationFacade {
     }
 
     @Override
+    public List<Vacation> getAllvacationBySprint(String sprint) {
+        Date start = sprintRepository.findByName(sprint).getStart();
+        Date end = sprintRepository.findByName(sprint).getEnd();
+        return vacationRepository.findVacationsByStartIsBetween(start,end);
+    }
+
+    @Override
     public List<VacationDto> getVacationByMemberName(String name) {
         return null;
     }
@@ -55,5 +67,7 @@ public class VacationFacadeImpl implements VacationFacade {
     public List<VacationDto> getVacationbyMonth(Date startDate, Date endDate) {
         return null;
     }
+
+
 
 }

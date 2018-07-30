@@ -1,19 +1,15 @@
 package com.globallogic.dashboard.sprint;
 
-import com.globallogic.dashboard.team.Team;
-
 import java.io.Serializable;
 
 
 public class SprintDataDto implements Serializable {
 
-    private Long storyPointsTaken;
+    private String storyPointsTaken;
 
-    private Long storyPointsClosed;
+    private String storyPointsClosed;
 
-    private SprintDto sprintDto;
-
-    private Team team;
+    private String team;
 
     private Sprint sprint;
 
@@ -26,37 +22,27 @@ public class SprintDataDto implements Serializable {
         this.sprint = sprint;
     }
 
-    public Team getTeam() {
+    public String getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(String team) {
         this.team = team;
     }
 
-    public Long getStoryPointsTaken() {
+    public String getStoryPointsTaken() {
         return storyPointsTaken;
     }
 
-    public void setStoryPointsTaken(Long storyPointsTaken) {
+    public void setStoryPointsTaken(String storyPointsTaken) {
         this.storyPointsTaken = storyPointsTaken;
     }
 
-    public Long getStoryPointsClosed() {
+    public String getStoryPointsClosed() {
         return storyPointsClosed;
     }
 
-    public void setStoryPointsClosed(Long storyPointsClosed) {
+    public void setStoryPointsClosed(String storyPointsClosed) {
         this.storyPointsClosed = storyPointsClosed;
     }
-
-    public SprintDto getSprintDto() {
-        return sprintDto;
-    }
-
-    public void setSprintDto(SprintDto sprintDto) {
-        this.sprintDto = sprintDto;
-    }
-
-
 }

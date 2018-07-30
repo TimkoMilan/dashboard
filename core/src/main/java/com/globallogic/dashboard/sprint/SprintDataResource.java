@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("sprintdata")
@@ -21,19 +23,17 @@ public class SprintDataResource {
     }
 
     @GetMapping
-    public List<SprintData> getAllSprintData() throws GeneralSecurityException, IOException {
+    public Set<SprintData> getAllSprintData() throws GeneralSecurityException, IOException, ParseException {
         return sprintDataService.getAllSprintData();
     }
     @GetMapping("sprint/{sprint}")
-    public List<SprintDataModel> getAllSprintDataBySprint(@PathVariable(value = "sprint")String sprint){
+    public List<SprintDataDto> getAllSprintDataBySprint(@PathVariable(value = "sprint")String sprint){
         return sprintDataService.getAllSprintDataBySprint(sprint);
     }
     @GetMapping("team/{teamName}")
     public List<SprintDataModel> getAllSprintDataByTeam(@PathVariable(value = "teamName")String teamName){
         return sprintDataService.getAllSprintDataByTeam(teamName);
     }
-
-
 
 
 }

@@ -20,9 +20,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class SprintDataLoader implements SprintLoader{
+public class SprintDataLoader implements SprintLoader {
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String CREDENTIALS_FOLDER = "src/main/resources/credentials";
@@ -45,14 +47,16 @@ public class SprintDataLoader implements SprintLoader{
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
-    public List<SprintData> loadSprintData() throws GeneralSecurityException, IOException {
+    public Set<SprintData> loadSprintData() throws GeneralSecurityException, IOException, ParseException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         final String spreadsheetId = "1w0BHwyNqRHRfsAQGqhGngvxHN1YvLfuL17VMpiSu1Es";
-        final String sprintRange = "reliability!C1:AX1";
-        final String dataRange = "reliability!B3:AX7";
+        final String sprintRange = "reliability!C2:AX2";
+        final String dataRange = "reliability!B4:AX8";
+        final String dateRange = "reliability!C1:AX1";
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+
         ValueRange response = service.spreadsheets().values()
                 .get(spreadsheetId, sprintRange)
                 .execute();
@@ -60,32 +64,46 @@ public class SprintDataLoader implements SprintLoader{
         ValueRange dataResponse = service.spreadsheets().values()
                 .get(spreadsheetId, dataRange)
                 .execute();
+        ValueRange dateResponse = service.spreadsheets().values()
+                .get(spreadsheetId, dateRange)
+                .execute();
 
         List<List<Object>> values = response.getValues();
         List<List<Object>> dataValues = dataResponse.getValues();
+        List<List<Object>> dateValue = dateResponse.getValues();
 
-        List<SprintData> sprintDataList = new ArrayList<>();
+        Set<SprintData> sprintDataList = new HashSet<>();
 
         if (!(values == null || values.isEmpty())) {
             List<Object> row = values.get(0);
+            List<Object> rowDate = dateValue.get(0);
             Map<Integer, String> sprintData = new HashMap<>();
             for (int i = 0; i <= row.size(); i += 2) {
                 String sprintName = (String) row.get(i);
                 sprintData.put(i, sprintName);
                 sprintData.put(i + 1, sprintName);
-        }
+            }
             if (!(dataValues == null || dataValues.isEmpty())) {
                 for (List rows : dataValues) {
-                    String teamName= (String) rows.get(0);
-                    for (int i =1 ;i<rows.size();i+=2){
-                        if (!rows.get(i).equals("")){
-                            String taken = (String) rows.get(i);
-                            String completed = (String) rows.get(i+1);
+                    String teamName = (String) rows.get(0);
+                    for (int i = 1; i < rows.size(); i += 2) {
+                        if (!rows.get(i).equals("")) {
                             SprintData sprintData1 = new SprintData();
+                            String taken = (String) rows.get(i);
+                            String completed = (String) rows.get(i + 1);
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+                            Date start = simpleDateFormat.parse((String) rowDate.get(i-1));
+                            Date end = simpleDateFormat.parse((String) rowDate.get(i));
+
+                            sprintData1.setTeamName(teamName);
+                            sprintData1.setStart(start);
+                            sprintData1.setEnd(end);
+
                             sprintData1.setName((sprintData.get(i)));
                             sprintData1.setTaken(taken);
                             sprintData1.setCompleted(completed);
-                            sprintData1.setTeam(teamName);
+
 
                             sprintDataList.add(sprintData1);
                         }

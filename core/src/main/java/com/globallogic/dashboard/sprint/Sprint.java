@@ -1,31 +1,35 @@
 package com.globallogic.dashboard.sprint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Sprint implements Serializable {
 
+
     @Id
     @GeneratedValue
     private Long id;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end;
 
     private String name;
-
+    @JsonIgnore
     private Range<Integer> range;
 
+    @JsonIgnore
     @OneToOne
     private SprintDataModel sprintDataModel;
-
-
 
 
     public Range<Integer> getRange() {

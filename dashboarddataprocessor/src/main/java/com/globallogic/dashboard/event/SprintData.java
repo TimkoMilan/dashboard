@@ -1,12 +1,38 @@
 package com.globallogic.dashboard.event;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+import java.util.Objects;
+
 public class SprintData {
 
     private String name;
-    private String Team;
-    private String taken;
-    private String completed;
+    private String teamName;
 
+    private String taken; //todo convert to numeric value int and re-generate hashcode & equals
+    private String completed;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date start;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date end;
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public String getTaken() {
         return taken;
@@ -24,30 +50,48 @@ public class SprintData {
         this.completed = completed;
     }
 
-    public void setTeam(String team) {
-        Team = team;
+    public Date getStart() {
+        return start;
     }
 
-    public String getName() {
-        return name;
+    public void setStart(Date start) {
+        this.start = start;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
     }
 
     @Override
     public String toString() {
         return "SprintData{" +
                 "name='" + name + '\'' +
-                ", Team='" + Team + '\'' +
+                ", teamName='" + teamName + '\'' +
                 ", taken='" + taken + '\'' +
                 ", completed='" + completed + '\'' +
                 '}';
     }
 
 
-    public String getTeam() {
-        return Team;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SprintData that = (SprintData) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(teamName, that.teamName) &&
+                Objects.equals(taken, that.taken) &&
+                Objects.equals(completed, that.completed) &&
+                Objects.equals(start, that.start) &&
+                Objects.equals(end, that.end);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, teamName, taken, completed, start, end);
     }
 }

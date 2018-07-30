@@ -45,4 +45,8 @@ public class VacationService {
 
 
     }
+
+    public List<Vacation> getAllVacationBySprint(String sprint) {
+        return vacationFacade.getAllvacationBySprint(sprint);
+    }
 }

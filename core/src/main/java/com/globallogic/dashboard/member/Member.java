@@ -20,7 +20,7 @@ public class Member implements Serializable {
 
     private String billingValue;
 
-    private String focus;
+    private String focus;   //enum
 
     private String searchString;
 

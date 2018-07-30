@@ -1,7 +1,6 @@
 package com.globallogic.dashboard.vacation;
 
 import com.globallogic.dashboard.event.VacationData;
-import com.globallogic.dashboard.team.TeamUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +26,7 @@ public class VacationResource {
     public List<VacationDto> getVacationByMember(@PathVariable(value = "name")String name){
         return vacationService.getVacationByMemberName(name);
     }
+
     @GetMapping("/team/{teamid}")
     public List<VacationDto>getVacationByTeam(@PathVariable(value = "teamid")Long teamid){
         return vacationService.getVacationByTeam(teamid);
@@ -35,8 +35,11 @@ public class VacationResource {
     @GetMapping("/date")
     public List<VacationDto>getVacationByMonth(@RequestParam(value = "startDate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                                                @RequestParam(value = "endDate")@DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate){
-
         return vacationService.getVacationbyMonth(startDate,endDate);
     }
 
+    @GetMapping("/{sprint}")
+    public List<Vacation> getAllVacationBySprint(@PathVariable(value = "sprint")String sprint){
+        return vacationService.getAllVacationBySprint(sprint);
+    }
 }

@@ -24,6 +24,10 @@ public class SprintDataModel implements Serializable {
     private Sprint sprint;
 
 
+    public Team getTeam() {
+        return team;
+    }
+
     public Long getId() {
         return id;
     }
@@ -31,6 +35,7 @@ public class SprintDataModel implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getStoryPointsTaken() {
         return storyPointsTaken;

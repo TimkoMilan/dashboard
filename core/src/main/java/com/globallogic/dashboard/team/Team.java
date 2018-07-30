@@ -21,7 +21,7 @@ public class Team implements Serializable {
     @OneToMany(mappedBy = "team")
     private Set<Member> members;
 
-    @OneToMany
+    @OneToMany(mappedBy = "team")
     private Set<SprintDataModel> sprintDatumModels;
 
 

@@ -1,12 +1,14 @@
 package com.globallogic.dashboard.sprint;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class SprintDto implements Serializable {
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end;
 
     private String name;
