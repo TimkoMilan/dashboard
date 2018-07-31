@@ -42,4 +42,9 @@ public class MemberServiceImpl implements Memberservice {
         return memberRepository.findById(id);
     }
 
+    @Override
+    public Member findMemberByMemberName(String name) {
+        return memberRepository.findMemberByNameIsLike(name);
+    }
+
 }

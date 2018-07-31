@@ -3,8 +3,7 @@ package com.globallogic.dashboard.vacation;
 import com.globallogic.dashboard.event.VacationData;
 import com.globallogic.dashboard.loader.DataLoader;
 import com.globallogic.dashboard.member.Member;
-import com.globallogic.dashboard.member.MemberRepository;
-import com.globallogic.dashboard.sprint.SprintDataRepository;
+import com.globallogic.dashboard.member.Memberservice;
 import com.globallogic.dashboard.sprint.SprintRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +17,16 @@ public class VacationFacadeImpl implements VacationFacade {
 
     private DataLoader dataLoader;
     private VacationRepository vacationRepository;
-    private MemberRepository memberRepository;
     private SprintRepository sprintRepository;
-    private SprintDataRepository sprintDataRepository;
+    private Memberservice memberservice;
 
 
-    public VacationFacadeImpl(DataLoader dataLoader, VacationRepository vacationRepository, MemberRepository memberRepository, SprintRepository sprintRepository) {
+
+    public VacationFacadeImpl(DataLoader dataLoader, VacationRepository vacationRepository, SprintRepository sprintRepository, Memberservice memberservice) {
         this.dataLoader = dataLoader;
         this.vacationRepository = vacationRepository;
-        this.memberRepository = memberRepository;
         this.sprintRepository = sprintRepository;
+        this.memberservice = memberservice;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class VacationFacadeImpl implements VacationFacade {
         List<VacationData> vacationData = dataLoader.loadVacationData();
         for (VacationData vacationDatum : vacationData) {
             String name = vacationDatum.getName();
-            Member mamber =  memberRepository.findMemberByNameIsLike(name);
+            Member mamber =  memberservice.findMemberByMemberName(name);
             Vacation v = new Vacation();
             v.setMember(mamber);
             v.setStart(vacationDatum.getFrom());
@@ -50,7 +49,7 @@ public class VacationFacadeImpl implements VacationFacade {
     public List<Vacation> getAllvacationBySprint(String sprint) {
         Date start = sprintRepository.findByName(sprint).getStart();
         Date end = sprintRepository.findByName(sprint).getEnd();
-        return vacationRepository.findVacationsByStartIsBetween(start,end);
+        return vacationRepository.findVacationsByStartOrEndIsBetween(start,end);
     }
 
     @Override

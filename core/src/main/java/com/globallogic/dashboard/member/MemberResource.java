@@ -12,7 +12,7 @@ public class MemberResource {
     @Autowired
     private Memberservice memberService;
     @Autowired
-    private MemberFacadeImpl memberFacade;
+    private MemberFacade memberFacade;
 
 
     @PostMapping

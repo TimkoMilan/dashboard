@@ -42,11 +42,9 @@ public class VacationService {
     public List<VacationDto> getVacationbyMonth(Date startDate, Date endDate) {
         List<Vacation> vacation = vacationRepository.findVacationsByStartIsBetween(startDate, endDate);
         return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
-
-
     }
-
-    public List<Vacation> getAllVacationBySprint(String sprint) {
-        return vacationFacade.getAllvacationBySprint(sprint);
+    public List<VacationDto> getAllVacationBySprint(String sprint) {
+        List<Vacation> vacation = vacationFacade.getAllvacationBySprint(sprint);
+        return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
     }
 }

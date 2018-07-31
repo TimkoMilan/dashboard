@@ -11,4 +11,6 @@ public interface Memberservice {
 
      Optional<Member> findById(Long id);
 
+     Member findMemberByMemberName(String name);
+
 }

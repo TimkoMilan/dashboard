@@ -39,7 +39,7 @@ public class VacationResource {
     }
 
     @GetMapping("/{sprint}")
-    public List<Vacation> getAllVacationBySprint(@PathVariable(value = "sprint")String sprint){
+    public List<VacationDto> getAllVacationBySprint(@PathVariable(value = "sprint")String sprint){
         return vacationService.getAllVacationBySprint(sprint);
     }
 }

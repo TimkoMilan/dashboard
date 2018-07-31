@@ -11,6 +11,8 @@ public final class VacationUtil {
         vacationDto.setFrom(vacation.getStart());
         vacationDto.setTo(vacation.getEnd());
         vacationDto.setHalfDay(vacation.isHalfDay());
+        vacationDto.setName(vacation.getMember().getName());
+
         return vacationDto;
     }
 }
