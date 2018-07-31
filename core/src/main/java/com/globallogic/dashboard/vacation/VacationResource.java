@@ -12,9 +12,11 @@ import java.util.List;
 public class VacationResource {
 
     private VacationService vacationService;
+    private VacationFacade vacationFacade;
 
-    public VacationResource(VacationService vacationService) {
+    public VacationResource(VacationService vacationService, VacationFacade vacationFacade) {
         this.vacationService = vacationService;
+        this.vacationFacade = vacationFacade;
     }
 
     @GetMapping

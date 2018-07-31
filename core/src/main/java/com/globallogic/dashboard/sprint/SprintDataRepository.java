@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface SprintDataRepository extends JpaRepository<SprintDataModel,Long> {
 
-    SprintData findAllBySprint_Name(String sprintName);
+    List<SprintDataModel> findAllBySprint_Name(String sprintName);
     List<SprintDataModel>findAllByTeam_Name(String teamName);
 
 }

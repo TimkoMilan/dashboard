@@ -14,7 +14,6 @@ import java.util.Date;
 @Entity
 public class Sprint implements Serializable {
 
-
     @Id
     @GeneratedValue
     private Long id;

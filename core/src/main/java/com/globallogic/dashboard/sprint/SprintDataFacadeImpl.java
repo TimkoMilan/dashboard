@@ -17,15 +17,17 @@ import java.util.Set;
 @Transactional
 public class SprintDataFacadeImpl implements SprintDataFacade {
 
-    @Autowired
     private SprintLoader loadSprintData;
-    @Autowired
     private SprintRepository sprintRepository;
-
-    @Autowired
     private SprintDataRepository sprintDataRepository;
-    @Autowired
     private TeamRepository teamRepository;
+
+    public SprintDataFacadeImpl(SprintLoader loadSprintData, SprintRepository sprintRepository, SprintDataRepository sprintDataRepository, TeamRepository teamRepository) {
+        this.loadSprintData = loadSprintData;
+        this.sprintRepository = sprintRepository;
+        this.sprintDataRepository = sprintDataRepository;
+        this.teamRepository = teamRepository;
+    }
 
     @Override
     public Set<SprintData> getAllSprintData() throws GeneralSecurityException, IOException, ParseException {
