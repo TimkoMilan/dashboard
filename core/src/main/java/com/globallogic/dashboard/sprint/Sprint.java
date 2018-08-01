@@ -28,19 +28,19 @@ public class Sprint implements Serializable {
 
     @JsonIgnore
     @OneToOne
-    private SprintDataModel sprintDataModel;
+    private SprintData sprintData;
 
 
     public Range<Integer> getRange() {
         return range;
     }
 
-    public SprintDataModel getSprintDataModel() {
-        return sprintDataModel;
+    public SprintData getSprintData() {
+        return sprintData;
     }
 
-    public void setSprintDataModel(SprintDataModel sprintDataModel) {
-        this.sprintDataModel = sprintDataModel;
+    public void setSprintData(SprintData sprintData) {
+        this.sprintData = sprintData;
     }
 
     public void setRange(Range<Integer> range) {

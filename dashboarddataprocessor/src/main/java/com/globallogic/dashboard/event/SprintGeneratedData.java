@@ -5,13 +5,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class SprintData {
+public class SprintGeneratedData {
 
     private String name;
     private String teamName;
 
-    private String taken; //todo convert to numeric value int and re-generate hashcode & equals
-    private String completed;
+    private float taken;
+    private float completed;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -34,19 +34,19 @@ public class SprintData {
         this.teamName = teamName;
     }
 
-    public String getTaken() {
+    public float getTaken() {
         return taken;
     }
 
-    public void setTaken(String taken) {
+    public void setTaken(float taken) {
         this.taken = taken;
     }
 
-    public String getCompleted() {
+    public float getCompleted() {
         return completed;
     }
 
-    public void setCompleted(String completed) {
+    public void setCompleted(float completed) {
         this.completed = completed;
     }
 
@@ -68,7 +68,7 @@ public class SprintData {
 
     @Override
     public String toString() {
-        return "SprintData{" +
+        return "SprintGeneratedData{" +
                 "name='" + name + '\'' +
                 ", teamName='" + teamName + '\'' +
                 ", taken='" + taken + '\'' +
@@ -81,7 +81,7 @@ public class SprintData {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SprintData that = (SprintData) o;
+        SprintGeneratedData that = (SprintGeneratedData) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(teamName, that.teamName) &&
                 Objects.equals(taken, that.taken) &&

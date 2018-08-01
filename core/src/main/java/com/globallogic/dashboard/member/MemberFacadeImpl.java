@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,12 +24,13 @@ public class MemberFacadeImpl implements MemberFacade {
 
     @Override
     public Member createMember(MemberCreateDto memberCreateDto) {
-        return null;
+        return memberservice.createMember(memberCreateDto);
     }
 
     @Override
-    public List<Member> getAllMember() {
-        return null;
+    public List<MemberDto> getAllMembers() {
+        List<Member> members = memberservice.getAllMembers();
+        return members.stream().map(MemberUtil::createDto).collect(Collectors.toList());
     }
 
     @Override

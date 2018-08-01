@@ -10,19 +10,17 @@ import java.util.List;
 public class MemberResource {
 
     @Autowired
-    private Memberservice memberService;
-    @Autowired
     private MemberFacade memberFacade;
 
 
     @PostMapping
     public Member createMember (MemberCreateDto memberCreateDto){
-       return memberService.createMember(memberCreateDto);
+       return memberFacade.createMember(memberCreateDto);
        }
 
      @GetMapping
-    public List<Member> getAllMember(){
-        return memberService.getAllMembers();
+    public List<MemberDto> getAllMember(){
+        return memberFacade.getAllMembers();
      }
 
      @PutMapping("/{memberId}/team/assign/{teamId}")

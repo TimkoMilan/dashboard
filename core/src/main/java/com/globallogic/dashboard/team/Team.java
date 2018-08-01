@@ -1,9 +1,13 @@
 package com.globallogic.dashboard.team;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.globallogic.dashboard.member.Member;
-import com.globallogic.dashboard.sprint.SprintDataModel;
+import com.globallogic.dashboard.sprint.SprintData;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -20,14 +24,10 @@ public class Team implements Serializable {
     
     @OneToMany(mappedBy = "team")
     private Set<Member> members;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "team")
-    private Set<SprintDataModel> sprintDatumModels;
+    private Set<SprintData> sprintDatumModels;
 
-
-    public void setSprintDatumModels(Set<SprintDataModel> sprintDatumModels) {
-        this.sprintDatumModels = sprintDatumModels;
-    }
 
     public Set<Member> getMembers() {
         return members;
@@ -35,6 +35,14 @@ public class Team implements Serializable {
 
     public void setMembers(Set<Member> members) {
         this.members = members;
+    }
+
+    public Set<SprintData> getSprintDatumModels() {
+        return sprintDatumModels;
+    }
+
+    public void setSprintDatumModels(Set<SprintData> sprintDatumModels) {
+        this.sprintDatumModels = sprintDatumModels;
     }
 
     public Long getId() {

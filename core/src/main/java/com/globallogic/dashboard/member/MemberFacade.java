@@ -6,7 +6,7 @@ public interface MemberFacade {
 
     Member createMember (MemberCreateDto memberCreateDto);
 
-    List<Member> getAllMember();
+    List<MemberDto> getAllMembers();
 
     void assignToTeam(Long memberId, Long teamId);
 

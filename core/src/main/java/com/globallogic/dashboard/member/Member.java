@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.globallogic.dashboard.team.Team;
 import com.globallogic.dashboard.vacation.Vacation;
 
@@ -20,10 +21,11 @@ public class Member implements Serializable {
 
     private String billingValue;
 
-    private String focus;   //enum
+    private String focus;
 
     private String searchString;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;

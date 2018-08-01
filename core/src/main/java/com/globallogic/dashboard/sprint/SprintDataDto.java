@@ -5,11 +5,11 @@ import java.io.Serializable;
 
 public class SprintDataDto implements Serializable {
 
-    private String storyPointsTaken;
+    private float storyPointsTaken;
 
-    private String storyPointsClosed;
+    private float storyPointsClosed;
 
-    private String team;
+    private Long teamId;
 
     private Sprint sprint;
 
@@ -22,27 +22,27 @@ public class SprintDataDto implements Serializable {
         this.sprint = sprint;
     }
 
-    public String getTeam() {
-        return team;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setTeam(String team) {
-        this.team = team;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 
-    public String getStoryPointsTaken() {
+    public float getStoryPointsTaken() {
         return storyPointsTaken;
     }
 
-    public void setStoryPointsTaken(String storyPointsTaken) {
+    public void setStoryPointsTaken(float storyPointsTaken) {
         this.storyPointsTaken = storyPointsTaken;
     }
 
-    public String getStoryPointsClosed() {
+    public float getStoryPointsClosed() {
         return storyPointsClosed;
     }
 
-    public void setStoryPointsClosed(String storyPointsClosed) {
+    public void setStoryPointsClosed(float storyPointsClosed) {
         this.storyPointsClosed = storyPointsClosed;
     }
 }

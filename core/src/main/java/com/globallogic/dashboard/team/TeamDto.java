@@ -1,25 +1,25 @@
 package com.globallogic.dashboard.team;
 
-import com.globallogic.dashboard.member.MemberDto;
-import com.globallogic.dashboard.sprint.SprintDto;
+import com.globallogic.dashboard.member.Member;
+import com.globallogic.dashboard.sprint.SprintData;
 
 import java.io.Serializable;
 import java.util.Set;
 
 public class TeamDto implements Serializable {
 
-    private String projectName;
+    private String teamName;
     private String focus;
-    private Set<MemberDto> members;
-    private Set<SprintDto> sprint;
+    private Set<Member> members;
+    private Set<SprintData> sprint;
 
 
-    public String getProjectName() {
-        return projectName;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public String getFocus() {
@@ -30,19 +30,19 @@ public class TeamDto implements Serializable {
         this.focus = focus;
     }
 
-    public Set<MemberDto> getMembers() {
+    public Set<Member> getMembers() {
         return members;
     }
 
-    public void setMembers(Set<MemberDto> members) {
+    public void setMembers(Set<Member> members) {
         this.members = members;
     }
 
-    public Set<SprintDto> getSprint() {
+    public Set<SprintData> getSprint() {
         return sprint;
     }
 
-    public void setSprint(Set<SprintDto> sprint) {
+    public void setSprint(Set<SprintData> sprint) {
         this.sprint = sprint;
     }
 }

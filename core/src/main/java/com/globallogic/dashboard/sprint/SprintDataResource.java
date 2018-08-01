@@ -1,11 +1,11 @@
 package com.globallogic.dashboard.sprint;
 
-import com.globallogic.dashboard.event.SprintData;
-import org.springframework.web.bind.annotation.*;
+import com.globallogic.dashboard.event.SprintGeneratedData;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
 
@@ -13,25 +13,25 @@ import java.util.Set;
 @RequestMapping("sprintdata")
 public class SprintDataResource {
 
-    private SprintDataServiceImpl sprintDataService;
     private SprintDataFacade sprintDataFacade;
 
-    public SprintDataResource(SprintDataServiceImpl sprintDataService, SprintDataFacade sprintDataFacade) {
-        this.sprintDataService = sprintDataService;
+    public SprintDataResource(SprintDataFacade sprintDataFacade) {
         this.sprintDataFacade = sprintDataFacade;
     }
 
     @GetMapping
-    public Set<SprintData> getAllSprintData() throws GeneralSecurityException, IOException, ParseException {
+    public Set<SprintGeneratedData> getAllSprintData(){
         return sprintDataFacade.getAllSprintData();
     }
+
     @GetMapping("sprint/{sprint}")
     public List<SprintDataDto> getAllSprintDataBySprint(@PathVariable(value = "sprint")String sprint){
-        return sprintDataService.getAllSprintDataBySprint(sprint);
+        return sprintDataFacade.getAllSprintDataBySprint(sprint);
     }
     @GetMapping("team/{teamName}")
-    public List<SprintDataModel> getAllSprintDataByTeam(@PathVariable(value = "teamName")String teamName){
-        return sprintDataService.getAllSprintDataByTeam(teamName);
+    public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName")String teamName){
+
+        return sprintDataFacade.getAllSprintDataByTeam(teamName);
     }
 
 

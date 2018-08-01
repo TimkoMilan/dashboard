@@ -4,12 +4,12 @@ public class SprintDataUtil {
     private SprintDataUtil(){
 
     }
-    public static SprintDataDto convertToDto (SprintDataModel sprintDataModel){
+    public static SprintDataDto convertToDto (SprintData sprintData){
         SprintDataDto sprintDataDto = new SprintDataDto();
-        sprintDataDto.setStoryPointsClosed(sprintDataModel.getStoryPointsClosed());
-        sprintDataDto.setStoryPointsTaken(sprintDataModel.getStoryPointsTaken());
-        sprintDataDto.setSprint(sprintDataModel.getSprint());
-
+        sprintDataDto.setStoryPointsClosed(sprintData.getStoryPointsClosed());
+        sprintDataDto.setStoryPointsTaken(sprintData.getStoryPointsTaken());
+        sprintDataDto.setSprint(sprintData.getSprint());
+        sprintDataDto.setTeamId(sprintData.getTeam().getId());
         return sprintDataDto;
     }
 }

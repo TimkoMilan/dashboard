@@ -1,7 +1,6 @@
 package com.globallogic.dashboard.vacation;
 
 import com.globallogic.dashboard.event.VacationData;
-import com.globallogic.dashboard.member.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,19 +12,15 @@ import java.util.stream.Collectors;
 @Transactional
 public class VacationService {
 
-    private MemberRepository memberRepository;
     private VacationRepository vacationRepository;
-    private VacationFacade vacationFacade;
 
 
-    public VacationService(MemberRepository memberRepository, VacationRepository vacationRepository, VacationFacade vacationFacade) {
-        this.memberRepository = memberRepository;
+    public VacationService(VacationRepository vacationRepository) {
         this.vacationRepository = vacationRepository;
-        this.vacationFacade = vacationFacade;
     }
 
     public List<VacationData> getAllVacations() {
-        return vacationFacade.getAllVacations();
+        return null;
     }
 
     public List<VacationDto> getVacationByMemberName(String name) {
@@ -41,10 +36,6 @@ public class VacationService {
 
     public List<VacationDto> getVacationbyMonth(Date startDate, Date endDate) {
         List<Vacation> vacation = vacationRepository.findVacationsByStartIsBetween(startDate, endDate);
-        return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
-    }
-    public List<VacationDto> getAllVacationBySprint(String sprint) {
-        List<Vacation> vacation = vacationFacade.getAllvacationBySprint(sprint);
         return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
     }
 }

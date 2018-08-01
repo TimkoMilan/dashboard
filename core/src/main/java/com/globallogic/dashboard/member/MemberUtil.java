@@ -14,7 +14,14 @@ public final class MemberUtil {
         String searchname= ((memberCreateDto.getName()).toLowerCase()).replace(" ","");
         member.setSearchString(searchname);
         return  member;
+    }
 
+
+    public static MemberDto createDto(Member member){
+        MemberDto memberDto = new MemberDto();
+        memberDto.setName(member.getName());
+        memberDto.setSearchString(member.getSearchString());
+        return memberDto;
     }
 
 

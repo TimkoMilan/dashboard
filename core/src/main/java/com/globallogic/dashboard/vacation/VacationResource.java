@@ -11,37 +11,34 @@ import java.util.List;
 @RequestMapping("vacations")
 public class VacationResource {
 
-    private VacationService vacationService;
     private VacationFacade vacationFacade;
 
-    public VacationResource(VacationService vacationService, VacationFacade vacationFacade) {
-        this.vacationService = vacationService;
+    public VacationResource(VacationFacade vacationFacade) {
         this.vacationFacade = vacationFacade;
     }
 
     @GetMapping
     public List<VacationData> getAllVacations() {
-        return vacationService.getAllVacations();
+       return vacationFacade.getAllVacations();
     }
-
     @GetMapping("member/{name}")
     public List<VacationDto> getVacationByMember(@PathVariable(value = "name")String name){
-        return vacationService.getVacationByMemberName(name);
+        return vacationFacade.getVacationByMemberName(name);
     }
 
     @GetMapping("/team/{teamid}")
     public List<VacationDto>getVacationByTeam(@PathVariable(value = "teamid")Long teamid){
-        return vacationService.getVacationByTeam(teamid);
+        return vacationFacade.getVacationByTeam(teamid);
     }
 
     @GetMapping("/date")
     public List<VacationDto>getVacationByMonth(@RequestParam(value = "startDate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                                                @RequestParam(value = "endDate")@DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate){
-        return vacationService.getVacationbyMonth(startDate,endDate);
+        return vacationFacade.getVacationbyMonth(startDate, endDate);
     }
 
     @GetMapping("/{sprint}")
     public List<VacationDto> getAllVacationBySprint(@PathVariable(value = "sprint")String sprint){
-        return vacationService.getAllVacationBySprint(sprint);
+        return vacationFacade.getAllvacationBySprint(sprint);
     }
 }

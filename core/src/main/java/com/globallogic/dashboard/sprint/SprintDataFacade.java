@@ -1,15 +1,15 @@
 package com.globallogic.dashboard.sprint;
 
-import com.globallogic.dashboard.event.SprintData;
+import com.globallogic.dashboard.event.SprintGeneratedData;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.text.ParseException;
+import java.util.List;
 import java.util.Set;
 
 public interface SprintDataFacade {
 
-    Set<SprintData> getAllSprintData() throws GeneralSecurityException, IOException, ParseException;
+    Set<SprintGeneratedData> getAllSprintData() ;
+    List<SprintDataDto> getAllSprintDataBySprint(String sprint);
+    List<SprintDataDto> getAllSprintDataByTeam(String teamName);
 
 }
 

@@ -6,6 +6,6 @@ public interface SprintDataService {
 
     List<SprintDataDto> getAllSprintDataBySprint(String sprint);
 
-    List<SprintDataModel> getAllSprintDataByTeam(String teamName);
+    List<SprintDataDto> getAllSprintDataByTeam(String teamName);
 
 }

@@ -61,7 +61,6 @@ public class GoogleDataLoader implements DataLoader {
 
     @Override
     public List<VacationData> loadVacationData() {
-
         String spreadSheetIdconfig = googleDataLoaderConfig.getSpreadsheetId();
         String monthRangeconfig = googleDataLoaderConfig.getMonthRange();
         String dayRangeconfig = googleDataLoaderConfig.getDaysRange();
@@ -90,7 +89,6 @@ public class GoogleDataLoader implements DataLoader {
                     .get(spreadsheetId, vacationRange)
                     .execute().getValues();
 
-
             Processor<String> monthProcessor = new Processor<>(new MonthStartDataEvaluator(), new MonthEndDataEvaluator());
             MonthEventListener monthEventListener = new MonthEventListener();
             monthProcessor.withEventListener(monthEventListener);
@@ -107,10 +105,6 @@ public class GoogleDataLoader implements DataLoader {
             for (List<Object> vacation : listVacations) {
                 vacationProcessor.process(DataLoaderUtil.toListOfStrings(vacation));
             }
-
-
-
-
             return vacationEventListener.getVacationData();
 
         } catch (Exception e) {

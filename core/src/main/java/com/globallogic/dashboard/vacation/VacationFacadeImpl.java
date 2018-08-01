@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,14 +20,17 @@ public class VacationFacadeImpl implements VacationFacade {
     private VacationRepository vacationRepository;
     private SprintRepository sprintRepository;
     private Memberservice memberservice;
+    private VacationService vacationService;
+    private VacationUtil vacationUtil;
 
 
-
-    public VacationFacadeImpl(DataLoader dataLoader, VacationRepository vacationRepository, SprintRepository sprintRepository, Memberservice memberservice) {
+    public VacationFacadeImpl(DataLoader dataLoader, VacationRepository vacationRepository, SprintRepository sprintRepository, Memberservice memberservice, VacationService vacationService, VacationUtil vacationUtil) {
         this.dataLoader = dataLoader;
         this.vacationRepository = vacationRepository;
         this.sprintRepository = sprintRepository;
         this.memberservice = memberservice;
+        this.vacationService = vacationService;
+        this.vacationUtil = vacationUtil;
     }
 
     @Override
@@ -42,29 +46,32 @@ public class VacationFacadeImpl implements VacationFacade {
             v.setHalfDay(vacationDatum.isHalfDay());
             vacationRepository.save(v);
         }
-        return vacationData;
+
+//        return vacationData.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
+    return vacationData;
     }
 
     @Override
-    public List<Vacation> getAllvacationBySprint(String sprint) {
+    public List<VacationDto> getAllvacationBySprint(String sprint) {
         Date start = sprintRepository.findByName(sprint).getStart();
         Date end = sprintRepository.findByName(sprint).getEnd();
-        return vacationRepository.findVacationsByStartOrEndIsBetween(start,end);
+        List<Vacation> vacations = vacationRepository.findVacationsByStartOrEndIsBetween(start,end);
+        return vacations.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public List<VacationDto> getVacationByMemberName(String name) {
-        return null;
+        return vacationService.getVacationByMemberName(name) ;
     }
 
     @Override
     public List<VacationDto> getVacationByTeam(Long teamid) {
-        return null;
+        return vacationService.getVacationByTeam(teamid);
     }
 
     @Override
     public List<VacationDto> getVacationbyMonth(Date startDate, Date endDate) {
-        return null;
+        return vacationService.getVacationbyMonth(startDate, endDate);
     }
 
 

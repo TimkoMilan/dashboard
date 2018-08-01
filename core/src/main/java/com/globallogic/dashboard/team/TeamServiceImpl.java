@@ -3,11 +3,14 @@ package com.globallogic.dashboard.team;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class TeamServiceImpl implements TeamService {
+
     private TeamRepository teamRepository;
 
 
@@ -25,9 +28,23 @@ public class TeamServiceImpl implements TeamService {
         }
         return teamRepository.findTeamByName(teamName);
     }
+    @Override
+    public List<TeamDto> findAll() {
+        List<Team>teams = teamRepository.findAll();
+        return teams.stream().map(TeamUtil::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public TeamDto findByTeamId(Long teamId) {
+        Team team = teamRepository.findTeamById(teamId);
+        return TeamUtil.convertToDto(team);
+
+    }
 
     @Override
     public Optional<Team> findById(Long id) {
         return teamRepository.findById(id);
     }
+
+
 }

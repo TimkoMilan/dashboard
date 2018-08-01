@@ -14,7 +14,7 @@ import java.util.Optional;
 @Transactional
 public class MemberServiceImpl implements Memberservice {
 
-    private static final Logger log = LoggerFactory.getLogger(VacationEventListener.class);
+    private static final Logger log = LoggerFactory.getLogger(MemberServiceImpl.class);
     @Autowired
     private MemberRepository memberRepository;
 
