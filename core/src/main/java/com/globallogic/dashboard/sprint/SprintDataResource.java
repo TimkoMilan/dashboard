@@ -30,7 +30,6 @@ public class SprintDataResource {
     }
     @GetMapping("team/{teamName}")
     public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName")String teamName){
-
         return sprintDataFacade.getAllSprintDataByTeam(teamName);
     }
 

@@ -22,4 +22,25 @@ public class SprintServiceImpl implements SprintService {
         List<Sprint> sprints = sprintRepository.findSprintsByStartOrEndIsBetween(startDate, endDate);
             return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
     }
+
+    @Override
+    public Sprint findStartBySprintName(String sprint) {
+        return sprintRepository.findByName(sprint);
+    }
+
+    @Override
+    public Sprint findEndBySprintName(String sprint) {
+        return sprintRepository.findByName(sprint);
+    }
+
+    @Override
+    public Sprint findByName(String sprintName) {
+        return null;
+    }
+
+    @Override
+    public void save(Sprint sprint) {
+        sprintRepository.save(sprint);
+    }
+
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 public interface SprintDataFacade {
 
+    void loadSprintData();
     Set<SprintGeneratedData> getAllSprintData() ;
     List<SprintDataDto> getAllSprintDataBySprint(String sprint);
     List<SprintDataDto> getAllSprintDataByTeam(String teamName);

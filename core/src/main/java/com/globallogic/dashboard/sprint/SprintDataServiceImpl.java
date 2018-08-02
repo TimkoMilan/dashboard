@@ -11,12 +11,11 @@ import java.util.stream.Collectors;
 public class SprintDataServiceImpl implements SprintDataService{
 
     private SprintDataRepository sprintDataRepository;
-    private SprintRepository sprintRepository;
 
 
-    public SprintDataServiceImpl(SprintDataRepository sprintDataRepository, SprintRepository sprintRepository) {
+    public SprintDataServiceImpl(SprintDataRepository sprintDataRepository) {
         this.sprintDataRepository = sprintDataRepository;
-        this.sprintRepository = sprintRepository;
+
     }
 
     public List<SprintDataDto> getAllSprintDataBySprint(String sprint) {
@@ -26,6 +25,18 @@ public class SprintDataServiceImpl implements SprintDataService{
 
     public List<SprintDataDto> getAllSprintDataByTeam(String teamName) {
         List<SprintData> sprintData = sprintDataRepository.findAllByTeam_Name(teamName);
+        return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SprintDataDto> getSprintDataByTeamAndSprint(String teamName, String sprintName) {
+        List <SprintData> sprints = sprintDataRepository.findAllByTeam_NameAndSprint_Name(teamName,sprintName);
+        return sprints.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SprintDataDto> getAllSprintData() {
+       List<SprintData> sprintData = sprintDataRepository.findAll();
         return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
     }
 

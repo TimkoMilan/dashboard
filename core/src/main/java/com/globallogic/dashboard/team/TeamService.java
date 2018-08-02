@@ -12,4 +12,7 @@ public interface TeamService {
     List<TeamDto> findAll();
 
     TeamDto findByTeamId(Long teamId);
+
+    Team finByTeamName(String name);
+
 }

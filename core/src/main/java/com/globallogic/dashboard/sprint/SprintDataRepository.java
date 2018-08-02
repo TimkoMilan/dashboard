@@ -10,5 +10,5 @@ public interface SprintDataRepository extends JpaRepository<SprintData,Long> {
 
     List<SprintData> findAllBySprint_Name(String sprintName);
     List<SprintData>findAllByTeam_Name(String teamName);
-
+    List<SprintData> findAllByTeam_NameAndSprint_Name(String teamName, String sprintId);
 }

@@ -22,6 +22,12 @@ public class VacationService {
     public List<VacationData> getAllVacations() {
         return null;
     }
+    public void saveVacation(Vacation v){
+        vacationRepository.save(v);
+    }
+    public void deleteAllVacation(){
+        vacationRepository.deleteAll();
+    }
 
     public List<VacationDto> getVacationByMemberName(String name) {
          name = name.replace(" ", "").toLowerCase();
@@ -37,5 +43,8 @@ public class VacationService {
     public List<VacationDto> getVacationbyMonth(Date startDate, Date endDate) {
         List<Vacation> vacation = vacationRepository.findVacationsByStartIsBetween(startDate, endDate);
         return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
+    }
+    public List<Vacation> findVacationByDate(Date start,Date end){
+         return vacationRepository.findVacationsByStartIsBetween(start, end);
     }
 }

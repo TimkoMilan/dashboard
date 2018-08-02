@@ -34,11 +34,11 @@ public class VacationResource {
     @GetMapping("/date")
     public List<VacationDto>getVacationByMonth(@RequestParam(value = "startDate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                                                @RequestParam(value = "endDate")@DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate){
-        return vacationFacade.getVacationbyMonth(startDate, endDate);
+        return vacationFacade.getVacationByMonth(startDate, endDate);
     }
 
     @GetMapping("/{sprint}")
     public List<VacationDto> getAllVacationBySprint(@PathVariable(value = "sprint")String sprint){
-        return vacationFacade.getAllvacationBySprint(sprint);
+        return vacationFacade.getAllVacationBySprint(sprint);
     }
 }

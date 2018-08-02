@@ -2,7 +2,7 @@ package com.globallogic.dashboard.sprint;
 
 import com.globallogic.dashboard.event.SprintGeneratedData;
 import com.globallogic.dashboard.loader.SprintLoader;
-import com.globallogic.dashboard.team.TeamRepository;
+import com.globallogic.dashboard.team.TeamService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,45 +14,56 @@ import java.util.Set;
 public class SprintDataFacadeImpl implements SprintDataFacade {
 
     private SprintLoader loadSprintData;
-    private SprintRepository sprintRepository;
     private SprintDataRepository sprintDataRepository;
-    private TeamRepository teamRepository;
     private SprintDataService sprintDataService;
+    private SprintService sprintService;
+    private TeamService teamService;
 
-    public SprintDataFacadeImpl(SprintLoader loadSprintData, SprintRepository sprintRepository, SprintDataRepository sprintDataRepository, TeamRepository teamRepository, SprintDataService sprintDataService) {
+
+    public SprintDataFacadeImpl(SprintLoader loadSprintData,SprintDataRepository sprintDataRepository, SprintDataService sprintDataService, SprintService sprintService, TeamService teamService) {
         this.loadSprintData = loadSprintData;
-        this.sprintRepository = sprintRepository;
         this.sprintDataRepository = sprintDataRepository;
-        this.teamRepository = teamRepository;
         this.sprintDataService = sprintDataService;
+        this.sprintService = sprintService;
+        this.teamService = teamService;
+    }
+
+    @Override
+    public void loadSprintData() {
+        Set<SprintGeneratedData> sprintGeneratedData = loadSprintData.loadSprintData();
+        for (SprintGeneratedData sprintDatum : sprintGeneratedData) {
+            String teamName = sprintDatum.getTeamName();
+            String sprintName = sprintDatum.getName();
+            List<SprintDataDto> sprints = sprintDataService.getSprintDataByTeamAndSprint(teamName,sprintName);
+            if (sprints.isEmpty()){
+                SprintData sprintData = new SprintData();
+                sprintData.setStoryPointsTaken(sprintDatum.getTaken());
+                sprintData.setStoryPointsClosed(sprintDatum.getCompleted());
+                String sprintsName = sprintDatum.getName();
+                Sprint allBySprint_name = sprintService.findByName(sprintsName);
+
+                if (allBySprint_name == null) {
+                    Sprint sprint = new Sprint();
+                    sprint.setName(sprintDatum.getName());
+                    sprint.setStart(sprintDatum.getStart());
+                    sprint.setEnd(sprintDatum.getEnd());
+                    sprintService.save(sprint);
+                    allBySprint_name = sprint;
+                }
+                sprintData.setSprint(allBySprint_name);
+                sprintData.setTeam(teamService.finByTeamName(sprintDatum.getTeamName()));
+                sprintDataRepository.save(sprintData);
+            }
+        }
+
+
     }
 
     @Override
     public Set<SprintGeneratedData> getAllSprintData() {
-        Set<SprintGeneratedData> sprintGeneratedData = loadSprintData.loadSprintData();
-        for (SprintGeneratedData sprintDatum : sprintGeneratedData) {
-
-            SprintData sprintData = new SprintData();
-
-            sprintData.setStoryPointsTaken(sprintDatum.getTaken());
-            sprintData.setStoryPointsClosed(sprintDatum.getCompleted());
-
-            Sprint allBySprint_name = sprintRepository.findByName(sprintDatum.getName());
-            if (allBySprint_name == null) {
-                Sprint sprint = new Sprint();
-                sprint.setName(sprintDatum.getName());
-                sprint.setStart(sprintDatum.getStart());
-                sprint.setEnd(sprintDatum.getEnd());
-                sprintRepository.save(sprint);
-                allBySprint_name = sprint;
-            }
-            sprintData.setSprint(allBySprint_name);
-            sprintData.setTeam(teamRepository.findTeamByName(sprintDatum.getTeamName()));
-            sprintDataRepository.save(sprintData);
-        }
-        return sprintGeneratedData;
+        sprintDataService.getAllSprintData();
+        return null;
     }
-
     @Override
     public List<SprintDataDto> getAllSprintDataBySprint(String sprint) {
         return sprintDataService.getAllSprintDataBySprint(sprint);

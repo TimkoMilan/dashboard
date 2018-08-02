@@ -3,7 +3,7 @@ package com.globallogic.dashboard.member;
 import java.util.List;
 import java.util.Optional;
 
-public interface Memberservice {
+public interface MemberService {
 
      Member createMember(MemberCreateDto memberCreateDto);
 

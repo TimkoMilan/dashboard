@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class MemberFacadeImpl implements MemberFacade {
 
-    private Memberservice memberservice;
+    private MemberService memberservice;
     private TeamService teamService;
 
-    public MemberFacadeImpl(Memberservice memberservice, TeamService teamService) {
+    public MemberFacadeImpl(MemberService memberservice, TeamService teamService) {
         this.memberservice = memberservice;
         this.teamService = teamService;
     }
