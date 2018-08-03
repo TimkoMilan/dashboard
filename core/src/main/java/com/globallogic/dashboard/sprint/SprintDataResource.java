@@ -1,6 +1,5 @@
 package com.globallogic.dashboard.sprint;
 
-import com.globallogic.dashboard.event.SprintGeneratedData;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,7 @@ public class SprintDataResource {
     }
 
     @GetMapping
-    public Set<SprintGeneratedData> getAllSprintData(){
+    public List<SprintDataDto> getAllSprintData(){
         return sprintDataFacade.getAllSprintData();
     }
 

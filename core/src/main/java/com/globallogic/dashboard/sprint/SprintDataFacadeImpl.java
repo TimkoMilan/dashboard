@@ -55,14 +55,10 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
                 sprintDataRepository.save(sprintData);
             }
         }
-
-
     }
-
     @Override
-    public Set<SprintGeneratedData> getAllSprintData() {
-        sprintDataService.getAllSprintData();
-        return null;
+    public List<SprintDataDto> getAllSprintData() {
+        return sprintDataService.getAllSprintData();
     }
     @Override
     public List<SprintDataDto> getAllSprintDataBySprint(String sprint) {
