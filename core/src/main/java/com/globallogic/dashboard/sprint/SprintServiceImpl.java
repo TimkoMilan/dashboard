@@ -20,7 +20,7 @@ public class SprintServiceImpl implements SprintService {
     @Override
     public List<SprintDto> getSprintByDate(Date startDate, Date endDate) {
         List<Sprint> sprints = sprintRepository.findSprintsByStartOrEndIsBetween(startDate, endDate);
-            return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
+        return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -41,6 +41,12 @@ public class SprintServiceImpl implements SprintService {
     @Override
     public void save(Sprint sprint) {
         sprintRepository.save(sprint);
+    }
+
+    @Override
+    public List<SprintNameDto> getSprintsName() {
+        List<Sprint>sprints=sprintRepository.findAll();
+        return sprints.stream().map(SprintUtil::converToSprintNameDto).collect(Collectors.toList());
     }
 
 }

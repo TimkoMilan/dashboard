@@ -1,6 +1,5 @@
 package com.globallogic.dashboard.vacation;
 
-import com.globallogic.dashboard.event.VacationData;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,19 +18,26 @@ public class VacationService {
         this.vacationRepository = vacationRepository;
     }
 
-    public List<VacationData> getAllVacations() {
-        return null;
+    public List<VacationDto> getVacations(VacationFilterDto vacationFilterDto) {
+        if (vacationFilterDto == null) {
+            List<Vacation> vacations = vacationRepository.findAll();
+            return vacations.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
+        } else {
+            return null; //todo implement filtering
+        }
     }
-    public void saveVacation(Vacation v){
+
+    public void saveVacation(Vacation v) {
         vacationRepository.save(v);
     }
-    public void deleteAllVacation(){
+
+    public void deleteAllVacation() {
         vacationRepository.deleteAll();
     }
 
     public List<VacationDto> getVacationByMemberName(String name) {
-         name = name.replace(" ", "").toLowerCase();
-         List<Vacation> vacation = vacationRepository.findVacationsByMember_SearchString(name);
+        name = name.replace(" ", "").toLowerCase();
+        List<Vacation> vacation = vacationRepository.findVacationsByMember_SearchString(name);
         return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
     }
 
@@ -44,7 +50,8 @@ public class VacationService {
         List<Vacation> vacation = vacationRepository.findVacationsByStartIsBetween(startDate, endDate);
         return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
     }
-    public List<Vacation> findVacationByDate(Date start,Date end){
-         return vacationRepository.findVacationsByStartIsBetween(start, end);
+
+    public List<Vacation> findVacationByDate(Date start, Date end) {
+        return vacationRepository.findVacationsByStartIsBetween(start, end);
     }
 }

@@ -47,6 +47,13 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public List<TeamNameDto> getTeamName() {
+        List<Team>teams = teamRepository.findAll();
+        return teams.stream().map(TeamUtil::convertToTeamNameDto).collect(Collectors.toList());
+
+    }
+
+    @Override
     public Optional<Team> findById(Long id) {
         return teamRepository.findById(id);
     }

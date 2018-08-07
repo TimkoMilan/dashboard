@@ -14,18 +14,19 @@ public class MemberResource {
 
 
     @PostMapping
-    public Member createMember (MemberCreateDto memberCreateDto){
+    public Member createMember (@RequestBody MemberCreateDto memberCreateDto){
        return memberFacade.createMember(memberCreateDto);
        }
 
-     @GetMapping
+    @GetMapping
     public List<MemberDto> getAllMember(){
         return memberFacade.getAllMembers();
      }
 
-     @PutMapping("/{memberId}/team/assign/{teamId}")
-     public void assignToTeam( Long memberId, Long teamId){
+    @PutMapping("/{memberId}/teams/{teamId}/assign")
+     public void assignToTeam(@PathVariable Long memberId, Long teamId){
          memberFacade.assignToTeam(memberId,teamId);
      }
+
 
 }

@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("sprintdata")
@@ -24,13 +24,12 @@ public class SprintDataResource {
     }
 
     @GetMapping("sprint/{sprint}")
-    public List<SprintDataDto> getAllSprintDataBySprint(@PathVariable(value = "sprint")String sprint){
+    public List<SprintDataDto> getAllSprintDataBySprint(@PathVariable(value = "sprint")@NotNull String sprint){
         return sprintDataFacade.getAllSprintDataBySprint(sprint);
     }
     @GetMapping("team/{teamName}")
-    public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName")String teamName){
+    public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName")@NotNull String teamName){
         return sprintDataFacade.getAllSprintDataByTeam(teamName);
     }
-
 
 }

@@ -20,5 +20,10 @@ public class TeamUtil {
         teamDto.setMembers(team.getMembers());
         return  teamDto;
     }
-
+    public static TeamNameDto convertToTeamNameDto(Team team){
+        TeamNameDto teamNameDto = new TeamNameDto();
+        teamNameDto.setTeamName(team.getName());
+        teamNameDto.setFocus(team.getFocus());
+        return teamNameDto;
+    }
 }

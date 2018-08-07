@@ -5,12 +5,12 @@ import java.io.Serializable;
 
 @Entity
 public class User implements Serializable {
+
     @Id
     @GeneratedValue
     private Long id;
 
     private String username;
-
 
 
     @ManyToMany

@@ -14,6 +14,7 @@ public class SprintDataDto implements Serializable {
     private Sprint sprint;
 
 
+
     public Sprint getSprint() {
         return sprint;
     }

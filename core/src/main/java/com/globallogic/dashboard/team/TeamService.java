@@ -15,4 +15,6 @@ public interface TeamService {
 
     Team finByTeamName(String name);
 
+    List<TeamNameDto> getTeamName();
+
 }

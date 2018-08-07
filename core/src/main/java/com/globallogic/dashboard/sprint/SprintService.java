@@ -11,4 +11,5 @@ public interface SprintService {
     Sprint findByName(String sprintName);
     void  save(Sprint sprint);
 
+    List<SprintNameDto> getSprintsName();
 }

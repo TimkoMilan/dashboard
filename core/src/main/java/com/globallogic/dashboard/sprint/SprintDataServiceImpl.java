@@ -15,7 +15,6 @@ public class SprintDataServiceImpl implements SprintDataService{
 
     public SprintDataServiceImpl(SprintDataRepository sprintDataRepository) {
         this.sprintDataRepository = sprintDataRepository;
-
     }
 
     public List<SprintDataDto> getAllSprintDataBySprint(String sprint) {

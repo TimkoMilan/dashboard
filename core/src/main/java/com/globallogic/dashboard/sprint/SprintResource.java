@@ -24,4 +24,8 @@ public class SprintResource {
                                              @RequestParam(value = "endDate")@DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate){
         return sprintService.getSprintByDate(startDate,endDate);
     }
+    @GetMapping("/names/")
+    public List<SprintNameDto> getSprintNameAndDate(){
+        return sprintService.getSprintsName();
+    }
 }
