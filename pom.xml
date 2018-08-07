@@ -112,6 +112,11 @@
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
     </dependencies>
 
 </project>

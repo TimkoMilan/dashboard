@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class VacationFilterDto implements Serializable {
+
     private Long memberId;
 
     private Long teamId;
