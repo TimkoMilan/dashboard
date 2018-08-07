@@ -4,6 +4,6 @@ services:
         image: sovy-dashboard-core
         container_name: sovy-dashboard-core
         ports:
-         - "8089:9989"
+         - "8089:3098"
         environment:
             - JAVA_OPTS=-Xmx4192M
