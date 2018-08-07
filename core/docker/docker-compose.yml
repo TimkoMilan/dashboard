@@ -1,0 +1,9 @@
+version: '3'
+services:
+    sovy-dashboard:
+        image: sovy-dashboard-core
+        container_name: sovy-dashboard-core
+        ports:
+         - "3098:8089"
+        environment:
+            - JAVA_OPTS=-Xmx4192M
