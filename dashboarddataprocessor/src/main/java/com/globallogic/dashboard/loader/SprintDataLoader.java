@@ -28,7 +28,7 @@ public class SprintDataLoader implements SprintLoader {
     private static final String CREDENTIALS_FOLDER = "src/main/resources/credentials";
     private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
     private static final String CLIENT_SECRET_DIR = "/client_secret.json";
-    private static final Logger log = LoggerFactory.getLogger(GoogleDataLoader.class);
+    private static final Logger log = LoggerFactory.getLogger(SprintDataLoader.class);
     public static final String CONFIG_PROPERTIES = "config.properties";
 
 
