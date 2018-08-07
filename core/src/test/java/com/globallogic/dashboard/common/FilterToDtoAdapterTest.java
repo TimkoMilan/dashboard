@@ -8,10 +8,10 @@ public class FilterToDtoAdapterTest {
 
     @Test
     public void dotest() {
-        FilterToDtoAdapter<VacationFilterDto> vacationFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>("vacation?memberId=12&teamId=15", VacationFilterDto.class);
+        FilterToDtoAdapter<VacationFilterDto> vacationFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>("vacation?memberId=12&teamId=15", VacationFilterDto.class, new UrlFilterValueParser());
         VacationFilterDto dto = vacationFilterDtoFilterToDtoAdapter.getDto();
-        Assert.assertEquals(12l, (long)dto.getMemberId());
-        Assert.assertEquals(15l, (long)dto.getTeamId());
+        Assert.assertEquals(12l, (long) dto.getMemberId());
+        Assert.assertEquals(15l, (long) dto.getTeamId());
 
     }
 }

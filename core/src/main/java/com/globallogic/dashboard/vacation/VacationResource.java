@@ -1,6 +1,7 @@
 package com.globallogic.dashboard.vacation;
 
 import com.globallogic.dashboard.common.FilterToDtoAdapter;
+import com.globallogic.dashboard.common.UrlFilterValueParser;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,10 @@ public class VacationResource {
 
 
         if (Strings.isNotBlank(filter)) {
-            FilterToDtoAdapter<VacationFilterDto> vacationFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>(filter, VacationFilterDto.class);
+            FilterToDtoAdapter<VacationFilterDto> vacationFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>(filter, VacationFilterDto.class, new UrlFilterValueParser());
             VacationFilterDto dto = vacationFilterDtoFilterToDtoAdapter.getDto();
         }
-      return null;
+        return null;
 //        return vacationFacade.getVacations(vacationFilterDto);
     }
 
