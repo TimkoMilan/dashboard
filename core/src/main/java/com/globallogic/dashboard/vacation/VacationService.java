@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.vacation;
 
+import com.querydsl.core.BooleanBuilder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,9 +21,16 @@ public class VacationService {
     public List<VacationDto> getVacations(VacationFilterDto vacationFilterDto) {
         if (vacationFilterDto == null) {
             List<Vacation> vacations = vacationRepository.findAll();
-            return vacations.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
+            return VacationUtil.convertToListDto(vacations);
         } else {
-            return null; //todo implement filtering
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            if (vacationFilterDto.getMemberId() != null) {
+                booleanBuilder.and(QVacation.vacation.member.id.eq(vacationFilterDto.getMemberId()));
+            }
+            if (vacationFilterDto.getTeamId() != null) {
+                booleanBuilder.and(QVacation.vacation.member.team.id.eq(vacationFilterDto.getTeamId()));
+            }
+            return VacationUtil.convertToListDto(vacationRepository.findAll(booleanBuilder.getValue()));
         }
     }
 
