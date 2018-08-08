@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -43,23 +42,19 @@ public class VacationService {
     }
 
     public List<VacationDto> getVacationByMemberName(String name) {
-        name = name.replace(" ", "").toLowerCase();
-        List<Vacation> vacation = vacationRepository.findVacationsByMember_SearchString(name);
-        return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
+        return null;
     }
 
     public List<VacationDto> getVacationByTeam(Long teamid) {
-        List<Vacation> vacation = vacationRepository.findVacationsByMember_TeamId(teamid);
-        return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
+        return null;
     }
 
     public List<VacationDto> getVacationbyMonth(Date startDate, Date endDate) {
-        List<Vacation> vacation = vacationRepository.findVacationsByStartIsBetween(startDate, endDate);
-        return vacation.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
+        return null;
     }
 
     public List<Vacation> findVacationByDate(Date start, Date end) {
-        return vacationRepository.findVacationsByStartIsBetween(start, end);
+        return null;
     }
 
 
