@@ -42,11 +42,7 @@ public class FilterToDtoAdapter<T> {
 
 
             }
-
-
             return t;
-
-
         } catch (Exception e) {
             throw new BusinessException(e);
         }

@@ -10,5 +10,4 @@ public interface VacationFacade {
     List<VacationDto> getVacationByTeam(Long teamid);
     List<VacationDto> getVacationByMonth(Date startDate, Date endDate);
     List<VacationDto> getAllVacationBySprint(String sprint);
-
 }

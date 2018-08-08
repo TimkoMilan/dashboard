@@ -18,6 +18,11 @@ public class SprintDataResource {
         this.sprintDataFacade = sprintDataFacade;
     }
 
+    @GetMapping("/loadData")
+    public void loadData(){
+         sprintDataFacade.loadSprintData();
+    }
+
     @GetMapping
     public List<SprintDataDto> getAllSprintData(){
         return sprintDataFacade.getAllSprintData();

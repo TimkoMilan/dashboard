@@ -20,21 +20,21 @@ public class VacationResource {
         this.vacationFacade = vacationFacade;
     }
 
-    @GetMapping
-    public List<VacationDto> getAllVacations(@RequestParam(required = false) String filter) {
-
-        //todo filter to object adapter
-        //FilterToDtoAdapter adapter= new FilterToDtoAdapter(filter, DtoFilteringClass.class) ->filter is the string form request, DtoFilteringClass is the dto we want the filter transform to in our case its VacationFilterDto
-
-
-        if (Strings.isNotBlank(filter)) {
-            FilterToDtoAdapter<VacationFilterDto> vacationFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>(filter, VacationFilterDto.class, new UrlFilterValueParser());
-            VacationFilterDto dto = vacationFilterDtoFilterToDtoAdapter.getDto();
-        }
-        return null;
-//        return vacationFacade.getVacations(vacationFilterDto);
+    @GetMapping("loadVacationData")
+    public void loadVacation(){
+        vacationFacade.loadVacation();
     }
 
+    @GetMapping
+    public List<VacationDto> getVacations(@RequestParam(required = false) String filter) {
+        VacationFilterDto vacationFilterDto = null;
+        if (Strings.isNotBlank(filter)) {
+            FilterToDtoAdapter<VacationFilterDto> vacationFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>(filter, VacationFilterDto.class, new UrlFilterValueParser());
+            vacationFilterDto = vacationFilterDtoFilterToDtoAdapter.getDto();
+
+        }
+        return vacationFacade.getVacations(vacationFilterDto);
+    }
 
     @GetMapping("members/{name}")
     public List<VacationDto> getVacationByMember(@PathVariable(value = "name") String name) {

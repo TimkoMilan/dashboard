@@ -13,7 +13,6 @@ public class VacationService {
 
     private VacationRepository vacationRepository;
 
-
     public VacationService(VacationRepository vacationRepository) {
         this.vacationRepository = vacationRepository;
     }
@@ -54,4 +53,7 @@ public class VacationService {
     public List<Vacation> findVacationByDate(Date start, Date end) {
         return vacationRepository.findVacationsByStartIsBetween(start, end);
     }
+
+
 }
+

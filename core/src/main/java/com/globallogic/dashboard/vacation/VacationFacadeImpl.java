@@ -48,7 +48,6 @@ public class VacationFacadeImpl implements VacationFacade {
     @Override
     public List<VacationDto> getVacations(VacationFilterDto vacationFilterDto) {
         return vacationService.getVacations(vacationFilterDto);
-
     }
 
     @Override
@@ -60,10 +59,11 @@ public class VacationFacadeImpl implements VacationFacade {
         if (vacations.isEmpty()) {
             return vacations.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
         } else {
-            throw new VacationException("Vacation between these days not found", start, end);
+            throw new VacationException("Vacation between these days not found "+ start+" " + end);
         }
-
     }
+
+
 
     @Override
     public List<VacationDto> getVacationByMemberName(String name) {
@@ -79,6 +79,7 @@ public class VacationFacadeImpl implements VacationFacade {
     public List<VacationDto> getVacationByMonth(Date startDate, Date endDate) {
         return vacationService.getVacationbyMonth(startDate, endDate);
     }
+
 
 
 }
