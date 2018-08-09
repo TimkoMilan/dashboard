@@ -1,5 +1,8 @@
 package com.globallogic.dashboard.sprint;
 
+import com.globallogic.dashboard.common.FilterToDtoAdapter;
+import com.globallogic.dashboard.common.UrlFilterValueParser;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,21 @@ public class SprintResource {
 
     public SprintResource(SprintService sprintService) {
         this.sprintService = sprintService;
+    }
+
+    @GetMapping("/filter")
+    public List<SprintDto> getSprintByFilter(@RequestParam(required = false)String filter){
+        SprintFilterDto sprintFilterDto = null;
+        if (Strings.isNotBlank(filter)){
+            FilterToDtoAdapter<SprintFilterDto> sprintFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>(filter,SprintFilterDto.class,new UrlFilterValueParser());
+            sprintFilterDto = sprintFilterDtoFilterToDtoAdapter.getDto();
+        }
+        return sprintService.getAllSprints();
+    }
+
+    @GetMapping
+    public List<SprintDto> getAllSprints(){
+        return sprintService.getAllSprints();
     }
 
     @GetMapping("date")

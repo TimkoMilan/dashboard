@@ -1,6 +1,7 @@
 package com.globallogic.dashboard.sprint;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 public class SprintDataDto implements Serializable {
@@ -11,16 +12,16 @@ public class SprintDataDto implements Serializable {
 
     private Long teamId;
 
-    private Sprint sprint;
+    private Long sprintId;
 
 
 
-    public Sprint getSprint() {
-        return sprint;
+    public Long getSprintId() {
+        return sprintId;
     }
 
-    public void setSprint(Sprint sprint) {
-        this.sprint = sprint;
+    public void setSprintId(Long sprintId) {
+        this.sprintId = sprintId;
     }
 
     public Long getTeamId() {

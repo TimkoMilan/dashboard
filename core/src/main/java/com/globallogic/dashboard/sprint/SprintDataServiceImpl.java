@@ -28,8 +28,8 @@ public class SprintDataServiceImpl implements SprintDataService{
     }
 
     @Override
-    public List<SprintDataDto> getSprintDataByTeamAndSprint(String teamName, String sprintName) {
-        List <SprintData> sprints = sprintDataRepository.findAllByTeam_NameAndSprint_Name(teamName,sprintName);
+    public List<SprintDataDto> findAllBySprint_Name(String sprintName) {
+        List <SprintData> sprints = sprintDataRepository.findAllBySprint_Name(sprintName);
         return sprints.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
     }
 
@@ -38,6 +38,5 @@ public class SprintDataServiceImpl implements SprintDataService{
        List<SprintData> sprintData = sprintDataRepository.findAll();
         return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
     }
-
 
 }

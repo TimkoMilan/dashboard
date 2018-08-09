@@ -32,9 +32,8 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
     public void loadSprintData() {
         Set<SprintGeneratedData> sprintGeneratedData = loadSprintData.loadSprintData();
         for (SprintGeneratedData sprintDatum : sprintGeneratedData) {
-            String teamName = sprintDatum.getTeamName();
             String sprintName = sprintDatum.getName();
-            List<SprintDataDto> sprints = sprintDataService.getSprintDataByTeamAndSprint(teamName,sprintName);
+            List<SprintDataDto> sprints = sprintDataService.findAllBySprint_Name(sprintName);
             if (sprints.isEmpty()){
                 SprintData sprintData = new SprintData();
                 sprintData.setStoryPointsTaken(sprintDatum.getTaken());
@@ -69,6 +68,7 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
     public List<SprintDataDto> getAllSprintDataByTeam(String teamName) {
         return sprintDataService.getAllSprintDataByTeam(teamName);
     }
+
 
 }
 
