@@ -4,7 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,6 +28,13 @@ public class VacationService {
             if (vacationFilterDto.getTeamId() != null) {
                 booleanBuilder.and(QVacation.vacation.member.team.id.eq(vacationFilterDto.getTeamId()));
             }
+            if (vacationFilterDto.getStart() != null){
+                booleanBuilder.and(QVacation.vacation.start.gt(vacationFilterDto.getStart()).and(QVacation.vacation.end.lt(vacationFilterDto.getEnd())));
+            }   //TODO  startData < END_Sprint & End_DATA > START_SPRINT
+            if (vacationFilterDto.getEnd() != null){
+                booleanBuilder.and(QVacation.vacation.end.lt(vacationFilterDto.getEnd()));
+            }
+
             return VacationUtil.convertToListDto(vacationRepository.findAll(booleanBuilder.getValue()));
         }
     }
@@ -40,23 +46,6 @@ public class VacationService {
     public void deleteAllVacation() {
         vacationRepository.deleteAll();
     }
-
-    public List<VacationDto> getVacationByMemberName(String name) {
-        return null;
-    }
-
-    public List<VacationDto> getVacationByTeam(Long teamid) {
-        return null;
-    }
-
-    public List<VacationDto> getVacationbyMonth(Date startDate, Date endDate) {
-        return null;
-    }
-
-    public List<Vacation> findVacationByDate(Date start, Date end) {
-        return null;
-    }
-
 
 }
 

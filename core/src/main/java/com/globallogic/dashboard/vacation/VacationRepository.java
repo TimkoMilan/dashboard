@@ -15,6 +15,7 @@ public interface VacationRepository extends QuerydslPredicateExecutor<Vacation>,
     default void customize(QuerydslBindings bindings, QVacation root) {
 
         bindings.bind(String.class).first((SingleValueBinding<StringPath, String>) StringExpression::containsIgnoreCase);
+
     }
 
 

@@ -2,6 +2,7 @@ package com.globallogic.dashboard.sprint;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 public class SprintDto implements Serializable {
 
@@ -11,6 +12,16 @@ public class SprintDto implements Serializable {
 
     private Date end;
 
+    private Set<SprintDataDto> sprintDataDtos;
+
+
+    public Set<SprintDataDto> getSprintDataDtos() {
+        return sprintDataDtos;
+    }
+
+    public void setSprintDataDtos(Set<SprintDataDto> sprintDataDtos) {
+        this.sprintDataDtos = sprintDataDtos;
+    }
 
     public Date getStart() {
         return start;

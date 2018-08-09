@@ -1,15 +1,15 @@
 package com.globallogic.dashboard.sprint;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Sprint implements Serializable {
@@ -23,23 +23,21 @@ public class Sprint implements Serializable {
     private Date end;
 
     private String name;
-    @JsonIgnore
     private Range<Integer> range;
 
-    @JsonIgnore
-    @OneToOne
-    private SprintData sprintData;
+    @OneToMany(mappedBy = "sprint")
+    private Set<SprintData> sprintData;
 
 
     public Range<Integer> getRange() {
         return range;
     }
 
-    public SprintData getSprintData() {
+    public Set<SprintData> getSprintData() {
         return sprintData;
     }
 
-    public void setSprintData(SprintData sprintData) {
+    public void setSprintData(Set<SprintData> sprintData) {
         this.sprintData = sprintData;
     }
 

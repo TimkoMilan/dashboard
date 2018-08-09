@@ -20,7 +20,7 @@ public class SprintData implements Serializable {
     @ManyToOne
     private Team team;
 
-    @OneToOne
+    @ManyToOne
     private Sprint sprint;
 
 
