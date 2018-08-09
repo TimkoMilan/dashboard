@@ -9,8 +9,6 @@ public class VacationFilterDto implements Serializable {
 
     private Long teamId;
 
-    private Long sprintId;
-
     private Date starDate;
 
     private Date endDate;
@@ -30,14 +28,6 @@ public class VacationFilterDto implements Serializable {
 
     public void setTeamId(Long teamId) {
         this.teamId = teamId;
-    }
-
-    public Long getSprintId() {
-        return sprintId;
-    }
-
-    public void setSprintId(Long sprintId) {
-        this.sprintId = sprintId;
     }
 
     public Date getStarDate() {

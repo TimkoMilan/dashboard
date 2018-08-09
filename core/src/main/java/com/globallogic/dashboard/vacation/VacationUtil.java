@@ -2,12 +2,15 @@ package com.globallogic.dashboard.vacation;
 
 import com.globallogic.dashboard.event.VacationData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class VacationUtil {
-    private VacationUtil(){
+    private VacationUtil() {
 
     }
 
-    public static VacationDto convertToDto (Vacation vacation) {
+    public static VacationDto convertToDto(Vacation vacation) {
         VacationDto vacationDto = new VacationDto();
 
         vacationDto.setFrom(vacation.getStart());
@@ -20,7 +23,8 @@ public final class VacationUtil {
         }
         return vacationDto;
     }
-    public static VacationDto converToDoFromData (VacationData vacationData){
+
+    public static VacationDto converToDoFromData(VacationData vacationData) {
         VacationDto vacationDto = new VacationDto();
 
         vacationDto.setName(vacationData.getName());
@@ -30,4 +34,11 @@ public final class VacationUtil {
         return vacationDto;
     }
 
+    public static List<VacationDto> convertToListDto(Iterable<Vacation> vacations) {
+        List<VacationDto> vacationDtos = new ArrayList<>();
+        for (Vacation vacation : vacations) {
+            vacationDtos.add(convertToDto(vacation));
+        }
+        return vacationDtos;
+    }
 }
