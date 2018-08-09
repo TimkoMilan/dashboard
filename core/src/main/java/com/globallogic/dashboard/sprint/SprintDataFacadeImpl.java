@@ -70,6 +70,7 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
         return sprintDataService.getAllSprintDataByTeam(teamName);
     }
 
+
 }
 
 

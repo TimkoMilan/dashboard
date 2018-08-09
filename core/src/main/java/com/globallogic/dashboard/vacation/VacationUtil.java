@@ -29,4 +29,5 @@ public final class VacationUtil {
         vacationDto.setHalfDay(vacationData.isHalfDay());
         return vacationDto;
     }
+
 }

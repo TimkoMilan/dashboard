@@ -22,6 +22,9 @@ public class VacationService {
             List<Vacation> vacations = vacationRepository.findAll();
             return vacations.stream().map(VacationUtil::convertToDto).collect(Collectors.toList());
         } else {
+            if (vacationFilterDto.getTeamId() != null){
+                System.out.println("teamId"+vacationFilterDto.getTeamId());
+            }
             return null; //todo implement filtering
         }
     }

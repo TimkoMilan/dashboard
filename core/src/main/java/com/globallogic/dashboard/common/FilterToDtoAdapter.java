@@ -21,7 +21,6 @@ public class FilterToDtoAdapter<T> {
         this.filterValuesParser = filterValuesParser;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(FilterToDtoAdapter.class);
 
 
     public <t> T getDto() {

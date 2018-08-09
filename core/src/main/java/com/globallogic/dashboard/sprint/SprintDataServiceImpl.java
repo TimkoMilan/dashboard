@@ -39,5 +39,4 @@ public class SprintDataServiceImpl implements SprintDataService{
         return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
     }
 
-
 }

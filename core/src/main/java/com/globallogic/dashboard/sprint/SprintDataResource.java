@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("sprintdata")
 public class SprintDataResource {
