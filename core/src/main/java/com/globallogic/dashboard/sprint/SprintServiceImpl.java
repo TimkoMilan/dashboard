@@ -73,10 +73,10 @@ public class SprintServiceImpl implements SprintService {
         else {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
             if (sprintFilterDto.getSprintId() !=null){
-                booleanBuilder.and(QSprint.sprint.sprintData.id.eq(sprintFilterDto.getSprintId()));
+//                booleanBuilder.and(QSprint.sprint.sprintData.id.eq(sprintFilterDto.getSprintId()));
             }
             if (sprintFilterDto.getTeamId() != null){
-                booleanBuilder.and(QSprint.sprint.sprintData.team.id.eq(sprintFilterDto.getTeamId()));
+//                booleanBuilder.and(QSprint.sprint.sprintData.team.id.eq(sprintFilterDto.getTeamId()));
             }
             return SprintUtil.convertToListDto(sprintRepository.findAll(booleanBuilder.getValue()));
         }
