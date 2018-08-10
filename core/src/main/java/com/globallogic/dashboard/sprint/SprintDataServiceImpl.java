@@ -13,17 +13,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class SprintDataServiceImpl implements SprintDataService{
 
-    private static final Logger log = LoggerFactory.getLogger(SprintDataServiceImpl.class);
     private SprintDataRepository sprintDataRepository;
 
 
     public SprintDataServiceImpl(SprintDataRepository sprintDataRepository) {
         this.sprintDataRepository = sprintDataRepository;
-    }
-
-    public List<SprintDataDto> getAllSprintDataBySprint(String sprint) {
-        List<SprintData> sprintData = sprintDataRepository.findAllBySprint_Name(sprint);
-        return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
     }
 
     public List<SprintDataDto> getAllSprintDataByTeam(String teamName) {
@@ -54,7 +48,6 @@ public class SprintDataServiceImpl implements SprintDataService{
             return SprintDataUtil.convertToListdto(sprintDataRepository.findAll(booleanBuilder.getValue()));
         }
     }
-
     @Override
     public void save(SprintData sprintData) {
         sprintDataRepository.save(sprintData);

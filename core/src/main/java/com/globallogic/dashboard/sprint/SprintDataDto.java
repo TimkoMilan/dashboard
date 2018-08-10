@@ -1,5 +1,7 @@
 package com.globallogic.dashboard.sprint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 
@@ -13,9 +15,18 @@ public class SprintDataDto implements Serializable{
 
     private Long sprintId;
 
+
     private Sprint sprint;
+    @JsonIgnore
+    private SprintDto sprintDto;
 
+    public SprintDto getSprintDto() {
+        return sprintDto;
+    }
 
+    public void setSprintDto(SprintDto sprintDto) {
+        this.sprintDto = sprintDto;
+    }
 
     public void setStoryPointsTaken(Long storyPointsTaken) {
         this.storyPointsTaken = storyPointsTaken;

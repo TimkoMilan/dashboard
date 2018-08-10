@@ -3,8 +3,6 @@ package com.globallogic.dashboard.sprint;
 import com.globallogic.dashboard.common.FilterToDtoAdapter;
 import com.globallogic.dashboard.common.UrlFilterValueParser;
 import org.apache.logging.log4j.util.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -16,15 +14,8 @@ import java.util.List;
 public class SprintDataResource {
 
     private SprintDataFacade sprintDataFacade;
-    private static final Logger log = LoggerFactory.getLogger(SprintDataResource.class);
-
     public SprintDataResource(SprintDataFacade sprintDataFacade) {
         this.sprintDataFacade = sprintDataFacade;
-    }
-
-    @GetMapping("/loadData")
-    public void loadData(){
-         sprintDataFacade.loadSprintData();
     }
 
     @GetMapping
@@ -37,10 +28,11 @@ public class SprintDataResource {
         return sprintDataFacade.getAllSprintData(sprintDataFilterDto);
     }
 
-    @GetMapping("sprint/{sprint}")
-    public List<SprintDataDto> getAllSprintDataBySprint(@PathVariable(value = "sprint")@NotNull String sprint){
-        return sprintDataFacade.getAllSprintDataBySprint(sprint);
+    @GetMapping("/loadData")
+    public void loadData(){
+        sprintDataFacade.loadSprintData();
     }
+
     @GetMapping("team/{teamName}")
     public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName")@NotNull String teamName){
         return sprintDataFacade.getAllSprintDataByTeam(teamName);

@@ -8,11 +8,19 @@ import java.util.Set;
 
 public class TeamDto implements Serializable {
 
+    private Long id;
     private String teamName;
     private String focus;
     private Set<Member> members;
     private Set<SprintData> sprint;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTeamName() {
         return teamName;

@@ -22,7 +22,7 @@ class SprintDataUtil {
        List<SprintDataDto> sprintDataDtos = new ArrayList<>();
        for (SprintData sprintDatum : sprintData) {
           sprintDataDtos.add(convertToDto(sprintDatum));
-       }
+            }
        return  sprintDataDtos;
        }
 }

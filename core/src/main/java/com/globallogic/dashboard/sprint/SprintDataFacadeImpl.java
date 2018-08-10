@@ -19,7 +19,7 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
     private TeamService teamService;
 
 
-    public SprintDataFacadeImpl(SprintLoader loadSprintData,SprintDataRepository sprintDataRepository, SprintDataService sprintDataService, SprintService sprintService, TeamService teamService) {
+    public SprintDataFacadeImpl(SprintLoader loadSprintData, SprintDataService sprintDataService, SprintService sprintService, TeamService teamService) {
         this.loadSprintData = loadSprintData;
         this.sprintDataService = sprintDataService;
         this.sprintService = sprintService;
@@ -50,7 +50,6 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
                 sprintData.setSprint(allBySprint_name);
                 sprintData.setTeam(teamService.finByTeamName(sprintDatum.getTeamName()));
                 sprintDataService.save(sprintData);
-
             }
         }
     }
@@ -60,11 +59,6 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
     }
 
 
-
-    @Override
-    public List<SprintDataDto> getAllSprintDataBySprint(String sprint) {
-        return sprintDataService.getAllSprintDataBySprint(sprint);
-    }
 
     @Override
     public List<SprintDataDto> getAllSprintDataByTeam(String teamName) {

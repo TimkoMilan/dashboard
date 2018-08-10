@@ -29,33 +29,30 @@ public class VacationFacadeImpl implements VacationFacade {
     }
 
     @Override
-    public void loadVacation(){
-            List<VacationData> vacationData = dataLoader.loadVacationData();
-            vacationService.deleteAllVacation();
-            for (VacationData vacationDatum : vacationData) {
-                String name = vacationDatum.getName();
-                Member mamber = memberservice.findMemberByMemberName(name);
-                Vacation v = new Vacation();
-                v.setMember(mamber);
-                v.setStart(vacationDatum.getFrom());
-                v.setEnd(vacationDatum.getTo());
-                v.setHalfDay(vacationDatum.isHalfDay());
-                vacationService.saveVacation(v);
-            }
+    public void loadVacation() {
+        List<VacationData> vacationData = dataLoader.loadVacationData();
+        vacationService.deleteAllVacation();
+        for (VacationData vacationDatum : vacationData) {
+            String name = vacationDatum.getName();
+            Member mamber = memberservice.findMemberByMemberName(name);
+            Vacation v = new Vacation();
+            v.setMember(mamber);
+            v.setStart(vacationDatum.getFrom());
+            v.setEnd(vacationDatum.getTo());
+            v.setHalfDay(vacationDatum.isHalfDay());
+            vacationService.saveVacation(v);
         }
+    }
 
     @Override
     public List<VacationDto> getVacations(VacationFilterDto vacationFilterDto) {
-        if (vacationFilterDto.getSprintId() != null){
+            if (vacationFilterDto.getSprintId() != null) {
                 Optional<Sprint> sprint = sprintService.findById(vacationFilterDto.getSprintId());
                 vacationFilterDto.setStart(sprint.get().getStart());
                 vacationFilterDto.setEnd(sprint.get().getEnd());
-        }
+            }
         return vacationService.getVacations(vacationFilterDto);
     }
-
-
-
 
 
 }

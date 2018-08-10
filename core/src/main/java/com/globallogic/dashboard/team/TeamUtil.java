@@ -18,6 +18,7 @@ public class TeamUtil {
         teamDto.setFocus(team.getFocus());
         teamDto.setSprint(team.getSprintDatumModels());
         teamDto.setMembers(team.getMembers());
+        teamDto.setId(team.getId());
         return  teamDto;
     }
     public static TeamNameDto convertToTeamNameDto(Team team){
