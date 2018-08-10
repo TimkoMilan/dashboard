@@ -29,10 +29,7 @@ public class VacationService {
                 booleanBuilder.and(QVacation.vacation.member.team.id.eq(vacationFilterDto.getTeamId()));
             }
             if (vacationFilterDto.getStart() != null){
-                booleanBuilder.and(QVacation.vacation.start.gt(vacationFilterDto.getStart()).and(QVacation.vacation.end.lt(vacationFilterDto.getEnd())));
-            }   //TODO  startData < END_Sprint & End_DATA > START_SPRINT
-            if (vacationFilterDto.getEnd() != null){
-                booleanBuilder.and(QVacation.vacation.end.lt(vacationFilterDto.getEnd()));
+                booleanBuilder.and(QVacation.vacation.start.lt(vacationFilterDto.getEnd()).and(QVacation.vacation.end.gt(vacationFilterDto.getStart())));
             }
 
             return VacationUtil.convertToListDto(vacationRepository.findAll(booleanBuilder.getValue()));

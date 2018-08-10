@@ -26,18 +26,8 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Sprint findStartBySprintName(String sprint) {
-        return sprintRepository.findByName(sprint);
-    }
-
-    @Override
-    public Sprint findEndBySprintName(String sprint) {
-        return sprintRepository.findByName(sprint);
-    }
-
-    @Override
     public Sprint findByName(String sprintName) {
-        return null;
+        return sprintRepository.findAllByName(sprintName);
     }
 
     @Override
@@ -68,15 +58,14 @@ public class SprintServiceImpl implements SprintService {
         if (sprintFilterDto == null){
             List <Sprint> sprints =sprintRepository.findAll();
             return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
-
         }
         else {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
             if (sprintFilterDto.getSprintId() !=null){
-//                booleanBuilder.and(QSprint.sprint.sprintData.id.eq(sprintFilterDto.getSprintId()));
+                booleanBuilder.and(QSprint.sprint.sprintData.any().sprint.id.eq(sprintFilterDto.getSprintId()));
             }
             if (sprintFilterDto.getTeamId() != null){
-//                booleanBuilder.and(QSprint.sprint.sprintData.team.id.eq(sprintFilterDto.getTeamId()));
+                booleanBuilder.and(QSprint.sprint.sprintData.any().team.id.eq(sprintFilterDto.getTeamId()));
             }
             return SprintUtil.convertToListDto(sprintRepository.findAll(booleanBuilder.getValue()));
         }

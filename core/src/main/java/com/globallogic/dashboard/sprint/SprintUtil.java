@@ -15,12 +15,14 @@ public class SprintUtil {
         sprintDto.setName(sprint.getName());
         sprintDto.setStart(sprint.getStart());
         sprintDto.setEnd(sprint.getEnd());
+        sprintDto.setId(sprint.getId());
         Set<SprintDataDto> sprintDataDtos = new HashSet<>();
 
         for (SprintData sprintDatum : sprint.getSprintData()) {
             sprintDataDtos.add(SprintDataUtil.convertToDto(sprintDatum));
+            sprintDto.setSprintDataDtos(sprintDataDtos);
+
         }
-        sprintDto.setSprintDataDtos(sprintDataDtos);
 
         return sprintDto;
     }

@@ -15,7 +15,8 @@ import java.util.List;
 
 @Repository
 public interface SprintRepository extends QuerydslPredicateExecutor<Sprint>, QuerydslBinderCustomizer<QSprint>, JpaRepository<Sprint,Long> {
-    Sprint findByName(String name);
+
+    Sprint findAllByName(String sprintsName);
 
     @Query("SELECT s FROM Sprint s where s.start between ?1 AND ?2 OR s.end between ?1 AND ?2 ")
     List<Sprint> findSprintsByStartOrEndIsBetween(Date startDate,Date endDate);

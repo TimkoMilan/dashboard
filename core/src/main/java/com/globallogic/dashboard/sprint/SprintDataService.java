@@ -8,8 +8,10 @@ public interface SprintDataService {
 
     List<SprintDataDto> getAllSprintDataByTeam(String teamName);
 
-    List<SprintDataDto> findAllBySprint_Name(String sprintName);
+    List<SprintDataDto> findAllBySprint_NameAndTeamName(String sprintName,String teamName);
 
-    List<SprintDataDto> getAllSprintData();
+    List<SprintDataDto> getAllSprintData(SprintDataFilterDto sprintDataFilterDto);
+
+    void save(SprintData sprintData);
 
 }

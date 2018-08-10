@@ -1,6 +1,9 @@
 package com.globallogic.dashboard.sprint;
 
- class SprintDataUtil {
+import java.util.ArrayList;
+import java.util.List;
+
+class SprintDataUtil {
     private SprintDataUtil(){
 
     }
@@ -9,9 +12,17 @@ package com.globallogic.dashboard.sprint;
 
         sprintDataDto.setStoryPointsClosed(sprintData.getStoryPointsClosed());
         sprintDataDto.setStoryPointsTaken(sprintData.getStoryPointsTaken());
-        sprintDataDto.setSprintId(sprintData.getSprint().getId());
+        sprintDataDto.setSprint(sprintData.getSprint());
         sprintDataDto.setTeamId(sprintData.getTeam().getId());
-
+        sprintDataDto.setSprintId(sprintData.getSprint().getId());
         return sprintDataDto;
     }
+
+    static List<SprintDataDto> convertToListdto(Iterable<SprintData> sprintData){
+       List<SprintDataDto> sprintDataDtos = new ArrayList<>();
+       for (SprintData sprintDatum : sprintData) {
+          sprintDataDtos.add(convertToDto(sprintDatum));
+       }
+       return  sprintDataDtos;
+       }
 }

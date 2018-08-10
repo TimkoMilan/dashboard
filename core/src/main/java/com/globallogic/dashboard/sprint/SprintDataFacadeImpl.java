@@ -14,7 +14,6 @@ import java.util.Set;
 public class SprintDataFacadeImpl implements SprintDataFacade {
 
     private SprintLoader loadSprintData;
-    private SprintDataRepository sprintDataRepository;
     private SprintDataService sprintDataService;
     private SprintService sprintService;
     private TeamService teamService;
@@ -22,7 +21,6 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
 
     public SprintDataFacadeImpl(SprintLoader loadSprintData,SprintDataRepository sprintDataRepository, SprintDataService sprintDataService, SprintService sprintService, TeamService teamService) {
         this.loadSprintData = loadSprintData;
-        this.sprintDataRepository = sprintDataRepository;
         this.sprintDataService = sprintDataService;
         this.sprintService = sprintService;
         this.teamService = teamService;
@@ -33,14 +31,14 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
         Set<SprintGeneratedData> sprintGeneratedData = loadSprintData.loadSprintData();
         for (SprintGeneratedData sprintDatum : sprintGeneratedData) {
             String sprintName = sprintDatum.getName();
-            List<SprintDataDto> sprints = sprintDataService.findAllBySprint_Name(sprintName);
+            String teamName = sprintDatum.getTeamName();
+            List<SprintDataDto> sprints = sprintDataService.findAllBySprint_NameAndTeamName(teamName,sprintName);
             if (sprints.isEmpty()){
                 SprintData sprintData = new SprintData();
                 sprintData.setStoryPointsTaken(sprintDatum.getTaken());
                 sprintData.setStoryPointsClosed(sprintDatum.getCompleted());
                 String sprintsName = sprintDatum.getName();
-                Sprint allBySprint_name = sprintService.findByName(sprintsName);
-
+                Sprint allBySprint_name = sprintService.findByName(sprintName);
                 if (allBySprint_name == null) {
                     Sprint sprint = new Sprint();
                     sprint.setName(sprintDatum.getName());
@@ -51,14 +49,18 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
                 }
                 sprintData.setSprint(allBySprint_name);
                 sprintData.setTeam(teamService.finByTeamName(sprintDatum.getTeamName()));
-                sprintDataRepository.save(sprintData);
+                sprintDataService.save(sprintData);
+
             }
         }
     }
     @Override
-    public List<SprintDataDto> getAllSprintData() {
-        return sprintDataService.getAllSprintData();
+    public List<SprintDataDto> getAllSprintData(SprintDataFilterDto sprintDataFilterDto) {
+        return sprintDataService.getAllSprintData(sprintDataFilterDto);
     }
+
+
+
     @Override
     public List<SprintDataDto> getAllSprintDataBySprint(String sprint) {
         return sprintDataService.getAllSprintDataBySprint(sprint);

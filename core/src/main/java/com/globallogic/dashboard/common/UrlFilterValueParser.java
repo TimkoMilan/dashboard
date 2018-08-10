@@ -1,10 +1,14 @@
 package com.globallogic.dashboard.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UrlFilterValueParser implements FilterValuesParser {
+    private static final Logger log = LoggerFactory.getLogger(UrlFilterValueParser.class);
 
     @Override
     public Map<String, String> parse(String filterValue) {

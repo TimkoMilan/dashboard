@@ -22,20 +22,16 @@ public class SprintResource {
         this.sprintService = sprintService;
     }
 
-    @GetMapping("/filter")
+    @GetMapping
     public List<SprintDto> getSprintByFilter(@RequestParam(required = false)String filter){
         SprintFilterDto sprintFilterDto = null;
         if (Strings.isNotBlank(filter)){
             FilterToDtoAdapter<SprintFilterDto> sprintFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>(filter,SprintFilterDto.class,new UrlFilterValueParser());
             sprintFilterDto = sprintFilterDtoFilterToDtoAdapter.getDto();
         }
-        return sprintService.getAllSprints();
+        return sprintService.getSprintsByFilter(sprintFilterDto);
     }
 
-    @GetMapping
-    public List<SprintDto> getAllSprints(){
-        return sprintService.getAllSprints();
-    }
 
     @GetMapping("date")
     public List<SprintDto> getSprintsByMonth(@RequestParam(value = "startDate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,

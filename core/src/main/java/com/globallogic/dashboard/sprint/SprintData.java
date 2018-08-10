@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.sprint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.globallogic.dashboard.team.Team;
 
 import javax.persistence.*;

@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.sprint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,15 +24,11 @@ public class Sprint implements Serializable {
     private Date end;
 
     private String name;
-    private Range<Integer> range;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "sprint")
     private Set<SprintData> sprintData;
 
 
-    public Range<Integer> getRange() {
-        return range;
-    }
 
     public Set<SprintData> getSprintData() {
         return sprintData;
@@ -41,9 +38,7 @@ public class Sprint implements Serializable {
         this.sprintData = sprintData;
     }
 
-    public void setRange(Range<Integer> range) {
-        this.range = range;
-    }
+
 
     public Long getId() {
         return id;

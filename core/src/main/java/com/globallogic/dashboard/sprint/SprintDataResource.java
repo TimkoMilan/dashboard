@@ -1,9 +1,11 @@
 package com.globallogic.dashboard.sprint;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.globallogic.dashboard.common.FilterToDtoAdapter;
+import com.globallogic.dashboard.common.UrlFilterValueParser;
+import org.apache.logging.log4j.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class SprintDataResource {
 
     private SprintDataFacade sprintDataFacade;
+    private static final Logger log = LoggerFactory.getLogger(SprintDataResource.class);
 
     public SprintDataResource(SprintDataFacade sprintDataFacade) {
         this.sprintDataFacade = sprintDataFacade;
@@ -25,8 +28,13 @@ public class SprintDataResource {
     }
 
     @GetMapping
-    public List<SprintDataDto> getAllSprintData(){
-        return sprintDataFacade.getAllSprintData();
+    public List<SprintDataDto> getAllSprintData(@RequestParam(required = false)String filter){
+        SprintDataFilterDto sprintDataFilterDto = null;
+        if (Strings.isNotBlank(filter)){
+            FilterToDtoAdapter<SprintDataFilterDto> sprintDataFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>(filter,SprintDataFilterDto.class,new UrlFilterValueParser());
+            sprintDataFilterDto = sprintDataFilterDtoFilterToDtoAdapter.getDto();
+        }
+        return sprintDataFacade.getAllSprintData(sprintDataFilterDto);
     }
 
     @GetMapping("sprint/{sprint}")

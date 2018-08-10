@@ -1,5 +1,8 @@
 package com.globallogic.dashboard.sprint;
 
+import com.querydsl.core.BooleanBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,6 +13,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class SprintDataServiceImpl implements SprintDataService{
 
+    private static final Logger log = LoggerFactory.getLogger(SprintDataServiceImpl.class);
     private SprintDataRepository sprintDataRepository;
 
 
@@ -28,15 +32,32 @@ public class SprintDataServiceImpl implements SprintDataService{
     }
 
     @Override
-    public List<SprintDataDto> findAllBySprint_Name(String sprintName) {
-        List <SprintData> sprints = sprintDataRepository.findAllBySprint_Name(sprintName);
-        return sprints.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
+    public List<SprintDataDto> findAllBySprint_NameAndTeamName(String sprintName, String teamName) {
+        List<SprintData> sprintData = sprintDataRepository.findAllByTeam_NameAndSprint_Name(teamName,sprintName);
+        return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<SprintDataDto> getAllSprintData() {
-       List<SprintData> sprintData = sprintDataRepository.findAll();
-        return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
+    public List<SprintDataDto> getAllSprintData(SprintDataFilterDto sprintDataFilterDto) {
+        if (sprintDataFilterDto == null){
+            List<SprintData> sprintData = sprintDataRepository.findAll();
+            return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
+        }
+        else {
+            BooleanBuilder booleanBuilder =  new BooleanBuilder();
+            if (sprintDataFilterDto.getTeamId()!=null){
+                booleanBuilder.and(QSprintData.sprintData.team.id.eq(sprintDataFilterDto.getTeamId()));
+            }
+            if (sprintDataFilterDto.getSprintId() != null){
+                booleanBuilder.and(QSprintData.sprintData.sprint.id.eq(sprintDataFilterDto.getSprintId()));
+            }
+            return SprintDataUtil.convertToListdto(sprintDataRepository.findAll(booleanBuilder.getValue()));
+        }
+    }
+
+    @Override
+    public void save(SprintData sprintData) {
+        sprintDataRepository.save(sprintData);
     }
 
 }
