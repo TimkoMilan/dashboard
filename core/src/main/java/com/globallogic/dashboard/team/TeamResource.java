@@ -13,17 +13,17 @@ public class TeamResource {
     @Autowired
     private TeamService teamService;
 
-    @GetMapping("all")
+    @GetMapping()
     public List<TeamDto> allTeam(){
         return teamService.findAll();
     }
 
-    @PostMapping("/newteam")
+    @PostMapping()
     public Team createNewTeam( @RequestBody TeamCreateDto teamCreateDto){
         return teamService.saveTeam(teamCreateDto);
     }
 
-    @GetMapping("/byId/{teamId}")
+    @GetMapping("/{teamId}")
     public TeamDto findTeamById(@PathVariable(value = "teamId") Long teamId){
         return teamService.findByTeamId(teamId);
     }
