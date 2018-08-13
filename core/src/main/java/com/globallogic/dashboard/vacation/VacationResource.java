@@ -21,7 +21,7 @@ public class VacationResource {
         this.vacationFacade = vacationFacade;
     }
 
-    @GetMapping("loadVacationData")
+    @GetMapping("loadVacationData")//load data from excel
     public void loadVacation(){
         vacationFacade.loadVacation();
     }

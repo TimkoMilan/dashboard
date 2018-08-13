@@ -44,6 +44,7 @@ public class MonthUtil {
         throw new DataProcessorException("No month found for id:" + id);
     }
 
+
     private Date createExceptionDataAndThrow(Integer id, MonthData monthData, Exception e) {
         String dayInfo = " days data: ";
         if (days == null) {

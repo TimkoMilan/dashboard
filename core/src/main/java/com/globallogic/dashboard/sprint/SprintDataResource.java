@@ -28,7 +28,7 @@ public class SprintDataResource {
         return sprintDataFacade.getAllSprintData(sprintDataFilterDto);
     }
 
-    @GetMapping("/loadData")
+    @GetMapping("/loadData")//loading data from excel
     public void loadData(){
         sprintDataFacade.loadSprintData();
     }
