@@ -8,9 +8,9 @@ public class SprintDataFilterDto implements Serializable {
 
     private float storyPointsClosed;
 
-    private Long teamId;
+    private String teamId;
 
-    private Long sprintId;
+    private String sprintId;
 
 
     public float getStoryPointsTaken() {
@@ -29,19 +29,19 @@ public class SprintDataFilterDto implements Serializable {
         this.storyPointsClosed = storyPointsClosed;
     }
 
-    public Long getTeamId() {
+    public String getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(Long teamId) {
+    public void setTeamId(String teamId) {
         this.teamId = teamId;
     }
 
-    public Long getSprintId() {
+    public String getSprintId() {
         return sprintId;
     }
 
-    public void setSprintId(Long sprintId) {
+    public void setSprintId(String sprintId) {
         this.sprintId = sprintId;
     }
 }

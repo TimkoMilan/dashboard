@@ -1,6 +1,7 @@
 package com.globallogic.dashboard.sprint;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,15 +38,22 @@ public class SprintDataServiceImpl implements SprintDataService{
             List<SprintData> sprintData = sprintDataRepository.findAll();
             return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
         }
-        else {//TODO  filter
-            BooleanBuilder booleanBuilder =  new BooleanBuilder();
+        else {
+            BooleanBuilder booleanBuilderTeamId =  new BooleanBuilder();
             if (sprintDataFilterDto.getTeamId()!=null){
-                booleanBuilder.and(QSprintData.sprintData.team.id.eq(sprintDataFilterDto.getTeamId()));
+                for(String splitTeamId : sprintDataFilterDto.getTeamId().split(",")) {
+                    booleanBuilderTeamId.or(QSprintData.sprintData.team.id.eq(Long.valueOf(splitTeamId)));
+                }
             }
+
+            BooleanBuilder booleanBuilderSprintId =  new BooleanBuilder();
             if (sprintDataFilterDto.getSprintId() != null){
-                booleanBuilder.and(QSprintData.sprintData.sprint.id.eq(sprintDataFilterDto.getSprintId()));
+                for(String splitSpringId : sprintDataFilterDto.getSprintId().split(",")) {
+                    booleanBuilderSprintId.or(QSprintData.sprintData.sprint.id.eq(Long.valueOf(splitSpringId)));
+                }
             }
-            return SprintDataUtil.convertToListdto(sprintDataRepository.findAll(booleanBuilder.getValue()));
+            Predicate queryPredicate = booleanBuilderSprintId.and(booleanBuilderTeamId.getValue()).getValue();
+            return SprintDataUtil.convertToListdto(sprintDataRepository.findAll(queryPredicate));
         }
     }
     @Override
