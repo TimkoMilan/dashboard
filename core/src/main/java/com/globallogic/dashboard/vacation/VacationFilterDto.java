@@ -5,11 +5,11 @@ import java.util.Date;
 
 public class VacationFilterDto implements Serializable {
 
-    private Long memberId;
+    private String memberId;
 
-    private Long teamId;
+    private String teamId;
 
-    private Long sprintId;
+    private String sprintId;
 
     private Date start;
 
@@ -31,28 +31,27 @@ public class VacationFilterDto implements Serializable {
         this.end = end;
     }
 
-    public Long getSprintId() {
-        return sprintId;
-    }
-
-    public void setSprintId(Long sprintId) {
-        this.sprintId = sprintId;
-    }
-
-    public Long getMemberId() {
+    public String getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(Long memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
 
-    public Long getTeamId() {
+    public String getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(Long teamId) {
+    public void setTeamId(String teamId) {
         this.teamId = teamId;
     }
 
+    public String getSprintId() {
+        return sprintId;
+    }
+
+    public void setSprintId(String sprintId) {
+        this.sprintId = sprintId;
+    }
 }

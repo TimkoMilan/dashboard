@@ -1,10 +1,7 @@
 package com.globallogic.dashboard.sprint;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 public class SprintDto implements Serializable {
 
@@ -16,13 +13,7 @@ public class SprintDto implements Serializable {
 
     private Date end;
 
-    @JsonIgnore
-    private Set<SprintDataDto> sprintDataDtos;
 
-
-    public Set<SprintDataDto> getSprintDataDtos() {
-        return sprintDataDtos;
-    }
 
     public Long getId() {
         return id;
@@ -32,9 +23,6 @@ public class SprintDto implements Serializable {
         this.id = id;
     }
 
-    public void setSprintDataDtos(Set<SprintDataDto> sprintDataDtos) {
-        this.sprintDataDtos = sprintDataDtos;
-    }
 
     public Date getStart() {
         return start;

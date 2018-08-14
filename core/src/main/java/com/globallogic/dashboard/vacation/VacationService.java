@@ -23,11 +23,15 @@ public class VacationService {
         } else {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
             if (vacationFilterDto.getMemberId() != null) {
-                booleanBuilder.and(QVacation.vacation.member.id.eq(vacationFilterDto.getMemberId()));
+                for(String vacationMemberId : vacationFilterDto.getMemberId().split(","))
+                {
+                    booleanBuilder.or(QVacation.vacation.member.id.eq(Long.parseLong(vacationMemberId)));
+
+                }
             }
-            if (vacationFilterDto.getTeamId() != null) {
-                booleanBuilder.and(QVacation.vacation.member.team.id.eq(vacationFilterDto.getTeamId()));
-            }
+//            if (vacationFilterDto.getTeamId() != null) {
+//                booleanBuilder.and(QVacation.vacation.member.team.id.eq(vacationFilterDto.getTeamId()));
+//            }
             if (vacationFilterDto.getStart() != null){
                 booleanBuilder.and(QVacation.vacation.start.lt(vacationFilterDto.getEnd()).and(QVacation.vacation.end.gt(vacationFilterDto.getStart())));
             }

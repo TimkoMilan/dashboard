@@ -13,7 +13,6 @@ public class SprintDataFilterDto implements Serializable {
     private Long sprintId;
 
 
-
     public float getStoryPointsTaken() {
         return storyPointsTaken;
     }

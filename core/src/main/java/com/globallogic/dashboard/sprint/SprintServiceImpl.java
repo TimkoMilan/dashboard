@@ -42,9 +42,9 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public List<SprintNameDto> getSprintsName() {
+    public List<SprintDto> getSprintsName() {
         List<Sprint>sprints=sprintRepository.findAll();
-        return sprints.stream().map(SprintUtil::converToSprintNameDto).collect(Collectors.toList());
+        return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -59,7 +59,7 @@ public class SprintServiceImpl implements SprintService {
             List <Sprint> sprints =sprintRepository.findAll();
             return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
         }
-        else {
+        else {//TODO filter
             BooleanBuilder booleanBuilder = new BooleanBuilder();
             if (sprintFilterDto.getSprintId() !=null){
                 booleanBuilder.and(QSprint.sprint.sprintData.any().sprint.id.eq(sprintFilterDto.getSprintId()));

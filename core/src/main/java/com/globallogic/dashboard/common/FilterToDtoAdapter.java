@@ -22,9 +22,7 @@ public class FilterToDtoAdapter<T> {
         this.filterValuesParser = filterValuesParser;
     }
 
-
-
-    public <t> T getDto() {
+    public  T getDto() {
         try {
             Map<String, String> filterValues = filterValuesParser.parse(filter);
             T t = aClass.newInstance();

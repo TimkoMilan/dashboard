@@ -37,7 +37,7 @@ public class SprintDataServiceImpl implements SprintDataService{
             List<SprintData> sprintData = sprintDataRepository.findAll();
             return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
         }
-        else {
+        else {//TODO  filter
             BooleanBuilder booleanBuilder =  new BooleanBuilder();
             if (sprintDataFilterDto.getTeamId()!=null){
                 booleanBuilder.and(QSprintData.sprintData.team.id.eq(sprintDataFilterDto.getTeamId()));

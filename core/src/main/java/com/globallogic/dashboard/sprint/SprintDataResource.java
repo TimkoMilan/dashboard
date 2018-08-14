@@ -33,7 +33,7 @@ public class SprintDataResource {
         sprintDataFacade.loadSprintData();
     }
 
-    @GetMapping("team/{teamName}")
+    @GetMapping("teams/{teamName}")
     public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName")@NotNull String teamName){
         return sprintDataFacade.getAllSprintDataByTeam(teamName);
     }
