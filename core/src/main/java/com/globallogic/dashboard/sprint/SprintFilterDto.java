@@ -5,24 +5,24 @@ import java.util.Date;
 
 public class SprintFilterDto implements Serializable {
 
-    private Long sprintId;
-    private Long teamId;
+    private String sprintId;
+    private String teamId;
     private Date startDate;
     private Date endDate;
 
-    public Long getSprintId() {
+    public String getSprintId() {
         return sprintId;
     }
 
-    public void setSprintId(Long sprintId) {
+    public void setSprintId(String sprintId) {
         this.sprintId = sprintId;
     }
 
-    public Long getTeamId() {
+    public String getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(Long teamId) {
+    public void setTeamId(String teamId) {
         this.teamId = teamId;
     }
 

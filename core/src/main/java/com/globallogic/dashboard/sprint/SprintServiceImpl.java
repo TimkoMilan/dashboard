@@ -59,13 +59,20 @@ public class SprintServiceImpl implements SprintService {
             List <Sprint> sprints =sprintRepository.findAll();
             return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
         }
-        else {//TODO filter
+        else {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
+
             if (sprintFilterDto.getSprintId() !=null){
-                booleanBuilder.and(QSprint.sprint.sprintData.any().sprint.id.eq(sprintFilterDto.getSprintId()));
+                for (String sprintId : sprintFilterDto.getSprintId().split(","))
+                {
+                booleanBuilder.or(QSprint.sprint.sprintData.any().sprint.id.eq(Long.parseLong(sprintId)));
+                }
             }
             if (sprintFilterDto.getTeamId() != null){
-                booleanBuilder.and(QSprint.sprint.sprintData.any().team.id.eq(sprintFilterDto.getTeamId()));
+                for (String sprintTeamId : sprintFilterDto.getTeamId().split(","))
+                {
+                booleanBuilder.and(QSprint.sprint.sprintData.any().team.id.eq(Long.parseLong(sprintTeamId)));
+                }
             }
             return SprintUtil.convertToListDto(sprintRepository.findAll(booleanBuilder.getValue()));
         }

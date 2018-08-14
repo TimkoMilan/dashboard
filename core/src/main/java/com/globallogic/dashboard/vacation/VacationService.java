@@ -26,16 +26,17 @@ public class VacationService {
                 for(String vacationMemberId : vacationFilterDto.getMemberId().split(","))
                 {
                     booleanBuilder.or(QVacation.vacation.member.id.eq(Long.parseLong(vacationMemberId)));
-
                 }
             }
-//            if (vacationFilterDto.getTeamId() != null) {
-//                booleanBuilder.and(QVacation.vacation.member.team.id.eq(vacationFilterDto.getTeamId()));
-//            }
-            if (vacationFilterDto.getStart() != null){
-                booleanBuilder.and(QVacation.vacation.start.lt(vacationFilterDto.getEnd()).and(QVacation.vacation.end.gt(vacationFilterDto.getStart())));
+            if (vacationFilterDto.getTeamId() != null) {
+                for (String vacationTeamId : vacationFilterDto.getTeamId().split(","))
+                {
+                    booleanBuilder.or(QVacation.vacation.member.team.id.eq(Long.parseLong(vacationTeamId)));
+                }
             }
-
+            if (vacationFilterDto.getStart() != null){
+                    booleanBuilder.and(QVacation.vacation.start.lt(vacationFilterDto.getEnd()).and(QVacation.vacation.end.gt(vacationFilterDto.getStart())));
+                }
             return VacationUtil.convertToListDto(vacationRepository.findAll(booleanBuilder.getValue()));
         }
     }
