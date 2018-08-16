@@ -13,12 +13,22 @@ public class SprintDataDto implements Serializable{
 
     private Long teamId;
 
+    private String teamName;
+
     private Long sprintId;
 
 
     private Sprint sprint;
     @JsonIgnore
     private SprintDto sprintDto;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public SprintDto getSprintDto() {
         return sprintDto;

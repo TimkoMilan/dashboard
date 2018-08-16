@@ -15,6 +15,7 @@ public final class SprintUtil {
         sprintDto.setEnd(sprint.getEnd());
         sprintDto.setId(sprint.getId());
 
+
         return sprintDto;
     }
 

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UrlFilterValueParser implements FilterValuesParser {
+
     private static final Logger log = LoggerFactory.getLogger(UrlFilterValueParser.class);
 
     @Override

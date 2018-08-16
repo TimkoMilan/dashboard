@@ -25,7 +25,6 @@ public class LDAPConnection {
                 "CN=Andrea Stefanova,OU=KSC,OU=Allusers,DC=synapse,DC=com");
         ldapContextSource.afterPropertiesSet();
 
-
         return ldapContextSource;
 
     }

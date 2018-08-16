@@ -1,8 +1,5 @@
 package com.globallogic.dashboard.sprint;
 
-import com.globallogic.dashboard.common.FilterToDtoAdapter;
-import com.globallogic.dashboard.common.UrlFilterValueParser;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -19,12 +16,10 @@ public class SprintDataResource {
     }
 
     @GetMapping
-    public List<SprintDataDto> getAllSprintData(@RequestParam(required = false)String filter){
-        SprintDataFilterDto sprintDataFilterDto = null;
-        if (Strings.isNotBlank(filter)){
-            FilterToDtoAdapter<SprintDataFilterDto> sprintDataFilterDtoFilterToDtoAdapter = new FilterToDtoAdapter<>(filter,SprintDataFilterDto.class,new UrlFilterValueParser());
-            sprintDataFilterDto = sprintDataFilterDtoFilterToDtoAdapter.getDto();
-        }
+    public List<SprintDataDto> getAllSprintData(@RequestParam(required = false)String teamId,@RequestParam(required = false)String sprintId){
+        SprintDataFilterDto sprintDataFilterDto = new SprintDataFilterDto();
+        sprintDataFilterDto.setSprintId(sprintId);
+        sprintDataFilterDto.setTeamId(teamId);
         return sprintDataFacade.getAllSprintData(sprintDataFilterDto);
     }
 

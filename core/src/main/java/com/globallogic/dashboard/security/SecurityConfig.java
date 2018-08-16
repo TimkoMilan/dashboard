@@ -28,7 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         UserDetails build = User.withDefaultPasswordEncoder().username("user").password("user").roles("USER").build();
-
         auth
                 .inMemoryAuthentication()
                 .withUser(build);

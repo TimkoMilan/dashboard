@@ -14,6 +14,7 @@ class SprintDataUtil {
         sprintDataDto.setStoryPointsTaken(sprintData.getStoryPointsTaken());
         sprintDataDto.setSprint(sprintData.getSprint());
         sprintDataDto.setTeamId(sprintData.getTeam().getId());
+        sprintDataDto.setTeamName(sprintData.getTeam().getName());
         sprintDataDto.setSprintId(sprintData.getSprint().getId());
         return sprintDataDto;
     }
