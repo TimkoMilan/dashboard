@@ -11,7 +11,7 @@ public interface SprintService {
     void  save(Sprint sprint);
     Optional<Sprint> findById(Long sprintId);
     List<SprintDto> getSprintsByFilter(SprintFilterDto sprintFilterDto);
-    List<SprintNameDto> getSprintsName();
+    List<SprintDto> getSprintsName();
 
     List<SprintDto> getAllSprints();
 }

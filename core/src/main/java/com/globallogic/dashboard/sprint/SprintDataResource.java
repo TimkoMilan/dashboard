@@ -28,12 +28,12 @@ public class SprintDataResource {
         return sprintDataFacade.getAllSprintData(sprintDataFilterDto);
     }
 
-    @GetMapping("/loadData")
+    @GetMapping("/loadData")//loading data from excel
     public void loadData(){
         sprintDataFacade.loadSprintData();
     }
 
-    @GetMapping("team/{teamName}")
+    @GetMapping("teams/{teamName}")
     public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName")@NotNull String teamName){
         return sprintDataFacade.getAllSprintDataByTeam(teamName);
     }

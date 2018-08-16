@@ -47,7 +47,7 @@ public class VacationFacadeImpl implements VacationFacade {
     @Override
     public List<VacationDto> getVacations(VacationFilterDto vacationFilterDto) {
             if (vacationFilterDto.getSprintId() != null) {
-                Optional<Sprint> sprint = sprintService.findById(vacationFilterDto.getSprintId());
+                Optional<Sprint> sprint = sprintService.findById(Long.valueOf(vacationFilterDto.getSprintId()));
                 vacationFilterDto.setStart(sprint.get().getStart());
                 vacationFilterDto.setEnd(sprint.get().getEnd());
             }

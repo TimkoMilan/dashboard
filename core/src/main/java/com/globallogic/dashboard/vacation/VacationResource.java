@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("vacations")
+@RequestMapping("vacation")
 public class VacationResource {
 
 
@@ -21,7 +21,7 @@ public class VacationResource {
         this.vacationFacade = vacationFacade;
     }
 
-    @GetMapping("loadVacationData")
+    @GetMapping("loadVacationData")//load data from excel
     public void loadVacation(){
         vacationFacade.loadVacation();
     }

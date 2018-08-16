@@ -23,6 +23,7 @@ public class TeamUtil {
     }
     public static TeamNameDto convertToTeamNameDto(Team team){
         TeamNameDto teamNameDto = new TeamNameDto();
+        teamNameDto.setId(team.getId());
         teamNameDto.setTeamName(team.getName());
         teamNameDto.setFocus(team.getFocus());
         return teamNameDto;
