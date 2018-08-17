@@ -1,12 +1,14 @@
 package com.globallogic.dashboard.user;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
-public class Role implements Serializable {
+public class Role implements Serializable  , GrantedAuthority {
 
     @Id
     @GeneratedValue
@@ -14,6 +16,7 @@ public class Role implements Serializable {
 
     private String name;
 
+    private String authority;
 
     public Long getId() {
         return id;
@@ -28,4 +31,8 @@ public class Role implements Serializable {
     }
 
 
+    @Override
+    public String getAuthority() {
+        return authority;
+    }
 }

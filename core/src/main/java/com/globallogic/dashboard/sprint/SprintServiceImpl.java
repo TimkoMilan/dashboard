@@ -27,7 +27,7 @@ public class SprintServiceImpl implements SprintService {
 
     @Override
     public Sprint findByName(String sprintName) {
-        return sprintRepository.findAllByName(sprintName);
+        return sprintRepository.findAllByNameOrderByStartAsc(sprintName);
     }
 
     @Override
@@ -36,9 +36,9 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Optional<Sprint> findById(Long sprintId) {
+    public SprintDto findById(Long sprintId) {
         Optional<Sprint> sprint = sprintRepository.findById(sprintId);
-        return sprint;
+        return  sprint.map(SprintUtil::convertToDto).get();
     }
 
     @Override
@@ -74,6 +74,10 @@ public class SprintServiceImpl implements SprintService {
                 booleanBuilder.and(QSprint.sprint.sprintData.any().team.id.eq(Long.parseLong(sprintTeamId)));
                 }
             }
+//            if (sprintFilterDto.getStartDate() != null)//TODO test filtering 
+//            {
+//                booleanBuilder.and(QSprint.sprint.start.between(sprintFilterDto.getStartDate(),sprintFilterDto.getEndDate()));
+//            }
             return SprintUtil.convertToListDto(sprintRepository.findAll(booleanBuilder.getValue()));
         }
     }

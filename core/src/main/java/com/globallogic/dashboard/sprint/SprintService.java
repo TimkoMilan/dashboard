@@ -9,7 +9,7 @@ public interface SprintService {
     List<SprintDto> getSprintByDate(Date startDate,Date endDate);
     Sprint findByName(String sprintName);
     void  save(Sprint sprint);
-    Optional<Sprint> findById(Long sprintId);
+    SprintDto findById(Long sprintId);
     List<SprintDto> getSprintsByFilter(SprintFilterDto sprintFilterDto);
     List<SprintDto> getSprintsName();
 
