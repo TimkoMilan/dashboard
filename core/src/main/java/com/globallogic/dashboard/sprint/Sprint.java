@@ -1,7 +1,6 @@
 package com.globallogic.dashboard.sprint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;

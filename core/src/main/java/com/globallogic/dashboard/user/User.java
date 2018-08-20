@@ -1,21 +1,38 @@
 package com.globallogic.dashboard.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue
     private Long id;
 
     private String username;
-
+    @JsonIgnore
     private String password;
 
     private String email;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     @ManyToMany
     @JoinTable(name = "user_role",
@@ -23,8 +40,14 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
 
+
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     public String getPassword() {
@@ -46,6 +69,27 @@ public class User implements Serializable {
 
     public String getUsername() {
         return username;
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setUsername(String username) {

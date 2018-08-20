@@ -4,13 +4,12 @@ import com.globallogic.dashboard.event.VacationData;
 import com.globallogic.dashboard.loader.DataLoader;
 import com.globallogic.dashboard.member.Member;
 import com.globallogic.dashboard.member.MemberService;
-import com.globallogic.dashboard.sprint.Sprint;
+import com.globallogic.dashboard.sprint.SprintDto;
 import com.globallogic.dashboard.sprint.SprintService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,9 +46,9 @@ public class VacationFacadeImpl implements VacationFacade {
     @Override
     public List<VacationDto> getVacations(VacationFilterDto vacationFilterDto) {
             if (vacationFilterDto.getSprintId() != null) {
-                Optional<Sprint> sprint = sprintService.findById(Long.valueOf(vacationFilterDto.getSprintId()));
-                vacationFilterDto.setStart(sprint.get().getStart());
-                vacationFilterDto.setEnd(sprint.get().getEnd());
+                SprintDto sprint = sprintService.findById(Long.valueOf(vacationFilterDto.getSprintId()));
+                vacationFilterDto.setStart(sprint.getStart());
+                vacationFilterDto.setEnd(sprint.getEnd());
             }
         return vacationService.getVacations(vacationFilterDto);
     }
