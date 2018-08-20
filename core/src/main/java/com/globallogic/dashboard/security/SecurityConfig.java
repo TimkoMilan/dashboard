@@ -55,8 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .antMatchers(AUTH_WHITELIST)
                     .permitAll()
-                .antMatchers("/api/v1/**")
-                    .permitAll()
+                //TODO remove later, permitting now all requests to make it easier to work for front-end
+                .antMatchers("/**")
+                .permitAll()
                 .antMatchers("/**/users/doLogin/**")
                     .permitAll()
                 .anyRequest().authenticated()

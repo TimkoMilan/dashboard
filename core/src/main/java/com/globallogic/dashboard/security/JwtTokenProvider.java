@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +32,7 @@ public class JwtTokenProvider {
     private long validityInMilliseconds;
 
     @Autowired
-    private UserService userService;
+    private UserDetailsService userService;
 
     @PostConstruct
     protected void init() {
