@@ -1,7 +1,9 @@
 package com.globallogic.dashboard.user;
 
 import com.globallogic.dashboard.security.JwtTokenProvider;
+import com.globallogic.dashboard.user.payload.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -22,6 +24,9 @@ public class UserResource {
     private UserRepository userRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
@@ -29,13 +34,24 @@ public class UserResource {
 
 
     @PostMapping("doLogin")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public ResponseEntity<LoginResponse> login(@RequestParam("username") String username, @RequestParam("password") String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
+            LoginResponse response =
+                    new LoginResponse(jwtTokenProvider
+                            .createToken(username, userRepository.findByUsername(username).getRoles()));
+            return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
             throw new SecurityException("Invalid username/password supplied");
         }
     }
+
+    @PostMapping
+    public User newUser(UserDto userDto){
+        return userService.newUser(userDto);
+    }
+
+
+
 
 }

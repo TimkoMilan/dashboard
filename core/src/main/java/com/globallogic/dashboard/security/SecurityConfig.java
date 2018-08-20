@@ -27,9 +27,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(11);
     }
 
+
+
+    private static final String[] AUTH_WHITELIST = {
+
+            // -- swagger ui
+            "/**/swagger-resources/**",
+            "/**/swagger-ui.html",
+            "/**/v2/api-docs",
+            "/**/webjars/**",
+            "/**/h2-console/**"
+    };
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated().and()
+        http.authorizeRequests()
+                .antMatchers("/",
+                        "/favicon.ico",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js")
+                    .permitAll()
+                .antMatchers(AUTH_WHITELIST)
+                    .permitAll()
+                //TODO remove later, permitting now all requests to make it easier to work for front-end
+                .antMatchers("/**")
+                .permitAll()
+                .antMatchers("/**/users/doLogin/**")
+                    .permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
                 .and().headers().frameOptions().disable()
                 .and()
