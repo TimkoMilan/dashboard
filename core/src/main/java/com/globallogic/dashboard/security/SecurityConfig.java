@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //TODO remove later, permitting now all requests to make it easier to work for front-end
                 .antMatchers("/**")
                 .permitAll()
-                .antMatchers("/**/users/doLogin/**")
+                .antMatchers("/**/users/login/**")
                     .permitAll()
                 .anyRequest().authenticated()
                 .and()
