@@ -18,7 +18,6 @@ public class ScheduledTasks {
 
     @Scheduled(cron = "${cron.dataLoader.expression}")
     public void dataLoaderScheduledTask(){
-        System.out.println("Running scheduled task, loading vacation and sprint data" + System.currentTimeMillis()/1000);
         vacationFacade.loadVacation();
         sprintDataFacade.loadSprintData();
     }
