@@ -1,19 +1,21 @@
 package com.globallogic.dashboard.user;
 
+import com.globallogic.dashboard.common.ApiResponse;
 import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.payload.LoginResponse;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("users")
@@ -35,22 +37,34 @@ public class UserResource {
     private AuthenticationManager authenticationManager;
 
 
-    @PostMapping("doLogin")
+    @PostMapping("login")
     public ResponseEntity<LoginResponse> login(@RequestParam("username") String username, @RequestParam("password") String password) {
         try {
             User user = (User) authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password)).getPrincipal();
             LoginResponse response =
                     new LoginResponse(jwtTokenProvider
-                            .createToken(user, userRepository.findByUsername(username).getRoles()));
+                            .createToken(user, new ArrayList<>(userRepository.findByUsername(username).getRoles())));
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
             throw new SecurityException("Invalid username/password supplied");
         }
     }
 
-    @PostMapping
-    public User newUser(UserDto userDto){
-        return userService.newUser(userDto);
+    @PostMapping("addRegularUser")
+    public ResponseEntity<?> addRegularUser(@RequestBody UserDto userDto){
+        if(userRepository.existsByUsername(userDto.getUsername())) {
+            return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
+                    "exists. Select another username."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        if(userRepository.existsByEmail(userDto.getEmail())) {
+            return new ResponseEntity(new ApiResponse(false, "A user with the same email already" +
+                    "exists. Select another email."),
+                    HttpStatus.BAD_REQUEST);
+        }
+        UserDto userRegisterResponse = userService.newUser(userDto);
+        return ResponseEntity.ok(userRegisterResponse);
     }
 
     @GetMapping("getUserNameFromToken")
@@ -71,7 +85,5 @@ public class UserResource {
         return ResponseEntity.ok(new UserInTokenResponse(jwtTokenProvider.getUsername(token),
                                                         jwtTokenProvider.getEmail(token)));
     }
-
-
-
+    
 }

@@ -1,11 +1,14 @@
 package com.globallogic.dashboard.user;
 
+import com.globallogic.dashboard.common.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -14,16 +17,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private PasswordEncoder encoder;
 
     @Override
-    public User newUser(UserDto userDto) {
+    public UserDto newUser(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
-        userRepository.save(user);
-        return user;
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new ServiceException("User Role has not been set."));
+        user.setRoles(Collections.singleton(userRole));
+        User result = userRepository.save(user);
+        return UserUtil.convertUserToUserDto(result);
     }
 
     @Override
