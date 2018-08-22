@@ -13,20 +13,20 @@ public class PublicHolidayLoader {
     @Autowired
     private PublicHoliday publicHoliday;
 
-      private int getPublicHolidaysInMonth(int year, int month) {
+      private int getPublicHolidaysInMonth(int yearInt, int monthInt) {
         String holidayData = publicHoliday.getData();
         String[] holiday = holidayData.split(",");
         int counter = 0;
         for (String s : holiday) {
             String[] splitDate = s.split("-");
-            if (Integer.parseInt(splitDate[0]) == month) {
+            if (Integer.parseInt(splitDate[0]) == monthInt) {
                 counter++;
             }
 
         }
-        String easter = publicHoliday.getEaster().get(String.valueOf(year));
+        String easter = publicHoliday.getEaster().get(String.valueOf(yearInt));
         String[] splitEaster = easter.split("-");
-        if (month == Integer.parseInt(splitEaster[0])) {
+        if (monthInt == Integer.parseInt(splitEaster[0])) {
             counter++;
         }
         return counter;

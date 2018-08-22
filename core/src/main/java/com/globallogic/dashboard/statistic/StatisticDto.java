@@ -14,8 +14,18 @@ public class StatisticDto {
 
     private int year;
 
+    private String teamId;
+
     public int getWorkingDays() {
         return workingDays;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
     }
 
     public void setWorkingDays(int workingDays) {

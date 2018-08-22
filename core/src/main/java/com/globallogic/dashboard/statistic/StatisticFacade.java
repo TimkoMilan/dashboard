@@ -29,45 +29,50 @@ public class StatisticFacade {
         this.daysInMonth = daysInMonth;
     }
 
-    public List<StatisticDto> getStatistic(String year, String month) {
-        String []years =year.split(",");
-        String []months = month.split(",");
-        for (String s : years) {
+    public List<StatisticDto> getStatistic(String year, String month, String teamId) {
+        String[] years = year.split(",");
+        String[] months = month.split(",");
+        String[] teamsId = teamId.split(",");
+        List<StatisticDto> statisticDtos = new ArrayList<>();
+
+        for (String tId : teamsId) {
             for (String month1 : months) {
-                int yearInt = Integer.parseInt(s);
+//
+//
+                int yearInt = Integer.parseInt(year);
+                int teamInt = Integer.parseInt(tId);
                 int monthInt = Integer.parseInt(month1);
+                int workingDays = publicHolidayLoader.getWorkingDaysInMonth(yearInt, monthInt);
 
+                VacationFilterDto vacationFilterDto = new VacationFilterDto();
+                StatisticDto statisticDto = new StatisticDto();
+                statisticDto.setWorkingDays(workingDays);
+                statisticDto.setYear(yearInt);
+                statisticDto.setMonth(monthInt);
+                statisticDto.setTeamId(tId);
+                int lastDayInmonth = daysInMonth.daysByMonth(monthInt);
+                String startDateString = yearInt + "-" + monthInt + "-01";
+                String endDateString = yearInt + "-" + monthInt + "-" + lastDayInmonth;
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    Date startDate = df.parse(startDateString);
+                    Date endDate = df.parse(endDateString);
+                    vacationFilterDto.setStart(startDate);
+                    vacationFilterDto.setEnd(endDate);
+                    vacationFilterDto.setTeamId(tId);
+                    List<VacationDto> vacations = vacationService.getVacations(vacationFilterDto);
+                    statisticDto.setVacationDto(vacations);
 
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
+                statisticDtos.add(statisticDto);
+
+//
+//
             }
         }
-
-
-//        int workingDays = publicHolidayLoader.getWorkingDaysInMonth(year, month);
-//        List<StatisticDto> statisticDtos = new ArrayList<>();
-//        VacationFilterDto vacationFilterDto = new VacationFilterDto();
-//        StatisticDto statisticDto = new StatisticDto();
-//
-//        statisticDto.setWorkingDays(workingDays);
-//        statisticDto.setYear(year);
-//        statisticDto.setMonth(month);
-//        int lastDayInmonth = daysInMonth.daysByMonth(month);
-//        String startDateString = year + "-" + month + "-01";
-//        String endDateString = year + "-" + month + "-" + lastDayInmonth;
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//        try {
-//            Date startDate = df.parse(startDateString);
-//            Date endDate = df.parse(endDateString);
-//            vacationFilterDto.setStart(startDate);
-//            vacationFilterDto.setEnd(endDate);
-//            List<VacationDto> vacations = vacationService.getVacations(vacationFilterDto);
-//            statisticDto.setVacationDto(vacations);
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        statisticDtos.add(statisticDto);
-
-        return null;
+        return statisticDtos;
     }
 }

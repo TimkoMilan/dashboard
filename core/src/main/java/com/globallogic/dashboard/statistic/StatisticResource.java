@@ -19,8 +19,9 @@ public class StatisticResource {
 
     @GetMapping
     public List<StatisticDto> getStatsByYearAndMonth(@RequestParam String year,
-                                                     @RequestParam String month) {
+                                                     @RequestParam String month,
+                                                     @RequestParam String teamId) {
 
-        return statisticFacade.getStatistic(year, month);
+        return statisticFacade.getStatistic(year, month,teamId);
     }
 }
