@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class VacationDto implements Serializable{
+
     private String name;
     private Date from;
     private Date to;
     private boolean isHalfDay;
 
-    public VacationDto() {
-    }
 
     public String getName() {
         return name;
@@ -19,8 +18,6 @@ public class VacationDto implements Serializable{
     public Date getFrom() {
         return from;
     }
-
-
 
     public Date getTo() {
         return to;
@@ -46,11 +43,14 @@ public class VacationDto implements Serializable{
         this.to = to;
     }
 
-    public VacationDto(String name, Date from, Date to,boolean isHalfDay) {
+    public VacationDto(String name, Date from, Date to, boolean isHalfDay) {
         this.name = name;
         this.from = from;
         this.to = to;
         this.isHalfDay = isHalfDay;
+    }
+
+    public VacationDto() {
     }
 
     @Override

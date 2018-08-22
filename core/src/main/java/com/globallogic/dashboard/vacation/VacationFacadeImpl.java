@@ -28,6 +28,16 @@ public class VacationFacadeImpl implements VacationFacade {
     }
 
     @Override
+    public List<VacationDto> getVacations(VacationFilterDto vacationFilterDto) {
+        if (vacationFilterDto.getSprintId() != null) {
+            SprintDto sprint = sprintService.findById(Long.valueOf(vacationFilterDto.getSprintId()));
+            vacationFilterDto.setStart(sprint.getStart());
+            vacationFilterDto.setEnd(sprint.getEnd());
+        }
+        return vacationService.getVacations(vacationFilterDto);
+    }
+
+    @Override
     public void loadVacation() {
         List<VacationData> vacationData = dataLoader.loadVacationData();
         vacationService.deleteAllVacation();
@@ -41,16 +51,6 @@ public class VacationFacadeImpl implements VacationFacade {
             v.setHalfDay(vacationDatum.isHalfDay());
             vacationService.saveVacation(v);
         }
-    }
-
-    @Override
-    public List<VacationDto> getVacations(VacationFilterDto vacationFilterDto) {
-            if (vacationFilterDto.getSprintId() != null) {
-                SprintDto sprint = sprintService.findById(Long.valueOf(vacationFilterDto.getSprintId()));
-                vacationFilterDto.setStart(sprint.getStart());
-                vacationFilterDto.setEnd(sprint.getEnd());
-            }
-        return vacationService.getVacations(vacationFilterDto);
     }
 
 
