@@ -41,6 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/**/h2-console/**"
     };
 
+    private static final String[] ADMIN_ENDPOINTS = {
+            "/**/users/addRegularUser/**",
+            "/**/users/promoteUserToAdmin/**"
+    };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -65,9 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()*/
                     .antMatchers("/**/users/login/**")
                         .permitAll()
-                    .antMatchers("/**/users/addRegularUser/**")
+                    .antMatchers(ADMIN_ENDPOINTS)
                         .hasRole("ADMIN")
-                    .anyRequest().authenticated()
+                    .anyRequest().hasAnyRole("ADMIN","USER")
                     .and()
                     .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
                     .and().headers().frameOptions().disable()
