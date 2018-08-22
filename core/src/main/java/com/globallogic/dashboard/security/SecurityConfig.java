@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.security;
 
+import com.globallogic.dashboard.user.RoleName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -39,33 +41,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/**/h2-console/**"
     };
 
+    private static final String[] ADMIN_ENDPOINTS = {
+            "/**/users/addRegularUser/**",
+            "/**/users/promoteUserToAdmin/**"
+    };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/",
-                        "/favicon.ico",
-                        "/**/*.png",
-                        "/**/*.gif",
-                        "/**/*.svg",
-                        "/**/*.jpg",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js")
-                    .permitAll()
-                .antMatchers(AUTH_WHITELIST)
-                    .permitAll()
-                //TODO remove later, permitting now all requests to make it easier to work for front-end
-                .antMatchers("/**")
-                .permitAll()
-                .antMatchers("/**/users/login/**")
-                    .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
-                .and().headers().frameOptions().disable()
-                .and()
-                .csrf().disable();
+        http.sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                .authorizeRequests()
+                    .antMatchers("/",
+                            "/favicon.ico",
+                            "/**/*.png",
+                            "/**/*.gif",
+                            "/**/*.svg",
+                            "/**/*.jpg",
+                            "/**/*.html",
+                            "/**/*.css",
+                            "/**/*.js")
+                            .permitAll()
+                    .antMatchers(AUTH_WHITELIST)
+                        .permitAll()
+                    //TODO remove later, permitting now all requests to make it easier to work for front-end
+                    /*.antMatchers("/**")
+                        .permitAll()*/
+                    .antMatchers("/**/users/login/**")
+                        .permitAll()
+                    .antMatchers(ADMIN_ENDPOINTS)
+                        .hasRole("ADMIN")
+                    .anyRequest().hasAnyRole("ADMIN","USER")
+                    .and()
+                    .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
+                    .and().headers().frameOptions().disable()
+                    .and()
+                    .csrf().disable();
     }
 
 
