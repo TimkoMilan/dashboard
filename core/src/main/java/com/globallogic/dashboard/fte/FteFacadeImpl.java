@@ -27,5 +27,14 @@ public class FteFacadeImpl implements FteFacade {
         return FteUtil.toFteResponseDto(returnedFte);
     }
 
+    public Double findFteByTeamAndMonth(Byte monthByte, Long teamIdLong){
+        Long teamId = teamIdLong;
+        Byte month = monthByte;
+        Optional<Team> optionalTeam = teamService.findById(teamId);
+        Team team = optionalTeam.orElseThrow(() -> new ServiceException("Team not found"));
+
+        return fteService.findFteByTeamAndMonth(optionalTeam.get(),month);
+    }
+
 
 }

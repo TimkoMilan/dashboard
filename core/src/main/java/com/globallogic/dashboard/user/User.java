@@ -1,6 +1,7 @@
 package com.globallogic.dashboard.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.globallogic.dashboard.team.Team;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ public class User implements Serializable, UserDetails {
 
     private String email;
 
+    private Team team;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -39,6 +41,14 @@ public class User implements Serializable, UserDetails {
                 .map(s -> new SimpleGrantedAuthority(s.getName().name())).filter(Objects::nonNull)
                 .collect(Collectors.toList());
         return authorities;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public String getPassword() {

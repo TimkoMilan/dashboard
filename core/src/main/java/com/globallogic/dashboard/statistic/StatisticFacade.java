@@ -1,6 +1,9 @@
 package com.globallogic.dashboard.statistic;
 
+import com.globallogic.dashboard.fte.FteFacade;
+import com.globallogic.dashboard.fte.FteService;
 import com.globallogic.dashboard.publicHoliday.PublicHolidayLoader;
+import com.globallogic.dashboard.team.TeamService;
 import com.globallogic.dashboard.vacation.VacationDto;
 import com.globallogic.dashboard.vacation.VacationFilterDto;
 import com.globallogic.dashboard.vacation.VacationService;
@@ -19,11 +22,17 @@ public class StatisticFacade {
     private VacationService vacationService;
     private PublicHolidayLoader publicHolidayLoader;
     private DaysInMonth daysInMonth;
+    private FteService fteService;
+    private TeamService teamService;
+    private FteFacade fteFacade;
 
-    public StatisticFacade(VacationService vacationService, PublicHolidayLoader publicHolidayLoader, DaysInMonth daysInMonth) {
+    public StatisticFacade(VacationService vacationService, PublicHolidayLoader publicHolidayLoader, DaysInMonth daysInMonth, FteService fteService, TeamService teamService, FteFacade fteFacade) {
         this.vacationService = vacationService;
         this.publicHolidayLoader = publicHolidayLoader;
         this.daysInMonth = daysInMonth;
+        this.fteService = fteService;
+        this.teamService = teamService;
+        this.fteFacade = fteFacade;
     }
 
     public List<StatisticDto> getStatistic(String year, String month, String teamId) {
@@ -32,7 +41,7 @@ public class StatisticFacade {
         String[] teamsId = teamId.split(",");
         List<StatisticDto> statisticDtos = new ArrayList<>();
 
-        for (String tId : teamsId) {
+        for (String tId : teamsId)
             for (String month1 : months) {
 
                 int yearInt = Integer.parseInt(year);
@@ -47,7 +56,7 @@ public class StatisticFacade {
                 statisticDto.setMonth(monthInt);
                 statisticDto.setTeamId(tId);
 
-                int lastDayInmonth = daysInMonth.daysByMonth(monthInt);
+                int lastDayInmonth = daysInMonth.daysByMonth(monthInt);//TODO UTIL and service
                 Calendar startDate = Calendar.getInstance();
                 startDate.set(Calendar.YEAR, yearInt);
                 startDate.set(Calendar.MONTH, monthInt);
@@ -66,9 +75,11 @@ public class StatisticFacade {
                 List<VacationDto> vacations = vacationService.getVacations(vacationFilterDto);
                 statisticDto.setVacationDto(vacations);
 
+                byte monthByte = (byte) monthInt;
+                Long teamIdLong = new Long(teamInt);
+                statisticDto.setFte(fteFacade.findFteByTeamAndMonth(monthByte, teamIdLong));
                 statisticDtos.add(statisticDto);
             }
-        }
         return statisticDtos;
     }
 }

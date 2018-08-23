@@ -16,6 +16,8 @@ public class StatisticDto {
 
     private String teamId;
 
+    private Double fte;
+
     public int getWorkingDays() {
         return workingDays;
     }
@@ -26,6 +28,14 @@ public class StatisticDto {
 
     public void setTeamId(String teamId) {
         this.teamId = teamId;
+    }
+
+    public Double getFte() {
+        return fte;
+    }
+
+    public void setFte(Double fte) {
+        this.fte = fte;
     }
 
     public void setWorkingDays(int workingDays) {

@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new ServiceException("User Role has not been set."));
         user.setRoles(Collections.singleton(userRole));
+
         User result = userRepository.save(user);
         return UserUtil.convertUserToUserDto(result);
     }
