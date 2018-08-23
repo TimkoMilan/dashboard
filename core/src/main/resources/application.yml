@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:h2:~/dashboardGL2;DB_CLOSE_ON_EXIT=FALSE
+        url: jdbc:h2:./dashboardGL2;DB_CLOSE_ON_EXIT=FALSE
         username: sa
     jpa:
         hibernate:
@@ -14,7 +14,6 @@ server:
   port: 8089
   servlet:
     context-path: /api/v1
-
 security:
   jwt:
     token:
