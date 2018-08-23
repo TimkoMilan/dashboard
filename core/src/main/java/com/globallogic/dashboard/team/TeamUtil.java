@@ -19,6 +19,7 @@ public class TeamUtil {
         teamDto.setSprint(team.getSprintDatumModels());
         teamDto.setMembers(team.getMembers());
         teamDto.setId(team.getId());
+        teamDto.setFte(team.getFte());
         return  teamDto;
     }
     public static TeamNameDto convertToTeamNameDto(Team team){
