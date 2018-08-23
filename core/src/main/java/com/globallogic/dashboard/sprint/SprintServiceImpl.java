@@ -38,40 +38,37 @@ public class SprintServiceImpl implements SprintService {
     @Override
     public SprintDto findById(Long sprintId) {
         Optional<Sprint> sprint = sprintRepository.findById(sprintId);
-        return  sprint.map(SprintUtil::convertToDto).get();
+        return sprint.map(SprintUtil::convertToDto).get();
     }
 
     @Override
     public List<SprintDto> getSprintsName() {
-        List<Sprint>sprints=sprintRepository.findAll();
+        List<Sprint> sprints = sprintRepository.findAll();
         return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public List<SprintDto> getAllSprints() {
-        List<Sprint>sprints=sprintRepository.findAll();
+        List<Sprint> sprints = sprintRepository.findAll();
         return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public List<SprintDto> getSprintsByFilter(SprintFilterDto sprintFilterDto) {
-        if (sprintFilterDto == null){
-            List <Sprint> sprints =sprintRepository.findAll();
+        if (sprintFilterDto == null) {
+            List<Sprint> sprints = sprintRepository.findAll();
             return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
-        }
-        else {
+        } else {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-            if (sprintFilterDto.getSprintId() !=null){
-                for (String sprintId : sprintFilterDto.getSprintId().split(","))
-                {
-                booleanBuilder.or(QSprint.sprint.sprintData.any().sprint.id.eq(Long.parseLong(sprintId)));
+            if (sprintFilterDto.getSprintId() != null) {
+                for (String sprintId : sprintFilterDto.getSprintId().split(",")) {
+                    booleanBuilder.or(QSprint.sprint.sprintData.any().sprint.id.eq(Long.parseLong(sprintId)));
                 }
             }
-            if (sprintFilterDto.getTeamId() != null){
-                for (String sprintTeamId : sprintFilterDto.getTeamId().split(","))
-                {
-                booleanBuilder.and(QSprint.sprint.sprintData.any().team.id.eq(Long.parseLong(sprintTeamId)));
+            if (sprintFilterDto.getTeamId() != null) {
+                for (String sprintTeamId : sprintFilterDto.getTeamId().split(",")) {
+                    booleanBuilder.and(QSprint.sprint.sprintData.any().team.id.eq(Long.parseLong(sprintTeamId)));
                 }
             }
 //            if (sprintFilterDto.getStartDate() != null)//TODO test filtering 

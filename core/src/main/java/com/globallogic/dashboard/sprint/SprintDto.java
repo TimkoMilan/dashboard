@@ -14,7 +14,6 @@ public class SprintDto implements Serializable {
     private Date end;
 
 
-
     public Long getId() {
         return id;
     }

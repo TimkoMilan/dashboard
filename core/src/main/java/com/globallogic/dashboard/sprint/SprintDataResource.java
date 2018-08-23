@@ -11,12 +11,13 @@ import java.util.List;
 public class SprintDataResource {
 
     private SprintDataFacade sprintDataFacade;
+
     public SprintDataResource(SprintDataFacade sprintDataFacade) {
         this.sprintDataFacade = sprintDataFacade;
     }
 
     @GetMapping
-    public List<SprintDataDto> getAllSprintData(@RequestParam(required = false)String teamId,@RequestParam(required = false)String sprintId){
+    public List<SprintDataDto> getAllSprintData(@RequestParam(required = false) String teamId, @RequestParam(required = false) String sprintId) {
         SprintDataFilterDto sprintDataFilterDto = new SprintDataFilterDto();
         sprintDataFilterDto.setSprintId(sprintId);
         sprintDataFilterDto.setTeamId(teamId);
@@ -24,12 +25,12 @@ public class SprintDataResource {
     }
 
     @GetMapping("/loadData")//loading data from excel
-    public void loadData(){
+    public void loadData() {
         sprintDataFacade.loadSprintData();
     }
 
     @GetMapping("teams/{teamName}")
-    public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName")@NotNull String teamName){
+    public List<SprintDataDto> getAllSprintDataByTeam(@PathVariable(value = "teamName") @NotNull String teamName) {
         return sprintDataFacade.getAllSprintDataByTeam(teamName);
     }
 

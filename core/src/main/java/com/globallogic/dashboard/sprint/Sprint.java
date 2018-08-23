@@ -28,7 +28,6 @@ public class Sprint implements Serializable {
     private Set<SprintData> sprintData;
 
 
-
     public Set<SprintData> getSprintData() {
         return sprintData;
     }
@@ -36,7 +35,6 @@ public class Sprint implements Serializable {
     public void setSprintData(Set<SprintData> sprintData) {
         this.sprintData = sprintData;
     }
-
 
 
     public Long getId() {

@@ -13,7 +13,7 @@ public class VacationCreateDto implements Serializable {
 
     private String memberName;
 
-    public VacationCreateDto(Vacation vacation){
+    public VacationCreateDto(Vacation vacation) {
         this.memberName = vacation.getMember().getName();
         this.start = vacation.getStart();
         this.end = vacation.getEnd();

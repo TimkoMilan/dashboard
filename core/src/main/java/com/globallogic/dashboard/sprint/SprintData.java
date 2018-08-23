@@ -1,9 +1,11 @@
 package com.globallogic.dashboard.sprint;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.globallogic.dashboard.team.Team;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Set;
 

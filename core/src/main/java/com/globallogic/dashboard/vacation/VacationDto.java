@@ -3,7 +3,7 @@ package com.globallogic.dashboard.vacation;
 import java.io.Serializable;
 import java.util.Date;
 
-public class VacationDto implements Serializable{
+public class VacationDto implements Serializable {
 
     private String name;
     private Date from;

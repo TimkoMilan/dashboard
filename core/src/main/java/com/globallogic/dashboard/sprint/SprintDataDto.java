@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 
 
-public class SprintDataDto implements Serializable{
+public class SprintDataDto implements Serializable {
 
     private float storyPointsTaken;
 

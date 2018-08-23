@@ -6,7 +6,7 @@ public interface SprintDataService {
 
     List<SprintDataDto> getAllSprintDataByTeam(String teamName);
 
-    List<SprintDataDto> findAllBySprint_NameAndTeamName(String sprintName,String teamName);
+    List<SprintDataDto> findAllBySprint_NameAndTeamName(String sprintName, String teamName);
 
     List<SprintDataDto> getAllSprintData(SprintDataFilterDto sprintDataFilterDto);
 
