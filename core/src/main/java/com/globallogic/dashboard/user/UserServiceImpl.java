@@ -1,6 +1,8 @@
 package com.globallogic.dashboard.user;
 
 import com.globallogic.dashboard.common.ServiceException;
+import com.globallogic.dashboard.team.Team;
+import com.globallogic.dashboard.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +22,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private RoleRepository roleRepository;
 
     @Autowired
+    private TeamRepository teamRepository;
+
+    @Autowired
     private PasswordEncoder encoder;
 
     @Override
@@ -35,6 +40,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User result = userRepository.save(user);
         return UserUtil.convertUserToUserDto(result);
     }
+
+    @Override
+    public Boolean updateTeam(Long userId, Long teamId) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new ServiceException("Team does not exist"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ServiceException("User does not exist"));
+        user.setCurrentTeam(team);
+        userRepository.save(user);
+        return true;
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) {
