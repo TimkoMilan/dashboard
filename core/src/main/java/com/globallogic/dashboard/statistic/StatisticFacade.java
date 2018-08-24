@@ -36,6 +36,10 @@ public class StatisticFacade {
     }
 
     public List<StatisticDto> getStatistic(String year, String month, String teamId) {
+        if (teamId.equals("-1")){
+            teamId="44,45,46,47,48";
+        }
+
         String[] years = year.split(",");
         String[] months = month.split(",");
         String[] teamsId = teamId.split(",");
