@@ -1,6 +1,9 @@
 package com.globallogic.dashboard.user;
 
+
 import com.globallogic.dashboard.common.ServiceException;
+import com.globallogic.dashboard.team.Team;
+
 import com.globallogic.dashboard.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,9 +24,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private PasswordEncoder encoder;
-    @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public UserDto newUser(UserDto userDto) {
@@ -34,11 +38,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new ServiceException("User Role has not been set."));
         user.setRoles(Collections.singleton(userRole));
-        user.setTeam(teamRepository.findTeamById(userDto.getTeamId()));
+        user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
 
         User result = userRepository.save(user);
         return UserUtil.convertUserToUserDto(result);
     }
+
+    @Override
+    public Boolean updateTeam(Long userId, Long teamId) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new ServiceException("Team does not exist"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ServiceException("User does not exist"));
+        user.setCurrentTeam(team);
+        userRepository.save(user);
+        return true;
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) {

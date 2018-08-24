@@ -24,8 +24,10 @@ public class User implements Serializable, UserDetails {
 
     private String email;
 
-    @OneToOne
-    private Team team;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team currentTeam;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -45,12 +47,12 @@ public class User implements Serializable, UserDetails {
         return authorities;
     }
 
-    public Team getTeam() {
-        return team;
+    public Team getCurrentTeam() {
+        return currentTeam;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setCurrentTeam(Team currentTeam) {
+        this.currentTeam = currentTeam;
     }
 
     public String getPassword() {

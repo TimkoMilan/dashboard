@@ -3,6 +3,7 @@ package com.globallogic.dashboard.user;
 import com.globallogic.dashboard.common.ApiResponse;
 import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.payload.LoginResponse;
+import com.globallogic.dashboard.user.payload.UpdateTeamRequestDto;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,17 @@ public class UserResource {
         }
         UserDto userRegisterResponse = userService.newUser(userDto);
         return ResponseEntity.ok(userRegisterResponse);
+    }
+
+    @PostMapping("updateUserTeam")
+    public ResponseEntity<?> updateUserTeam(@RequestBody UpdateTeamRequestDto updateTeamRequestDto){
+        if(userService.updateTeam(updateTeamRequestDto.getUserId(), updateTeamRequestDto.getTeamId()))
+        {
+            return ResponseEntity.ok(new ApiResponse(true, "User updated"));
+        }
+        else{
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed updating user"));
+        }
     }
 
     @GetMapping("getUserNameFromToken")

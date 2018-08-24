@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.globallogic.dashboard.fte.Fte;
 import com.globallogic.dashboard.member.Member;
 import com.globallogic.dashboard.sprint.SprintData;
+import com.globallogic.dashboard.user.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,6 +30,9 @@ public class Team implements Serializable {
 
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
     private Set<Fte> fte;
+
+    @OneToMany(mappedBy = "currentTeam", fetch = FetchType.LAZY)
+    private Set<User> users;
 
 
     public Set<Member> getMembers() {
@@ -73,5 +77,13 @@ public class Team implements Serializable {
 
     public void setFte(Set<Fte> fte) {
         this.fte = fte;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }
