@@ -33,7 +33,12 @@ public class FteFacadeImpl implements FteFacade {
         Optional<Team> optionalTeam = teamService.findById(teamId);
         Team team = optionalTeam.orElseThrow(() -> new ServiceException("Team not found"));
 
-        return fteService.findFteByTeamAndMonth(optionalTeam.get(),month);
+         if (fteService.findFteByTeamAndMonth(optionalTeam.get(),month)!= null){
+             return fteService.findFteByTeamAndMonth(optionalTeam.get(),month);
+         }
+        else {
+            return 0.0;
+         }
     }
 
 

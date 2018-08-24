@@ -56,7 +56,7 @@ public class StatisticFacade {
                 statisticDto.setMonth(monthInt);
                 statisticDto.setTeamId(tId);
 
-                int lastDayInmonth = daysInMonth.daysByMonth(monthInt);//TODO UTIL and service
+                int lastDayInmonth = daysInMonth.daysByMonth(monthInt);//TODO UTIL and service FILTER
                 Calendar startDate = Calendar.getInstance();
                 startDate.set(Calendar.YEAR, yearInt);
                 startDate.set(Calendar.MONTH, monthInt);
@@ -77,8 +77,13 @@ public class StatisticFacade {
 
                 byte monthByte = (byte) monthInt;
                 Long teamIdLong = new Long(teamInt);
-                statisticDto.setFte(fteFacade.findFteByTeamAndMonth(monthByte, teamIdLong));
+                if (fteFacade.findFteByTeamAndMonth(monthByte, teamIdLong)!=null){
+                    statisticDto.setFte(fteFacade.findFteByTeamAndMonth(monthByte, teamIdLong));
+                }else {
+                    statisticDto.setFte(0.0);
+                }
                 statisticDtos.add(statisticDto);
+
             }
         return statisticDtos;
     }

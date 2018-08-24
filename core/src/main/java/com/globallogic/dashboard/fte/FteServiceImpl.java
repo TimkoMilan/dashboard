@@ -13,7 +13,11 @@ public class FteServiceImpl implements FteService{
 
     @Override
     public Double findFteByTeamAndMonth(Team team, Byte month){
-        return fteRepository.findByTeamAndMonth(team, month).getFte();
+        if (fteRepository.findByTeamAndMonth(team, month) != null){
+            return fteRepository.findByTeamAndMonth(team, month).getFte();
+        }else {
+            return 0.0;
+        }
     }
 
     @Override
