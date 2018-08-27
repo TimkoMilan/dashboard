@@ -17,6 +17,6 @@ public class PublicHolidayResource {
 
     @GetMapping
     public int getpublicHoliday(@RequestParam int year,@RequestParam int month){
-        return publicHolidayLoader.getWorkingFond(year,month);
+        return publicHolidayLoader.getWorkingDaysInMonth(year,month);
     }
 }

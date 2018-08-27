@@ -24,7 +24,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         }
         catch(SecurityException se){
             ApiResponse apiResponse = new ApiResponse(false,se.getMessage());
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write(convertObjectToJson(apiResponse));
         }
         catch (RuntimeException e) {
