@@ -19,8 +19,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({ SecurityException.class })
     public ResponseEntity<Object> handleSecurityError(
             SecurityException ex, WebRequest request) {
-        String bodyOfResponse = ex.getMessage();
-        return handleExceptionInternal(ex, bodyOfResponse,
+        ApiResponse responseBody = new ApiResponse(false, ex.getMessage());
+        return handleExceptionInternal(ex, responseBody,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }

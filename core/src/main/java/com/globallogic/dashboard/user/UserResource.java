@@ -12,6 +12,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import com.globallogic.dashboard.security.SecurityException;
+
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +46,7 @@ public class UserResource {
                             .createToken(user, new ArrayList<>(userRepository.findByUsername(username).getRoles())));
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            throw new SecurityException("Invalid username/password supplied");
+            throw new SecurityException("Invalid username/password supplied");   //TODO catch the security exception
         }
     }
 
