@@ -11,7 +11,7 @@ public class FteResource {
     @Autowired
     FteFacade fteFacade;
 
-
+    //The counting of months starts from 0
     @PostMapping("createFte")
     public ResponseEntity<FteResponseDto> createFte (@RequestBody FteCreateDto fteCreateDto){
         return ResponseEntity.ok(fteFacade.createFte(fteCreateDto));

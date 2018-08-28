@@ -19,7 +19,7 @@ public class StatisticResource {
 
     @GetMapping
     public List<StatisticDto> getStatsByYearAndMonth(@RequestParam String year,
-                                                     @RequestParam String month,
+                                                     @RequestParam String month,       // months are counted from 0
                                                      @RequestParam String teamId) {
 
         return statisticFacade.getStatistic(year, month,teamId);

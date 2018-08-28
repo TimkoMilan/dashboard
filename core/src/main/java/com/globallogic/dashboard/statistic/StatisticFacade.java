@@ -51,7 +51,8 @@ public class StatisticFacade {
                 int yearInt = Integer.parseInt(year);
                 int teamInt = Integer.parseInt(tId);
                 int monthInt = Integer.parseInt(month1);
-                int workingDays = publicHolidayLoader.getWorkingDaysInMonth(yearInt, monthInt);
+                // increase month by 1 since frontend starts counting months from 0
+                int workingDays = publicHolidayLoader.getWorkingDaysInMonth(yearInt, monthInt + 1);
 
                 VacationFilterDto vacationFilterDto = new VacationFilterDto();
                 StatisticDto statisticDto = new StatisticDto();
