@@ -47,7 +47,6 @@ public class VacationFacadeImpl implements VacationFacade {
             Vacation v = new Vacation();
             v.setMember(mamber);
             v.setStart(vacationDatum.getFrom());
-            v.setEnd(vacationDatum.getTo());
             v.setHalfDay(vacationDatum.isHalfDay());
             vacationService.saveVacation(v);
         }

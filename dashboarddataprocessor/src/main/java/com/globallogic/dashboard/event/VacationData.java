@@ -5,7 +5,6 @@ import java.util.Date;
 public class VacationData {
     private String name;
     private Date from;
-    private Date to;
     private boolean isHalfDay;
 
 
@@ -17,9 +16,6 @@ public class VacationData {
         return from;
     }
 
-    public Date getTo() {
-        return to;
-    }
 
     public boolean isHalfDay() {
         return isHalfDay;
@@ -29,10 +25,9 @@ public class VacationData {
         isHalfDay = halfDay;
     }
 
-    public VacationData(String name, Date from, Date to,boolean isHalfDay) {
+    public VacationData(String name, Date from,boolean isHalfDay) {
         this.name = name;
         this.from = from;
-        this.to = to;
         this.isHalfDay = isHalfDay;
     }
 
@@ -41,7 +36,6 @@ public class VacationData {
         return "VacationData{" +
                 "name='" + name + '\'' +
                 ", from=" + from +
-                ", to=" + to +
                 ", isHalfDay=" + isHalfDay +
                 '}';
     }

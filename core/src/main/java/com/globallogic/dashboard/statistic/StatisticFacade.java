@@ -93,6 +93,7 @@ public class StatisticFacade {
         return statisticDtos;
     }
 
+    //TODO refactor this method
     public List<StatisticDto> getStatisticByDateRange(Date startDate, Date endDate, String teamId){
         List<StatisticDto> statisticDtoList = new ArrayList<>();
         if (teamId.equals("-1")){
@@ -127,34 +128,18 @@ public class StatisticFacade {
                 statisticDto.setMonth(monthInt);
                 statisticDto.setYear(yearInt);
                 statisticDto.setTeamId(tId);
+                Calendar nextMonth = Calendar.getInstance();
+                nextMonth.setTime(beginCalendar.getTime());
+                nextMonth.add(Calendar.MONTH, 1);
                 List<VacationDto> vacationForMonth = vacations.stream().filter(
-                        vacation -> {
-                            Calendar vacationFrom = Calendar.getInstance();
-                            vacationFrom.setTime(vacation.getFrom());
-                            Calendar vacationTo = Calendar.getInstance();
-                            vacationTo.setTime(vacation.getTo());
-                            Integer vacationFromYear = vacationFrom.get(Calendar.YEAR);
-                            Integer vacationFromMonth = vacationFrom.get(Calendar.MONTH);
-                            Integer vacationToYear = vacationTo.get(Calendar.YEAR);
-                            Integer vacationToMonth = vacationTo.get(Calendar.MONTH);
-
-                            if((yearInt.equals(vacationFromYear) && monthInt.equals(vacationFromMonth)) ||     //TODO split vacation
-                                    (yearInt.equals(vacationToYear) && monthInt.equals(vacationToMonth))){
-                                return true;
-                            }
-                            else {
-                                return false;
-                            }
-                        }).collect(Collectors.toList());
+                        vacation -> vacation.getFrom().after(beginCalendar.getTime()) &&
+                            vacation.getFrom().before(nextMonth.getTime())
+                        ).collect(Collectors.toList());
                 statisticDto.setVacationDto(vacationForMonth);
                 statisticDtoList.add(statisticDto);
                 beginCalendar.add(Calendar.MONTH, 1);
             }
         }
-
-
-
         return statisticDtoList;
     }
-
 }
