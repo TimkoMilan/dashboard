@@ -21,6 +21,7 @@ public class FteUtil {
         return new FteResponseDto()
                 .setFte(fte.getFte())
                 .setMonth(fte.getMonth())
+                .setYear(fte.getYear())
                 .setTeamId(fte.getTeam().getId());
     }
 }

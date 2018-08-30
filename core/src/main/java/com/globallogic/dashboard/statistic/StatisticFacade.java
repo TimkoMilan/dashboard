@@ -82,8 +82,9 @@ public class StatisticFacade {
 
                 byte monthByte = (byte) monthInt;
                 Long teamIdLong = new Long(teamInt);
-                if (fteFacade.findFteByTeamAndMonth(monthByte, teamIdLong)!=null){
-                    statisticDto.setFte(fteFacade.findFteByTeamAndMonth(monthByte, teamIdLong));
+                Double fte = fteFacade.findFteByTeamAndMonthAndYear(monthByte, teamIdLong, yearInt);
+                if (fte!=null){
+                    statisticDto.setFte(fte);
                 }else {
                     statisticDto.setFte(0.0);
                 }
@@ -117,8 +118,8 @@ public class StatisticFacade {
                 statisticDto.setWorkingDays(publicHolidayLoader.getWorkingDaysInMonth(
                         yearInt, monthInt+1));
                 Long teamIdLong = new Long(tId);
-                Double fteForMonth = fteFacade.findFteByTeamAndMonth(
-                         monthInt.byteValue(), teamIdLong);
+                Double fteForMonth = fteFacade.findFteByTeamAndMonthAndYear(
+                         monthInt.byteValue(), teamIdLong, yearInt);
                 if(fteForMonth!=null){
                     statisticDto.setFte(fteForMonth);
                 }
