@@ -12,6 +12,7 @@ public class FteUtil {
         fte.setTeam(team);
         fte.setFte(fteCreateDto.getFte());
         fte.setMonth(fteCreateDto.getMonth());
+        fte.setYear(fteCreateDto.getYear());
         return fte;
     }
 

@@ -14,7 +14,8 @@ public class FteCreateDto implements Serializable {
     @NotNull
     private Double fte;
 
-    //TODO add year for FTE
+    @NotNull
+    private Integer year;
 
     public Long getTeamId() {
         return teamId;
@@ -38,5 +39,13 @@ public class FteCreateDto implements Serializable {
 
     public void setFte(Double fte) {
         this.fte = fte;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }

@@ -27,14 +27,14 @@ public class FteFacadeImpl implements FteFacade {
         return FteUtil.toFteResponseDto(returnedFte);
     }
 
-    public Double findFteByTeamAndMonth(Byte monthByte, Long teamIdLong){
+    public Double findFteByTeamAndMonthAndYear(Byte monthByte, Long teamIdLong, Integer year){
         Long teamId = teamIdLong;
         Byte month = monthByte;
         Optional<Team> optionalTeam = teamService.findById(teamId);
         Team team = optionalTeam.orElseThrow(() -> new ServiceException("Team not found"));
 
-         if (fteService.findFteByTeamAndMonth(optionalTeam.get(),month)!= null){
-             return fteService.findFteByTeamAndMonth(optionalTeam.get(),month);
+         if (fteService.findFteByTeamAndMonthAndYear(optionalTeam.get(),month, year)!= null){
+             return fteService.findFteByTeamAndMonthAndYear(optionalTeam.get(),month, year);
          }
         else {
             return 0.0;

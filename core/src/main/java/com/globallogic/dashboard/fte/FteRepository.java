@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FteRepository extends JpaRepository<Fte, Long> {
 
-    Fte findByTeamAndMonth(Team team, Byte month);
+    Fte findByTeamAndMonthAndYear(Team team, Byte month, Integer year);
 }

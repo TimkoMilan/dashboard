@@ -4,7 +4,7 @@ import com.globallogic.dashboard.team.Team;
 
 public interface FteService {
 
-    Double findFteByTeamAndMonth(Team team, Byte monthByte);
+    Double findFteByTeamAndMonthAndYear(Team team, Byte monthByte, Integer Year);
 
     Fte createFte(Fte fte);
 }

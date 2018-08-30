@@ -5,6 +5,7 @@ public class FteResponseDto {
     private Long teamId;
     private Byte month;
     private Double fte;
+    private Integer year;
 
 
     public Long getTeamId() {
@@ -27,6 +28,15 @@ public class FteResponseDto {
 
     public Double getFte() {
         return fte;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public FteResponseDto setYear(Integer year) {
+        this.year = year;
+        return this;
     }
 
     public FteResponseDto setFte(Double fte) {

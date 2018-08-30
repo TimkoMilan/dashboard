@@ -12,9 +12,9 @@ public class FteServiceImpl implements FteService{
     private FteRepository fteRepository;
 
     @Override
-    public Double findFteByTeamAndMonth(Team team, Byte month){
-        if (fteRepository.findByTeamAndMonth(team, month)!= null){
-            return fteRepository.findByTeamAndMonth(team, month).getFte();
+    public Double findFteByTeamAndMonthAndYear(Team team, Byte month, Integer year){
+        if (fteRepository.findByTeamAndMonthAndYear(team, month, year)!= null){
+            return fteRepository.findByTeamAndMonthAndYear(team, month, year).getFte();
         }else {
             return 0.0;
         }

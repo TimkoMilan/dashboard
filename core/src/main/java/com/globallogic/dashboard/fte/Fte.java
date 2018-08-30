@@ -20,6 +20,8 @@ public class Fte implements Serializable {
 
     private Byte month;
 
+    private Integer year;
+
     private Double fte;
 
 
@@ -45,5 +47,13 @@ public class Fte implements Serializable {
 
     public void setFte(Double fte) {
         this.fte = fte;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }
