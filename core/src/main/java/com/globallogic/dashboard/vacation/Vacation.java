@@ -19,8 +19,6 @@ public class Vacation implements Serializable {
 
     private Date start;
 
-    private Date end;
-
     private boolean isHalfDay;
 
     @ManyToOne
@@ -37,14 +35,6 @@ public class Vacation implements Serializable {
 
     public void setStart(Date start) {
         this.start = start;
-    }
-
-    public Date getEnd() {
-        return end;
-    }
-
-    public void setEnd(Date end) {
-        this.end = end;
     }
 
     public Member getMember() {

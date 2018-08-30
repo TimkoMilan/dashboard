@@ -7,7 +7,6 @@ import java.util.List;
 
 public class VacationEventListener implements EventListener<String>{
     private int start;
-    private int end;
     boolean isHalfDay = false;
 
 
@@ -26,12 +25,10 @@ public class VacationEventListener implements EventListener<String>{
             isHalfDay = isHalfDay(event.getPayload());
         } else if (event instanceof EndEvent) {
             String userName = context.get(0).toString();
-            end = ((EndEvent) event).getEnd();
-            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 3), monthUtil.monthById(end - 3), isHalfDay));
+            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 3), isHalfDay));
         } else if (event instanceof FinishEvent) {
             String userName = context.get(0).toString();
-            end = ((FinishEvent) event).getEnd();
-            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 3), monthUtil.monthById(end - 3), isHalfDay));
+            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 3), isHalfDay));
         }
 
     }

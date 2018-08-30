@@ -14,7 +14,6 @@ public final class VacationUtil {
         VacationDto vacationDto = new VacationDto();
 
         vacationDto.setFrom(vacation.getStart());
-        vacationDto.setTo(vacation.getEnd());
         vacationDto.setHalfDay(vacation.isHalfDay());
         if (vacation.getMember() != null) {
             vacationDto.setName(vacation.getMember().getName());
@@ -29,7 +28,6 @@ public final class VacationUtil {
 
         vacationDto.setName(vacationData.getName());
         vacationDto.setFrom(vacationData.getFrom());
-        vacationDto.setTo(vacationData.getTo());
         vacationDto.setHalfDay(vacationData.isHalfDay());
         return vacationDto;
     }
