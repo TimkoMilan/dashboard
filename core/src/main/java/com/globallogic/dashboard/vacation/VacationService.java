@@ -33,7 +33,7 @@ public class VacationService {
                 }
             }
             if (vacationFilterDto.getStart() != null) {
-                booleanBuilder.and(QVacation.vacation.start.lt(vacationFilterDto.getEnd()).and(QVacation.vacation.end.gt(vacationFilterDto.getStart())));
+                booleanBuilder.and(QVacation.vacation.start.loe(vacationFilterDto.getEnd()).and(QVacation.vacation.end.goe(vacationFilterDto.getStart())));
             }
             return VacationUtil.convertToListDto(vacationRepository.findAll(booleanBuilder.getValue()));
         }
