@@ -14,6 +14,8 @@ public class FteCreateDto implements Serializable {
     @NotNull
     private Double fte;
 
+    //TODO add year for FTE
+
     public Long getTeamId() {
         return teamId;
     }

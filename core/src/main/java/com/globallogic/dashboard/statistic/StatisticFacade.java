@@ -4,16 +4,16 @@ import com.globallogic.dashboard.fte.FteFacade;
 import com.globallogic.dashboard.fte.FteService;
 import com.globallogic.dashboard.publicHoliday.PublicHolidayLoader;
 import com.globallogic.dashboard.team.TeamService;
+import com.globallogic.dashboard.vacation.Vacation;
 import com.globallogic.dashboard.vacation.VacationDto;
 import com.globallogic.dashboard.vacation.VacationFilterDto;
 import com.globallogic.dashboard.vacation.VacationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import javax.swing.text.html.Option;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -92,4 +92,69 @@ public class StatisticFacade {
             }
         return statisticDtos;
     }
+
+    public List<StatisticDto> getStatisticByDateRange(Date startDate, Date endDate, String teamId){
+        List<StatisticDto> statisticDtoList = new ArrayList<>();
+        if (teamId.equals("-1")){
+            teamId="44,45,46,47,48";
+        }
+        String[] teamIds = teamId.split(",");
+        for(String tId : teamIds){
+            VacationFilterDto vacationFilterDto = new VacationFilterDto();
+            vacationFilterDto.setTeamId(tId);
+            vacationFilterDto.setStart(startDate);
+            vacationFilterDto.setEnd(endDate);
+            List<VacationDto> vacations = vacationService.getVacations(vacationFilterDto);
+            Calendar beginCalendar = Calendar.getInstance();
+            Calendar finishCalendar = Calendar.getInstance();
+            beginCalendar.setTime(startDate);
+            finishCalendar.setTime(endDate);
+            while (beginCalendar.before(finishCalendar)){
+                StatisticDto statisticDto = new StatisticDto();
+                Integer yearInt = beginCalendar.get(Calendar.YEAR);
+                Integer monthInt = beginCalendar.get(Calendar.MONTH);
+                statisticDto.setWorkingDays(publicHolidayLoader.getWorkingDaysInMonth(
+                        yearInt, monthInt+1));
+                Long teamIdLong = new Long(tId);
+                Double fteForMonth = fteFacade.findFteByTeamAndMonth(
+                         monthInt.byteValue(), teamIdLong);
+                if(fteForMonth!=null){
+                    statisticDto.setFte(fteForMonth);
+                }
+                else{
+                    statisticDto.setFte(0.0);
+                }
+                statisticDto.setMonth(monthInt);
+                statisticDto.setYear(yearInt);
+                statisticDto.setTeamId(tId);
+                List<VacationDto> vacationForMonth = vacations.stream().filter(
+                        vacation -> {
+                            Calendar vacationFrom = Calendar.getInstance();
+                            vacationFrom.setTime(vacation.getFrom());
+                            Calendar vacationTo = Calendar.getInstance();
+                            vacationTo.setTime(vacation.getTo());
+                            Integer vacationFromYear = vacationFrom.get(Calendar.YEAR);
+                            Integer vacationFromMonth = vacationFrom.get(Calendar.MONTH);
+                            Integer vacationToYear = vacationTo.get(Calendar.YEAR);
+                            Integer vacationToMonth = vacationTo.get(Calendar.MONTH);
+
+                            if((yearInt.equals(vacationFromYear) && monthInt.equals(vacationFromMonth)) ||     //TODO split vacation
+                                    (yearInt.equals(vacationToYear) && monthInt.equals(vacationToMonth))){
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }).collect(Collectors.toList());
+                statisticDto.setVacationDto(vacationForMonth);
+                statisticDtoList.add(statisticDto);
+                beginCalendar.add(Calendar.MONTH, 1);
+            }
+        }
+
+
+
+        return statisticDtoList;
+    }
+
 }
