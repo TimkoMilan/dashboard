@@ -93,6 +93,7 @@ public class StatisticFacade {
         return statisticDtos;
     }
 
+    //TODO refactor this method
     public List<StatisticDto> getStatisticByDateRange(Date startDate, Date endDate, String teamId){
         List<StatisticDto> statisticDtoList = new ArrayList<>();
         if (teamId.equals("-1")){
