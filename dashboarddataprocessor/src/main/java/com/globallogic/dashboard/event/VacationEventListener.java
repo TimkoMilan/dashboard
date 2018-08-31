@@ -27,12 +27,12 @@ public class VacationEventListener implements EventListener<String>{
             String teamName = context.get(0).toString();
             String userName = context.get(1).toString();
             String position = context.get(3).toString();
-            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 3), isHalfDay, teamName, position));
+            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 4), isHalfDay, teamName, position));
         } else if (event instanceof FinishEvent) {
             String teamName = context.get(0).toString();
             String userName = context.get(1).toString();
             String position = context.get(3).toString();
-            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 3), isHalfDay, teamName, position));
+            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 4), isHalfDay, teamName, position));
         }
 
     }
