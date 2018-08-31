@@ -1,10 +1,12 @@
 package com.globallogic.dashboard.common;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,10 +34,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @Override
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return getBasicErrorResponse(ex,request,status);
+    }
+
+    @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         return getBasicErrorResponse(ex,request,HttpStatus.BAD_REQUEST);
     }
-
 
     private ResponseEntity<Object> getBasicErrorResponse(Exception ex,
                                                          WebRequest request, HttpStatus status){
@@ -43,5 +49,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, responseBody,
                 new HttpHeaders(), status, request);
     }
+
+
 
 }

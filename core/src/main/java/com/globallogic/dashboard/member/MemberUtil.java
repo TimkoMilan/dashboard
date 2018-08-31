@@ -11,8 +11,8 @@ public final class MemberUtil {
         member.setFocus(memberCreateDto.getFocus());
         member.setPosition(memberCreateDto.getPosition());
         member.setBillingValue(memberCreateDto.getBillingValue());
-        String searchname= ((memberCreateDto.getName()).toLowerCase()).replace(" ","");
-        member.setSearchString(searchname);
+        String searchName= toSearchString((memberCreateDto.getName()));
+        member.setSearchString(searchName);
         return  member;
     }
 
@@ -22,6 +22,10 @@ public final class MemberUtil {
         memberDto.setName(member.getName());
         memberDto.setSearchString(member.getSearchString());
         return memberDto;
+    }
+
+    public static String toSearchString(String name){
+        return name.toLowerCase().replace(" ","");
     }
 
 

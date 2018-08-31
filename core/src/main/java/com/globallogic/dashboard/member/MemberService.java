@@ -13,4 +13,6 @@ public interface MemberService {
 
      Member findMemberByMemberName(String name);
 
+     Member findMemberBySearchString(String searchString);
+
 }
