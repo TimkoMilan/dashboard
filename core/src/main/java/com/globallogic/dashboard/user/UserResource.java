@@ -46,7 +46,7 @@ public class UserResource {
                             .createToken(user, new ArrayList<>(userRepository.findByUsername(username).getRoles())));
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            throw new SecurityException("Invalid username/password supplied");   //TODO catch the security exception
+            throw new SecurityException("Invalid username/password supplied");
         }
     }
 

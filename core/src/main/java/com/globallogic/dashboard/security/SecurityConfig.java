@@ -73,9 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .permitAll()
                     .antMatchers(AUTH_WHITELIST)
                         .permitAll()
-                    //TODO remove later, permitting now all requests to make it easier to work for front-end
-                    /*.antMatchers("/**")
-                        .permitAll()*/
                     .antMatchers("/**/users/login/**")
                         .permitAll()
                     .antMatchers(ADMIN_ENDPOINTS)
@@ -94,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true); // you USUALLY want this
+        config.setAllowCredentials(true);
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("OPTIONS");

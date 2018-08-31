@@ -12,18 +12,18 @@ public class MonthUtil {
 
     public MonthUtil(List<MonthData> monthData) {
         this.monthData = monthData;
-        monthMap.put("January", 1);
-        monthMap.put("February", 2);
-        monthMap.put("March", 3);
-        monthMap.put("April", 4);
-        monthMap.put("May", 5);
-        monthMap.put("June", 6);
-        monthMap.put("July", 7);
-        monthMap.put("August", 8);
-        monthMap.put("September", 9);
-        monthMap.put("October", 10);
-        monthMap.put("November", 11);
-        monthMap.put("December", 12);
+        monthMap.put("january", 1);
+        monthMap.put("february", 2);
+        monthMap.put("march", 3);
+        monthMap.put("april", 4);
+        monthMap.put("may", 5);
+        monthMap.put("june", 6);
+        monthMap.put("july", 7);
+        monthMap.put("august", 8);
+        monthMap.put("september", 9);
+        monthMap.put("october", 10);
+        monthMap.put("november", 11);
+        monthMap.put("december", 12);
     }
 
     public void setDays(List<Object> days) {
@@ -35,7 +35,7 @@ public class MonthUtil {
             if (monthDatum.getRange().contains(id)) {
                 Calendar instance = Calendar.getInstance();
                 try {
-                    instance.set(2018, monthMap.get(monthDatum.getMonth()) - 1, Integer.valueOf(days.get(id).toString()) + 1);
+                    instance.set(2018, monthMap.get(monthDatum.getMonth().toLowerCase()) - 1, Integer.valueOf(days.get(id).toString()) + 1);
                 } catch (Exception e) {
                     return createExceptionDataAndThrow(id, monthDatum, e);
                 }
