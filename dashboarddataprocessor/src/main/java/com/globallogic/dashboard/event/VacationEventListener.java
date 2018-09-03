@@ -1,21 +1,26 @@
 package com.globallogic.dashboard.event;
 
 
+import com.google.common.base.Strings;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class VacationEventListener implements EventListener<String>{
     private int start;
     boolean isHalfDay = false;
-
+    private Integer offset;
+    private String teamString = "";
 
     private List<VacationData> vacationData = new ArrayList<>();
 
     private MonthUtil monthUtil;
 
-    public VacationEventListener(MonthUtil monthUtil) {
+    public VacationEventListener(MonthUtil monthUtil, Integer offset) {
         this.monthUtil = monthUtil;
+        this.offset = offset;
     }
 
     public void fireEvent(Event<String> event) {
@@ -24,15 +29,21 @@ public class VacationEventListener implements EventListener<String>{
             start = ((StartEvent) event).getStart();
             isHalfDay = isHalfDay(event.getPayload());
         } else if (event instanceof EndEvent) {
-            String teamName = context.get(0).toString();
+            String teamName = context.get(0).toString();  // TODO fix, works only for the first member of the team
             String userName = context.get(1).toString();
             String position = context.get(3).toString();
-            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 4), isHalfDay, teamName, position));
+            if(!Strings.isNullOrEmpty(teamName)){
+                teamString = teamName;
+            }
+            vacationData.add(new VacationData(userName, monthUtil.monthById(start - offset), isHalfDay, teamString, position));
         } else if (event instanceof FinishEvent) {
             String teamName = context.get(0).toString();
             String userName = context.get(1).toString();
             String position = context.get(3).toString();
-            vacationData.add(new VacationData(userName, monthUtil.monthById(start - 4), isHalfDay, teamName, position));
+            if(!Strings.isNullOrEmpty(teamName)){
+                teamString = teamName;
+            }
+            vacationData.add(new VacationData(userName, monthUtil.monthById(start - offset), isHalfDay, teamString, position));
         }
 
     }

@@ -10,6 +10,8 @@ public class MonthUtil {
 
     private List<MonthData> monthData = new ArrayList<>();
 
+    private Integer monthYear;
+
     public MonthUtil(List<MonthData> monthData) {
         this.monthData = monthData;
         monthMap.put("january", 1);
@@ -30,12 +32,16 @@ public class MonthUtil {
         this.days = days;
     }
 
+    public void setMonthYear(Integer monthYear) {
+        this.monthYear = monthYear;
+    }
+
     public Date monthById(Integer id) {
         for (MonthData monthDatum : monthData) {
             if (monthDatum.getRange().contains(id)) {
                 Calendar instance = Calendar.getInstance();
                 try {
-                    instance.set(2018, monthMap.get(monthDatum.getMonth().toLowerCase()) - 1, Integer.valueOf(days.get(id).toString()) + 1);
+                    instance.set( monthYear, monthMap.get(monthDatum.getMonth().toLowerCase()) - 1, Integer.valueOf(days.get(id).toString()) + 1);
                 } catch (Exception e) {
                     return createExceptionDataAndThrow(id, monthDatum, e);
                 }

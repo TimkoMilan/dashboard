@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 public class GoogleDataLoader implements DataLoader {
@@ -62,13 +61,29 @@ public class GoogleDataLoader implements DataLoader {
     @Override
     public List<VacationData> loadVacationData() {
         String spreadSheetIdconfig = googleDataLoaderConfig.getSpreadsheetId();
-        String monthRangeconfig = googleDataLoaderConfig.getMonthRange();
-        String dayRangeconfig = googleDataLoaderConfig.getDaysRange();
-        String vacationRangeconfig = googleDataLoaderConfig.getVacationRange();
+        Map<String, String> offsetConfig = googleDataLoaderConfig.getOffset();
+        Map<String, String> vacationRangesConfig = googleDataLoaderConfig.getVacationRanges();
+        List<VacationData> vacationData = new ArrayList<>();
+        vacationRangesConfig.forEach((year,range) ->
+                vacationData.addAll(loadVacationDataByYear(year,range, spreadSheetIdconfig,
+                        Integer.parseInt(offsetConfig.get(year))))
+        );
+        return vacationData;
+    }
+
+
+    private List<VacationData> loadVacationDataByYear(String year, String range, final String spreadSheetIdconfig,
+                                                      final Integer offset){
+
+        List<String> rangesSplit = getRangesSplitByComma(range);
+        String monthRangeconfig = rangesSplit.get(0);
+        String dayRangeconfig = rangesSplit.get(1);
+        String vacationRangeconfig = rangesSplit.get(2);
 
         final String monthRange = monthRangeconfig;
         final String daysRange =  dayRangeconfig;
         final String vacationRange =vacationRangeconfig;
+
         try {
             final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
             final String spreadsheetId = spreadSheetIdconfig;
@@ -98,9 +113,10 @@ public class GoogleDataLoader implements DataLoader {
 
             MonthUtil mu = new MonthUtil(monthData);
             mu.setDays(days);
+            mu.setMonthYear(Integer.parseInt(year));
 
             Processor<String> vacationProcessor = new Processor<>(new VacationStartDataEvaluator(), new VacationEndDataEvaluator());
-            VacationEventListener vacationEventListener = new VacationEventListener(mu);
+            VacationEventListener vacationEventListener = new VacationEventListener(mu, offset);
             vacationProcessor.withEventListener(vacationEventListener);
             for (List<Object> vacation : listVacations) {
                 vacationProcessor.process(DataLoaderUtil.toListOfStrings(vacation));
@@ -112,8 +128,14 @@ public class GoogleDataLoader implements DataLoader {
         }
     }
 
+
     public void loadData() {
         throw new UnsupportedOperationException("load data is not implemented yet.");
+    }
+
+    private List<String> getRangesSplitByComma(String rangesString){
+        rangesString.replaceAll("\\s+",""); //remove whitespaces
+        return Arrays.asList(rangesString.split(","));
     }
 
 

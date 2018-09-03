@@ -9,6 +9,7 @@ import com.globallogic.dashboard.member.MemberUtil;
 import com.globallogic.dashboard.sprint.SprintDto;
 import com.globallogic.dashboard.sprint.SprintService;
 import com.globallogic.dashboard.team.Team;
+import com.globallogic.dashboard.team.TeamCreateDto;
 import com.globallogic.dashboard.team.TeamService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +60,8 @@ public class VacationFacadeImpl implements VacationFacade {
                 member.setName(vacationDatum.getName());
                 member.setPosition(vacationDatum.getPosition());
                 member.setSearchString(MemberUtil.toSearchString(member.getName()));
-                Team teamByName = teamService.finByTeamName(vacationDatum.getTeamName());
+                String teamName = vacationDatum.getTeamName().trim();
+                Team teamByName = findAndCreateNewIfNull(teamName);
                 member.setTeam(teamByName);
                 member = memberRepository.save(member);
             }
@@ -69,6 +71,16 @@ public class VacationFacadeImpl implements VacationFacade {
             v.setHalfDay(vacationDatum.isHalfDay());
             vacationService.saveVacation(v);
         }
+    }
+
+    private Team findAndCreateNewIfNull(String teamName) {
+        Team teamByName = teamService.finByTeamName(teamName);
+        if(!Objects.nonNull(teamByName)){
+            TeamCreateDto newTeamDto = new TeamCreateDto();
+            newTeamDto.setName(teamName);
+            teamByName = teamService.saveTeam(newTeamDto);
+        }
+        return teamByName;
     }
 
 
