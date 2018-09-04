@@ -29,7 +29,7 @@ public class VacationEventListener implements EventListener<String>{
             start = ((StartEvent) event).getStart();
             isHalfDay = isHalfDay(event.getPayload());
         } else if (event instanceof EndEvent) {
-            String teamName = context.get(0).toString();  // TODO fix, works only for the first member of the team
+            String teamName = context.get(0).toString();
             String userName = context.get(1).toString();
             String position = context.get(3).toString();
             if(!Strings.isNullOrEmpty(teamName)){
