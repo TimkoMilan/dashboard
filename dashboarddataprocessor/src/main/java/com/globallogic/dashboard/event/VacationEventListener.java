@@ -45,10 +45,9 @@ public class VacationEventListener implements EventListener<String>{
             }
             vacationData.add(new VacationData(userName, monthUtil.monthById(start - offset), isHalfDay, teamString, position));
         }
-
     }
 
-    private boolean isHalfDay(String rowdata) {
+    private boolean isHalfDay(String rowdata) {    // TODO there are values that are not 0.5, e.g. 0.3,0.4 in the sheets
         if (rowdata.equals("0.5")) {
             return true;
         }
