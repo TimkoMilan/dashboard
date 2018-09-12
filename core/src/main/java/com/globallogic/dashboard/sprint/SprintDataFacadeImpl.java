@@ -30,6 +30,7 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
     @Override
     public void loadSprintData() {
         Set<SprintGeneratedData> sprintGeneratedData = loadSprintData.loadSprintData();
+        sprintDataService.deleteAllSprintData();
         for (SprintGeneratedData sprintDatum : sprintGeneratedData) {
             String sprintName = sprintDatum.getName();
             String teamName = sprintDatum.getTeamName();

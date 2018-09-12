@@ -59,4 +59,9 @@ public class SprintDataServiceImpl implements SprintDataService {
         sprintDataRepository.save(sprintData);
     }
 
+    @Override
+    public void deleteAllSprintData() {
+        sprintDataRepository.deleteAll();
+    }
+
 }
