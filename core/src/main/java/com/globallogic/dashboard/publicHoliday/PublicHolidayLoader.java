@@ -16,7 +16,7 @@ public class PublicHolidayLoader {
     @Autowired
     private PublicHoliday publicHoliday;
 
-    //TODO improve code so not to call the method every time
+    //TODO improve so not to call the method every time
     private List<String> getPublicHolidaysInYearList(int yearInt){
         String holidayData = publicHoliday.getData();
         List<String> publicHolidayList = new ArrayList<String>(Arrays.asList(holidayData.split(",")));

@@ -7,6 +7,7 @@ public class GoogleDataLoaderConfig {
     private String spreadsheetId;
     private Map<String, String> vacationRanges;
     private Map<String, String> offset;
+    private Map<String, String> positionCell;
 
     public String getSpreadsheetId() {
         return spreadsheetId;
@@ -30,5 +31,13 @@ public class GoogleDataLoaderConfig {
 
     public void setOffset(Map<String, String> offset) {
         this.offset = offset;
+    }
+
+    public Map<String, String> getPositionCell() {
+        return positionCell;
+    }
+
+    public void setPositionCell(Map<String, String> positionCell) {
+        this.positionCell = positionCell;
     }
 }

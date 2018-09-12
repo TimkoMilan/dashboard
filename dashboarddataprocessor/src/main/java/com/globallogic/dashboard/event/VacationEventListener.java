@@ -18,9 +18,15 @@ public class VacationEventListener implements EventListener<String>{
 
     private MonthUtil monthUtil;
 
-    public VacationEventListener(MonthUtil monthUtil, Integer offset) {
+    private Integer positionIndex = 2;
+
+
+    public VacationEventListener(MonthUtil monthUtil, Integer offset, Integer positionIndex) {
         this.monthUtil = monthUtil;
         this.offset = offset;
+        if(positionIndex != null){
+            this.positionIndex = positionIndex;
+        }
     }
 
     public void fireEvent(Event<String> event) {
@@ -31,7 +37,7 @@ public class VacationEventListener implements EventListener<String>{
         } else if (event instanceof EndEvent) {
             String teamName = context.get(0).toString();
             String userName = context.get(1).toString();
-            String position = context.get(3).toString();
+            String position = context.get(positionIndex).toString();
             if(!Strings.isNullOrEmpty(teamName)){
                 teamString = teamName;
             }
@@ -39,7 +45,7 @@ public class VacationEventListener implements EventListener<String>{
         } else if (event instanceof FinishEvent) {
             String teamName = context.get(0).toString();
             String userName = context.get(1).toString();
-            String position = context.get(3).toString();
+            String position = context.get(positionIndex).toString();
             if(!Strings.isNullOrEmpty(teamName)){
                 teamString = teamName;
             }

@@ -29,4 +29,11 @@ public class TeamUtil {
         teamNameDto.setFocus(team.getFocus());
         return teamNameDto;
     }
+
+    public static String processTeamNameString(String teamName) {
+        if(teamName.toLowerCase().contains("grape")){
+            return "Grape";
+        }
+        return teamName.trim();
+    }
 }

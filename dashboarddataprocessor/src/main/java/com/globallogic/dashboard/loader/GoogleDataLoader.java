@@ -115,8 +115,11 @@ public class GoogleDataLoader implements DataLoader {
             mu.setDays(days);
             mu.setMonthYear(Integer.parseInt(year));
 
+            Integer positionIndex = Integer.parseInt(googleDataLoaderConfig.getPositionCell().get(year));
+
+
             Processor<String> vacationProcessor = new Processor<>(new VacationStartDataEvaluator(), new VacationEndDataEvaluator());
-            VacationEventListener vacationEventListener = new VacationEventListener(mu, offset);
+            VacationEventListener vacationEventListener = new VacationEventListener(mu, offset, positionIndex);
             vacationProcessor.withEventListener(vacationEventListener);
             for (List<Object> vacation : listVacations) {
                 vacationProcessor.process(DataLoaderUtil.toListOfStrings(vacation));
