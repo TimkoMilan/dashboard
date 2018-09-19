@@ -12,4 +12,6 @@ public interface SprintDataService {
 
     void save(SprintData sprintData);
 
+    void deleteAllSprintData();
+
 }

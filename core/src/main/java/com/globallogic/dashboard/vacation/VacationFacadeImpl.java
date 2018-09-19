@@ -10,6 +10,9 @@ import com.globallogic.dashboard.sprint.SprintDto;
 import com.globallogic.dashboard.sprint.SprintService;
 import com.globallogic.dashboard.team.Team;
 import com.globallogic.dashboard.team.TeamService;
+import com.globallogic.dashboard.team.TeamUtil;
+import com.google.common.base.Strings;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,14 +57,11 @@ public class VacationFacadeImpl implements VacationFacade {
         for (VacationData vacationDatum : vacationData) {
             String name = vacationDatum.getName();
             Member member = memberService.findMemberBySearchString(MemberUtil.toSearchString(name));
-            if(!Objects.nonNull(member)){
-                member = new Member();
-                member.setName(vacationDatum.getName());
-                member.setPosition(vacationDatum.getPosition());
-                member.setSearchString(MemberUtil.toSearchString(member.getName()));
-                Team teamByName = teamService.finByTeamName(vacationDatum.getTeamName());
-                member.setTeam(teamByName);
-                member = memberRepository.save(member);
+            if(member == null){
+                member = createNewMember(vacationDatum);
+            }
+            else{
+                checkForChange(member, vacationDatum);
             }
             Vacation v = new Vacation();
             v.setMember(member);
@@ -71,5 +71,37 @@ public class VacationFacadeImpl implements VacationFacade {
         }
     }
 
+    private Member createNewMember(VacationData vacationDatum) {
+        Member member = new Member();
+        member.setName(vacationDatum.getName());
+        member.setPosition(vacationDatum.getPosition());
+        member.setSearchString(MemberUtil.toSearchString(member.getName()));
+        String teamName = TeamUtil.processTeamNameString(vacationDatum.getTeamName());
+        Team teamByName = teamService.findByTeamName(teamName);
+
+        if(teamByName == null){
+            System.out.println();
+        }
+
+        member.setTeam(teamByName);
+        member = memberRepository.save(member);
+        return member;
+    }
+
+
+    private void checkForChange(Member member, VacationData vacationDatum) {
+        Boolean hasChanged = false;
+        if (!Strings.isNullOrEmpty(vacationDatum.getPosition()) &&
+                !vacationDatum.getPosition().equals(member.getPosition())){
+            member.setPosition(vacationDatum.getPosition());
+            hasChanged = true;
+        }
+        if(!Objects.equals(vacationDatum.getTeamName(), member.getTeam().getName())){
+            hasChanged = true;
+        }
+        if(hasChanged){
+            memberRepository.save(member);
+        }
+    }
 
 }
