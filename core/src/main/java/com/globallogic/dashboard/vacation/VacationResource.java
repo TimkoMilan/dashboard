@@ -1,8 +1,11 @@
 package com.globallogic.dashboard.vacation;
 
+import com.globallogic.dashboard.user.Role;
+import com.globallogic.dashboard.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,13 +38,25 @@ public class VacationResource {
                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                   Date endDate
     ) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int memberTeamId= Math.toIntExact(user.getCurrentTeam().getId());
         VacationFilterDto vacationFilterDto = new VacationFilterDto();
-
         vacationFilterDto.setMemberId(memberId);
         vacationFilterDto.setSprintId(sprintId);
-        vacationFilterDto.setTeamId(teamId);
         vacationFilterDto.setStart(startDate);
         vacationFilterDto.setEnd(endDate);
+
+        for (Role role : user.getRoles()) {
+            if (role.getAuthority()=="ROLE_ADMIN"){
+                vacationFilterDto.setTeamId(teamId);
+                return vacationFacade.getVacations(vacationFilterDto);
+
+            }
+            else {
+                vacationFilterDto.setTeamId(String.valueOf(memberTeamId));
+            }
+        }
+
         return vacationFacade.getVacations(vacationFilterDto);
     }
 

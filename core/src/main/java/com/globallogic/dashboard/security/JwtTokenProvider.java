@@ -8,6 +8,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -44,6 +45,9 @@ public class JwtTokenProvider {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("email",user.getEmail());
+        if (user.getCurrentTeam()!=null){
+            claims.put("teamId",user.getCurrentTeam().getId());
+        }
         claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getName().name())).filter(Objects::nonNull).collect(Collectors.toList()));
 
         Date now = new Date();
