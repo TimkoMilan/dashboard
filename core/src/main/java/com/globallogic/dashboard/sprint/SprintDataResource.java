@@ -31,7 +31,7 @@ public class SprintDataResource {
                 sprintDataFilterDto.setTeamId(teamId);
                 return sprintDataFacade.getAllSprintData(sprintDataFilterDto);
             }
-            else {
+            else {//
                 int memberTeamId= Math.toIntExact(user.getCurrentTeam().getId());
                 sprintDataFilterDto.setTeamId(String.valueOf(memberTeamId));
             }
