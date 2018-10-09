@@ -8,6 +8,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${security.jwt.token.secret-key}")
+    @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
     @Value("${security.jwt.token.expire-length}")
@@ -44,6 +45,9 @@ public class JwtTokenProvider {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("email",user.getEmail());
+        if (user.getCurrentTeam()!=null){
+            claims.put("teamId",user.getCurrentTeam().getId());
+        }
         claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getName().name())).filter(Objects::nonNull).collect(Collectors.toList()));
 
         Date now = new Date();
@@ -69,8 +73,9 @@ public class JwtTokenProvider {
     public String getEmail(String token){
         return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");
     }
-
-
+    public Integer getTeamId(String token){
+        return (Integer) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("teamId");
+    }
 
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
