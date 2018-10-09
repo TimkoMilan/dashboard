@@ -1,10 +1,13 @@
 package com.globallogic.dashboard.loader;
 
+import java.util.Map;
+
 public class GoogleDataLoaderConfig {
-    private String monthRange;
-    private String daysRange;
-    private String vacationRange;
+
     private String spreadsheetId;
+    private Map<String, String> vacationRanges;
+    private Map<String, String> offset;
+    private Map<String, String> positionCell;
 
     public String getSpreadsheetId() {
         return spreadsheetId;
@@ -14,29 +17,27 @@ public class GoogleDataLoaderConfig {
         this.spreadsheetId = spreadsheetId;
     }
 
-    public String getMonthRange() {
-        return monthRange;
+    public Map<String, String> getVacationRanges() {
+        return vacationRanges;
     }
 
-    public void setMonthRange(String monthRange) {
-        this.monthRange = monthRange;
+    public void setVacationRanges(Map<String, String> vacationRanges) {
+        this.vacationRanges = vacationRanges;
     }
 
-    public String getDaysRange() {
-        return daysRange;
+    public Map<String, String> getOffset() {
+        return offset;
     }
 
-    public void setDaysRange(String daysRange) {
-        this.daysRange = daysRange;
+    public void setOffset(Map<String, String> offset) {
+        this.offset = offset;
     }
 
-    public String getVacationRange() {
-        return vacationRange;
+    public Map<String, String> getPositionCell() {
+        return positionCell;
     }
 
-    public void setVacationRange(String vacationRange) {
-        this.vacationRange = vacationRange;
+    public void setPositionCell(Map<String, String> positionCell) {
+        this.positionCell = positionCell;
     }
-
-
 }

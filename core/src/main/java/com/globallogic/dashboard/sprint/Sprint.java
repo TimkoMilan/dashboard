@@ -1,7 +1,6 @@
 package com.globallogic.dashboard.sprint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
@@ -29,7 +28,6 @@ public class Sprint implements Serializable {
     private Set<SprintData> sprintData;
 
 
-
     public Set<SprintData> getSprintData() {
         return sprintData;
     }
@@ -37,7 +35,6 @@ public class Sprint implements Serializable {
     public void setSprintData(Set<SprintData> sprintData) {
         this.sprintData = sprintData;
     }
-
 
 
     public Long getId() {

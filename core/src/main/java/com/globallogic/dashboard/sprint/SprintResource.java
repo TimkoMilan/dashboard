@@ -18,7 +18,7 @@ public class SprintResource {
     }
 
     @GetMapping
-    public List<SprintDto> getSprintByFilter(@RequestParam(required = false)String teamId,@RequestParam(required = false)String sprintId){
+    public List<SprintDto> getSprintByFilter(@RequestParam(required = false) String teamId, @RequestParam(required = false) String sprintId) {
         SprintFilterDto sprintFilterDto = new SprintFilterDto();
         sprintFilterDto.setSprintId(sprintId);
         sprintFilterDto.setTeamId(teamId);
@@ -27,7 +27,7 @@ public class SprintResource {
 
 
     @GetMapping("/names/")
-    public List<SprintDto> getSprintNameAndDate(){
+    public List<SprintDto> getSprintNameAndDate() {
         return sprintService.getSprintsName();
     }
 }

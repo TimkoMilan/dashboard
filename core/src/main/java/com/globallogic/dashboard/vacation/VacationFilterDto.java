@@ -1,5 +1,7 @@
 package com.globallogic.dashboard.vacation;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,9 +12,9 @@ public class VacationFilterDto implements Serializable {
     private String teamId;
 
     private String sprintId;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end;
 
     public Date getStart() {

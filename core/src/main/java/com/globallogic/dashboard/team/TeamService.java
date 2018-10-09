@@ -13,7 +13,7 @@ public interface TeamService {
 
     TeamDto findByTeamId(Long teamId);
 
-    Team finByTeamName(String name);
+    Team findByTeamName(String name);
 
     List<TeamNameDto> getTeamName();
 

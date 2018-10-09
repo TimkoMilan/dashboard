@@ -9,4 +9,5 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:config.properties")
 @Component
 public class GoogleDataLoaderConfigSpring extends GoogleDataLoaderConfig {
+
 }

@@ -7,16 +7,14 @@ public class VacationCreateDto implements Serializable {
 
     private Date start;
 
-    private Date end;
 
     private String month;
 
     private String memberName;
 
-    public VacationCreateDto(Vacation vacation){
+    public VacationCreateDto(Vacation vacation) {
         this.memberName = vacation.getMember().getName();
         this.start = vacation.getStart();
-        this.end = vacation.getEnd();
     }
 
 
@@ -36,14 +34,6 @@ public class VacationCreateDto implements Serializable {
         this.start = start;
     }
 
-    public Date getEnd() {
-        return end;
-    }
-
-    public void setEnd(Date end) {
-        this.end = end;
-    }
-
     public String getMemberName() {
         return memberName;
     }
@@ -56,7 +46,6 @@ public class VacationCreateDto implements Serializable {
     public String toString() {
         return "VacationCreateDto{" +
                 "start='" + start + '\'' +
-                ", end='" + end + '\'' +
                 ", memberName='" + memberName + '\'' +
                 '}';
     }

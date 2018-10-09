@@ -19,6 +19,7 @@ public class TeamUtil {
         teamDto.setSprint(team.getSprintDatumModels());
         teamDto.setMembers(team.getMembers());
         teamDto.setId(team.getId());
+        teamDto.setFte(team.getFte());
         return  teamDto;
     }
     public static TeamNameDto convertToTeamNameDto(Team team){
@@ -27,5 +28,12 @@ public class TeamUtil {
         teamNameDto.setTeamName(team.getName());
         teamNameDto.setFocus(team.getFocus());
         return teamNameDto;
+    }
+
+    public static String processTeamNameString(String teamName) {
+        if(teamName.toLowerCase().contains("grape")){
+            return "Grape";
+        }
+        return teamName.trim();
     }
 }

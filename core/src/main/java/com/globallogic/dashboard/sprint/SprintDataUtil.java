@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 class SprintDataUtil {
-    private SprintDataUtil(){
+    private SprintDataUtil() {
 
     }
-     static SprintDataDto convertToDto (SprintData sprintData){
+
+    static SprintDataDto convertToDto(SprintData sprintData) {
         SprintDataDto sprintDataDto = new SprintDataDto();
 
         sprintDataDto.setStoryPointsClosed(sprintData.getStoryPointsClosed());
@@ -19,11 +20,11 @@ class SprintDataUtil {
         return sprintDataDto;
     }
 
-    static List<SprintDataDto> convertToListdto(Iterable<SprintData> sprintData){
-       List<SprintDataDto> sprintDataDtos = new ArrayList<>();
-       for (SprintData sprintDatum : sprintData) {
-          sprintDataDtos.add(convertToDto(sprintDatum));
-            }
-       return  sprintDataDtos;
-       }
+    static List<SprintDataDto> convertToListdto(Iterable<SprintData> sprintData) {
+        List<SprintDataDto> sprintDataDtos = new ArrayList<>();
+        for (SprintData sprintDatum : sprintData) {
+            sprintDataDtos.add(convertToDto(sprintDatum));
+        }
+        return sprintDataDtos;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepository extends JpaRepository<Member,Long> {
 
         Member findMemberByNameIsLike(String member);
+        Member findMemberBySearchStringIsLike(String searchString);
 
 
 

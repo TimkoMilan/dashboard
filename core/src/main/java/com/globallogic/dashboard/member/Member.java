@@ -25,6 +25,7 @@ public class Member implements Serializable {
 
     private String searchString;
 
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "team_id")
@@ -32,6 +33,7 @@ public class Member implements Serializable {
 
     @OneToMany(mappedBy = "member")
     private Set<Vacation> vacations;
+
 
     public Long getId() {
         return id;

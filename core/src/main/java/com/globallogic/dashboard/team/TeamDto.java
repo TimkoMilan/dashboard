@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.team;
 
+import com.globallogic.dashboard.fte.Fte;
 import com.globallogic.dashboard.member.Member;
 import com.globallogic.dashboard.sprint.SprintData;
 
@@ -13,6 +14,8 @@ public class TeamDto implements Serializable {
     private String focus;
     private Set<Member> members;
     private Set<SprintData> sprint;
+    private Set<Fte> fte;
+
 
     public Long getId() {
         return id;
@@ -52,5 +55,13 @@ public class TeamDto implements Serializable {
 
     public void setSprint(Set<SprintData> sprint) {
         this.sprint = sprint;
+    }
+
+    public Set<Fte> getFte() {
+        return fte;
+    }
+
+    public void setFte(Set<Fte> fte) {
+        this.fte = fte;
     }
 }

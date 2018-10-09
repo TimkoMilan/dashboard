@@ -1,46 +1,109 @@
 package com.globallogic.dashboard.security;
 
+import com.globallogic.dashboard.user.RoleName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Bean
+    public AuthenticationManager customAuthenticationManager() throws Exception {
+        return authenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder(11);
+    }
+
+
+
+    private static final String[] AUTH_WHITELIST = {
+
+            // -- swagger ui
+            "/**/swagger-resources/**",
+            "/**/swagger-ui.html",
+            "/**/v2/api-docs",
+            "/**/webjars/**",
+            "/**/h2-console/**"
+    };
+
+    private static final String[] ADMIN_ENDPOINTS = {
+            "/**/users/addRegularUser/**",
+            "/**/users/promoteUserToAdmin/**"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
                 .authorizeRequests()
-                .antMatchers("/actuator/health","/actuator/info").hasRole("ADMIN")
-                .and()
-                .httpBasic()
-                .and()
-                .csrf().disable();
+                    .antMatchers("/",
+                            "/favicon.ico",
+                            "/**/*.png",
+                            "/**/*.gif",
+                            "/**/*.svg",
+                            "/**/*.jpg",
+                            "/**/*.html",
+                            "/**/*.css",
+                            "/**/*.js")
+                            .permitAll()
+                    .antMatchers(AUTH_WHITELIST)
+                        .permitAll()
+                    .antMatchers("/**/users/login/**")
+                        .permitAll()
+                    .antMatchers(ADMIN_ENDPOINTS)
+                        .hasRole("ADMIN")
+                    .anyRequest().hasAnyRole("ADMIN","USER")
+                    .and()
+                    .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
+                    .and().headers().frameOptions().disable()
+                    .and().cors()
+                    .and()
+                    .csrf().disable();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetails build = User.withDefaultPasswordEncoder().username("user").password("user").roles("USER").build();
-        auth
-                .inMemoryAuthentication()
-                .withUser(build);
-        UserDetails buildAdmin = User.withDefaultPasswordEncoder().username("admin").password("admin").roles("ADMIN").build();
-        auth
-                .inMemoryAuthentication()
-                .withUser(buildAdmin);
+    @Bean
+    public CorsFilter corsFilter() {
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("HEAD");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("PATCH");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
-
-    public void configure(WebSecurity web){
-        web.ignoring()
-                .antMatchers("/swagger-ui.html")
-                .antMatchers("/**");
-    }
 }
+

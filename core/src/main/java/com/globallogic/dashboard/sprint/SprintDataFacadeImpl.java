@@ -3,6 +3,7 @@ package com.globallogic.dashboard.sprint;
 import com.globallogic.dashboard.event.SprintGeneratedData;
 import com.globallogic.dashboard.loader.SprintLoader;
 import com.globallogic.dashboard.team.TeamService;
+import com.globallogic.dashboard.team.TeamUtil;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,11 +30,12 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
     @Override
     public void loadSprintData() {
         Set<SprintGeneratedData> sprintGeneratedData = loadSprintData.loadSprintData();
+        sprintDataService.deleteAllSprintData();
         for (SprintGeneratedData sprintDatum : sprintGeneratedData) {
             String sprintName = sprintDatum.getName();
             String teamName = sprintDatum.getTeamName();
-            List<SprintDataDto> sprints = sprintDataService.findAllBySprint_NameAndTeamName(teamName,sprintName);
-            if (sprints.isEmpty()){
+            List<SprintDataDto> sprints = sprintDataService.findAllBySprint_NameAndTeamName(teamName, sprintName);
+            if (sprints.isEmpty()) {
                 SprintData sprintData = new SprintData();
                 sprintData.setStoryPointsTaken(sprintDatum.getTaken());
                 sprintData.setStoryPointsClosed(sprintDatum.getCompleted());
@@ -48,16 +50,17 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
                     allBySprint_name = sprint;
                 }
                 sprintData.setSprint(allBySprint_name);
-                sprintData.setTeam(teamService.finByTeamName(sprintDatum.getTeamName()));
+                sprintData.setTeam(teamService
+                        .findByTeamName(TeamUtil.processTeamNameString(sprintDatum.getTeamName())));
                 sprintDataService.save(sprintData);
             }
         }
     }
+
     @Override
     public List<SprintDataDto> getAllSprintData(SprintDataFilterDto sprintDataFilterDto) {
         return sprintDataService.getAllSprintData(sprintDataFilterDto);
     }
-
 
 
     @Override

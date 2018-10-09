@@ -23,20 +23,19 @@ public class VacationService {
         } else {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
             if (vacationFilterDto.getMemberId() != null) {
-                for(String vacationMemberId : vacationFilterDto.getMemberId().split(","))
-                {
+                for (String vacationMemberId : vacationFilterDto.getMemberId().split(",")) {
                     booleanBuilder.or(QVacation.vacation.member.id.eq(Long.parseLong(vacationMemberId)));
                 }
             }
             if (vacationFilterDto.getTeamId() != null) {
-                for (String vacationTeamId : vacationFilterDto.getTeamId().split(","))
-                {
+                for (String vacationTeamId : vacationFilterDto.getTeamId().split(",")) {
                     booleanBuilder.or(QVacation.vacation.member.team.id.eq(Long.parseLong(vacationTeamId)));
                 }
             }
-            if (vacationFilterDto.getStart() != null){
-                    booleanBuilder.and(QVacation.vacation.start.lt(vacationFilterDto.getEnd()).and(QVacation.vacation.end.gt(vacationFilterDto.getStart())));
-                }
+            if (vacationFilterDto.getStart() != null) {
+                //booleanBuilder.and(QVacation.vacation.start.loe(vacationFilterDto.getEnd()).and(QVacation.vacation.end.goe(vacationFilterDto.getStart())));
+                booleanBuilder.and(QVacation.vacation.start.between(vacationFilterDto.getStart(), vacationFilterDto.getEnd()));
+            }
             return VacationUtil.convertToListDto(vacationRepository.findAll(booleanBuilder.getValue()));
         }
     }

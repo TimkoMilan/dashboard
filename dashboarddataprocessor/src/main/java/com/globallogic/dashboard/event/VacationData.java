@@ -5,8 +5,9 @@ import java.util.Date;
 public class VacationData {
     private String name;
     private Date from;
-    private Date to;
     private boolean isHalfDay;
+    private String teamName;
+    private String position;
 
 
     public String getName() {
@@ -17,9 +18,6 @@ public class VacationData {
         return from;
     }
 
-    public Date getTo() {
-        return to;
-    }
 
     public boolean isHalfDay() {
         return isHalfDay;
@@ -29,11 +27,20 @@ public class VacationData {
         isHalfDay = halfDay;
     }
 
-    public VacationData(String name, Date from, Date to,boolean isHalfDay) {
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public VacationData(String name, Date from, boolean isHalfDay, String teamName, String position) {
         this.name = name;
         this.from = from;
-        this.to = to;
         this.isHalfDay = isHalfDay;
+        this.teamName = teamName;
+        this.position = position;
     }
 
     @Override
@@ -41,8 +48,9 @@ public class VacationData {
         return "VacationData{" +
                 "name='" + name + '\'' +
                 ", from=" + from +
-                ", to=" + to +
                 ", isHalfDay=" + isHalfDay +
+                ", teamName='" + teamName + '\'' +
+                ", position='" + position + '\'' +
                 '}';
     }
 }

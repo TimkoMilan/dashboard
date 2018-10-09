@@ -12,10 +12,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SprintDataRepository extends QuerydslPredicateExecutor<SprintData> , QuerydslBinderCustomizer<QSprintData>, JpaRepository<SprintData,Long> {
+public interface SprintDataRepository extends QuerydslPredicateExecutor<SprintData>, QuerydslBinderCustomizer<QSprintData>, JpaRepository<SprintData, Long> {
 
     List<SprintData> findAllBySprint_Name(String sprintName);
-    List<SprintData>findAllByTeam_Name(String teamName);
+
+    List<SprintData> findAllByTeam_Name(String teamName);
+
     List<SprintData> findAllByTeam_NameAndSprint_Name(String teamName, String sprintId);
 
     @Override
