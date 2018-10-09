@@ -44,7 +44,7 @@ public class VacationResource {
                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                   Date endDate,
                                           ServletRequest req
-    ) {
+    ) {//
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VacationFilterDto vacationFilterDto = new VacationFilterDto();
         vacationFilterDto.setMemberId(memberId);
