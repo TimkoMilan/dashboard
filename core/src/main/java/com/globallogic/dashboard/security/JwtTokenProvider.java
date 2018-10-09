@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${security.jwt.token.secret-key}")
+    @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
     @Value("${security.jwt.token.expire-length}")
@@ -73,8 +73,9 @@ public class JwtTokenProvider {
     public String getEmail(String token){
         return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");
     }
-
-
+    public Integer getTeamId(String token){
+        return (Integer) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("teamId");
+    }
 
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
