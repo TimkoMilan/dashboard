@@ -11,8 +11,7 @@
 
     <properties>
         <querydsl.version>4.2.1</querydsl.version>
-    </properties>
-
+    </properties>+
 
     <artifactId>core</artifactId>
 
@@ -48,6 +47,13 @@
             <artifactId>commons-text</artifactId>
             <version>1.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
