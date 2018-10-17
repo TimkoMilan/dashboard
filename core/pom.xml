@@ -11,7 +11,8 @@
 
     <properties>
         <querydsl.version>4.2.1</querydsl.version>
-    </properties>+
+    </properties>
+
 
     <artifactId>core</artifactId>
 
