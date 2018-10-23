@@ -14,7 +14,8 @@ import java.util.Set;
 public class Team implements Serializable {
 
     @Id
-    @GeneratedValue
+//    @SequenceGenerator(name = "seq", initialValue = 1000)
+    @GeneratedValue//(generator = "seq")
     private Long id;
 
     private String name;
