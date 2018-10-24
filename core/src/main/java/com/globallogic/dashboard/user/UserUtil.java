@@ -1,6 +1,6 @@
 package com.globallogic.dashboard.user;
 
-public final class UserUtil {
+public  class UserUtil {
 
     private UserUtil(){}
 
