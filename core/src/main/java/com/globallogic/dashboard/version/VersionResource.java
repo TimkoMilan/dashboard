@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @PropertySource("classpath:/application.properties")
 @RestController
 @RequestMapping("version")
-public class versionResource {
+public class VersionResource {
     @Value("${server.version}") private String version;
     @Value("${server.version.releaseDate}")private String releaseDate;
 
