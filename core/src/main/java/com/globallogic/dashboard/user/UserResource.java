@@ -6,6 +6,7 @@ import com.globallogic.dashboard.user.payload.LoginResponse;
 import com.globallogic.dashboard.user.payload.UpdateTeamRequestDto;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import com.globallogic.dashboard.security.SecurityException;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 
 @RestController
@@ -96,5 +98,12 @@ public class UserResource {
         return ResponseEntity.ok(new UserInTokenResponse(jwtTokenProvider.getUsername(token),
                                                         jwtTokenProvider.getEmail(token)));
     }
-    
+    @DeleteMapping("/{id}")
+    public void removeUser(@PathVariable(value = "id") Long id){
+         userService.removeUser(id);
+    }
+    @PutMapping("/{id}")
+    public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserDto userDto){
+        userService.updateUserData(userDto,id);
+    }
 }

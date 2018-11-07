@@ -2,17 +2,22 @@ package com.globallogic.dashboard.user;
 
 
 import com.globallogic.dashboard.common.ServiceException;
+import com.globallogic.dashboard.security.JwtTokenProvider;
+import com.globallogic.dashboard.sprint.SprintDataFilterDto;
 import com.globallogic.dashboard.team.Team;
 
 import com.globallogic.dashboard.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -28,6 +33,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public UserDto newUser(UserDto userDto) {
@@ -54,6 +62,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
         return true;
     }
+
+
+
+
+    @Override
+    public void removeUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUserData(UserDto userDto, Long id) {
+        Optional<User> users =  userRepository.findById(id);
+        if (users.isPresent()){
+            User user = users.get();
+            user.setUsername(userDto.getUsername());
+            user.setPassword(userDto.getPassword());
+            user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
+            user.setEmail(userDto.getEmail());
+            userRepository.save(user);
+        }
+    }
+
+
 
 
     @Override
