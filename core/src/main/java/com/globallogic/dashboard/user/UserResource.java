@@ -17,7 +17,6 @@ import com.globallogic.dashboard.security.SecurityException;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +99,14 @@ public class UserResource {
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
         return ResponseEntity.ok(new UserInTokenResponse(jwtTokenProvider.getUsername(token),
                                                         jwtTokenProvider.getEmail(token)));
+    }
+    @DeleteMapping("/{id}")
+    public void removeUser(@PathVariable(value = "id") Long id){
+         userService.removeUser(id);
+    }
+    @PutMapping("/{id}")
+    public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserDto userDto){
+        userService.updateUserData(userDto,id);
     }
     @GetMapping("{userId}/getById")
     public UserDto getUserById(@PathVariable(value = "userId") Long userId){
