@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -28,6 +31,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    private UserUtil userUtil;
 
     @Override
     public UserDto newUser(UserDto userDto) {
@@ -54,6 +59,42 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
         return true;
     }
+
+    @Override
+    public UserDto findById(Long userId) {
+        User user=userRepository.getOne(userId);
+        return UserUtil.convertUserToUserDto(user);
+
+    }
+
+    @Override
+    public List<UserDto> getAll() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(UserUtil::convertUserToUserDto).collect(Collectors.toList());
+    }
+
+
+
+
+    @Override
+    public void removeUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUserData(UserDto userDto, Long id) {
+        Optional<User> users =  userRepository.findById(id);
+        if (users.isPresent()){
+            User user = users.get();
+            user.setUsername(userDto.getUsername());
+            user.setPassword(userDto.getPassword());
+            user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
+            user.setEmail(userDto.getEmail());
+            userRepository.save(user);
+        }
+    }
+
+
 
 
     @Override

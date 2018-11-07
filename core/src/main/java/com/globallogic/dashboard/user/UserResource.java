@@ -18,6 +18,7 @@ import com.globallogic.dashboard.security.SecurityException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
@@ -30,11 +31,14 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
+    private UserUtil util;
+
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
 
 
     @PostMapping("login")
@@ -96,5 +100,20 @@ public class UserResource {
         return ResponseEntity.ok(new UserInTokenResponse(jwtTokenProvider.getUsername(token),
                                                         jwtTokenProvider.getEmail(token)));
     }
-    
+    @DeleteMapping("/{id}")
+    public void removeUser(@PathVariable(value = "id") Long id){
+         userService.removeUser(id);
+    }
+    @PutMapping("/{id}")
+    public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserDto userDto){
+        userService.updateUserData(userDto,id);
+    }
+    @GetMapping("{userId}/getById")
+    public UserDto getUserById(@PathVariable(value = "userId") Long userId){
+        return userService.findById(userId);
+    }
+    @GetMapping("getAll")
+    public List<UserDto> getAllUser(){
+        return userService.getAll();
+    }
 }
