@@ -32,15 +32,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
-    private UserUtil userUtil;
-
     @Override
     public UserDto newUser(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)//TODO fasada
                 .orElseThrow(() -> new ServiceException("User Role has not been set."));
         user.setRoles(Collections.singleton(userRole));
         user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));

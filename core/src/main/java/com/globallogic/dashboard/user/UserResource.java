@@ -100,6 +100,7 @@ public class UserResource {
         return ResponseEntity.ok(new UserInTokenResponse(jwtTokenProvider.getUsername(token),
                                                         jwtTokenProvider.getEmail(token)));
     }
+
     @DeleteMapping("/{id}")
     public void removeUser(@PathVariable(value = "id") Long id){
          userService.removeUser(id);
@@ -108,7 +109,7 @@ public class UserResource {
     public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserDto userDto){
         userService.updateUserData(userDto,id);
     }
-    @GetMapping("{userId}/getById")
+    @GetMapping("{userId}")
     public UserDto getUserById(@PathVariable(value = "userId") Long userId){
         return userService.findById(userId);
     }
