@@ -18,7 +18,10 @@ public class User implements Serializable, UserDetails {
     @GeneratedValue
     private Long id;
 
-    private String username;
+    private String firstName;
+
+    private String lastName;
+
     @JsonIgnore
     private String password;
 
@@ -27,7 +30,6 @@ public class User implements Serializable, UserDetails {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team currentTeam;
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -59,6 +61,11 @@ public class User implements Serializable, UserDetails {
         return password;
     }
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -72,10 +79,21 @@ public class User implements Serializable, UserDetails {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstName() {
+        return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -97,9 +115,6 @@ public class User implements Serializable, UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public Set<Role> getRoles() {
         return roles;
