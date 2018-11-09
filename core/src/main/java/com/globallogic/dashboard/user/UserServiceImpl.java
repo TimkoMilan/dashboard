@@ -35,7 +35,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDto newUser(UserDto userDto) {
         User user = new User();
-        user.setUsername(userDto.getUsername());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)//TODO fasada
@@ -71,9 +72,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return users.stream().map(UserUtil::convertUserToUserDto).collect(Collectors.toList());
     }
 
-
-
-
     @Override
     public void removeUser(Long id) {
         userRepository.deleteById(id);
@@ -84,7 +82,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Optional<User> users =  userRepository.findById(id);
         if (users.isPresent()){
             User user = users.get();
-            user.setUsername(userDto.getUsername());
+            user.setFirstName(userDto.getFirstName());
+            user.setLastName(userDto.getLastName());
             user.setPassword(userDto.getPassword());
             user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
             user.setEmail(userDto.getEmail());
@@ -92,12 +91,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
-
-
-
     @Override
     public UserDetails loadUserByUsername(String username) {
-        final User byUsername = userRepository.findByUsername(username);
+
+        User user=userRepository.findByEmail(username);
+        final User byUsername = userRepository.findByEmail(user.getEmail());
         if (byUsername == null) {
             throw new UsernameNotFoundException("User not found for username:" + username);
         }
