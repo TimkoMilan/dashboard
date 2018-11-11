@@ -57,12 +57,6 @@ public class UserResource {
                     "exists. Select another email."),
                     HttpStatus.BAD_REQUEST);
         }
-
-//        if(userRepository.existsByEmail(userDto.getEmail())) {
-//            return new ResponseEntity(new ApiResponse(false, "A user with the same email already" +
-//                    "exists. Select another email."),
-//                    HttpStatus.BAD_REQUEST);
-//        }
         UserDto userRegisterResponse = userService.newUser(userDto);
         return ResponseEntity.ok(userRegisterResponse);
     }
