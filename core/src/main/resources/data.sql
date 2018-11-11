@@ -1,11 +1,11 @@
 INSERT INTO PUBLIC.TEAM(ID, FOCUS, NAME) VALUES
-  (1, 'string', 'Manatee'),//44
-  (2, 'string', 'Beach Blonde'),//45
-  (3, 'string', 'Sunny Beach'),//46
-  (4, 'string', 'Chill Factory'),//47
-  (5, 'string', 'Grape'),//48
-  (6, 'string', 'N/A'),//49
-  (7, 'string', 'Labs');//50
+  (1, 'string', 'Manatee'),
+  (2, 'string', 'Beach Blonde'),
+  (3, 'string', 'Sunny Beach'),
+  (4, 'string', 'Chill Factory'),
+  (5, 'string', 'Grape'),
+  (6, 'string', 'N/A'),
+  (7, 'string', 'Labs');
 INSERT INTO PUBLIC.MEMBER(ID, BILLING_VALUE, FOCUS, NAME, POSITION, SEARCH_STRING, TEAM_ID) VALUES
   (1, NULL, NULL, 'Marcel Bodnar', 'java', 'marcelbodnar', 1),
   (2, NULL, NULL, 'Marian Kresak', 'node js / web ui', 'mariankresak', 1),
@@ -62,6 +62,7 @@ INSERT INTO PUBLIC.USER(ID, EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, TEAM_ID) VAL
   (1, 'admin@email.com', 'admin', 'admin', '$2a$11$qwDZtD8OSyaQ5aeL.leCoOycbRTy6rO.9FFLxFFOQ2cFtL/ZZkNw.', NULL);
 INSERT INTO PUBLIC.ROLE(ID, NAME) VALUES
   (1, 'ROLE_USER'),
-  (2, 'ROLE_ADMIN');
+  (2, 'ROLE_ADMIN'),
+  (3, 'ROLE_TEAMLEADER');
 INSERT INTO PUBLIC.USER_ROLES(USER_ID, ROLE_ID) VALUES
   (1, 2);

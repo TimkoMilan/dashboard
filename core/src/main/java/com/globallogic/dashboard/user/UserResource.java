@@ -51,7 +51,7 @@ public class UserResource {
     }
 
     @PostMapping("addRegularUser")
-    public ResponseEntity<?> addRegularUser(@RequestBody UserDto userDto){
+    public ResponseEntity<?> addRegularUser(@RequestBody UserCreateDto userDto){
         if(userRepository.existsByEmail(userDto.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
                     "exists. Select another email."),
@@ -97,7 +97,7 @@ public class UserResource {
     }
 
     @PutMapping("/{id}")
-    public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserDto userDto){
+    public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserCreateDto userDto){
         userService.updateUserData(userDto,id);
     }
 

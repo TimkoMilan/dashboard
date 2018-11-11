@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDto newUser(UserDto userDto);
+    UserDto newUser(UserCreateDto userDto);
     Boolean updateTeam(Long userId, Long teamId);
     UserDto findById(Long userId);
     List<UserDto> getAll();
     void removeUser(Long id);
-    void updateUserData(UserDto userDto,Long id);
+    void updateUserData(UserCreateDto userDto,Long id);
 }
