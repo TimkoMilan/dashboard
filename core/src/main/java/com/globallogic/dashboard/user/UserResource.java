@@ -1,9 +1,11 @@
 package com.globallogic.dashboard.user;
 
+import com.globallogic.dashboard.common.ApiResponse;
 import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.payload.LoginResponse;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,15 +52,15 @@ public class UserResource {
     }
 
     @PostMapping("addRegularUser")
-    public void addRegularUser(@RequestBody UserCreateDto userDto){
+    public ResponseEntity addRegularUser(@RequestBody UserCreateDto userDto){
         if(userRepository.existsByEmail(userDto.getEmail())) {
-//            return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
-//                    "exists. Select another email."),
-//                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
+                    "exists. Select another email."),
+                    HttpStatus.BAD_REQUEST);
         }
-        userService.newUser(userDto);
-//        UserDto userRegisterResponse = userService.newUser(userDto);
-//        return ResponseEntity.ok(userRegisterResponse);
+        userFacade.createUser(userDto);
+        UserDto userRegisterResponse = userService.newUser(userDto);
+        return ResponseEntity.ok(userRegisterResponse);
     }
 
     @GetMapping("getUserNameFromToken")
@@ -87,7 +89,7 @@ public class UserResource {
 
     @PutMapping("/{id}")
     public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserCreateDto userDto){
-        userFacade.updateUser(userDto,id);
+    userFacade.updateUser(userDto, id);
     }
 
     @GetMapping("{userId}")

@@ -1,26 +1,31 @@
 package com.globallogic.dashboard.user;
 
-import com.globallogic.dashboard.common.ServiceException;
 import com.globallogic.dashboard.team.TeamRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
 
 @Service
 public class UserFacade {
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private static final Logger log = LoggerFactory.getLogger(UserFacade.class);
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private TeamRepository teamRepository;
     @Autowired
     private PasswordEncoder encoder;
+    @Autowired
+    private RoleService roleService;
 
+    @Transactional
     public void updateUser(UserCreateDto userDto, Long id) {
         Optional<User> users = userRepository.findById(id);
         if (users.isPresent()) {
@@ -34,21 +39,24 @@ public class UserFacade {
                 user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
             }
             user.setEmail(userDto.getEmail());
-
             String role = userDto.getRoleName();
-            if (role.equals("ROLE_ADMIN")) {
-                Role userRole = roleRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new ServiceException("User Role has not been set."));
-                user.setRoles(Collections.singleton(userRole));
-            } else if (role.equals("ROLE_USER")) {
-                Role userRole = roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new ServiceException("Admin Role has not been set."));
-                user.setRoles(Collections.singleton(userRole));
-            } else if (role.equals("ROLE_TEAMLEADER")) {
-                Role userRole = roleRepository.findByName(RoleName.ROLE_TEAMLEADER).orElseThrow(() -> new ServiceException("TeamLeader Role has not been set."));
-                user.setRoles(Collections.singleton(userRole));
-            }
-            userRepository.save(user);
+
+            user.setRoles(Collections.singleton(roleService.setRole(role)));
+
         }
+    }
 
+    @Transactional
+    public void createUser(UserCreateDto userDto){
+        User user = new User();
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(encoder.encode(userDto.getPassword()));
 
+        user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
+        String role = userDto.getRoleName();
+        user.setRoles(Collections.singleton(roleService.setRole(role)));
+        userRepository.save(user);
     }
 }
