@@ -1,12 +1,9 @@
 package com.globallogic.dashboard.user;
 
-import com.globallogic.dashboard.common.ApiResponse;
 import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.payload.LoginResponse;
-import com.globallogic.dashboard.user.payload.UpdateTeamRequestDto;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import com.globallogic.dashboard.security.SecurityException;
 
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -37,6 +33,9 @@ public class UserResource {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserFacade userFacade;
+
     @PostMapping("login")
     public ResponseEntity<LoginResponse> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
@@ -51,25 +50,15 @@ public class UserResource {
     }
 
     @PostMapping("addRegularUser")
-    public ResponseEntity<?> addRegularUser(@RequestBody UserCreateDto userDto){
+    public void addRegularUser(@RequestBody UserCreateDto userDto){
         if(userRepository.existsByEmail(userDto.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
-                    "exists. Select another email."),
-                    HttpStatus.BAD_REQUEST);
+//            return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
+//                    "exists. Select another email."),
+//                    HttpStatus.BAD_REQUEST);
         }
-        UserDto userRegisterResponse = userService.newUser(userDto);
-        return ResponseEntity.ok(userRegisterResponse);
-    }
-
-    @PostMapping("updateUserTeam")
-    public ResponseEntity<?> updateUserTeam(@RequestBody UpdateTeamRequestDto updateTeamRequestDto){
-        if(userService.updateTeam(updateTeamRequestDto.getUserId(), updateTeamRequestDto.getTeamId()))
-        {
-            return ResponseEntity.ok(new ApiResponse(true, "User updated"));
-        }
-        else{
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed updating user"));
-        }
+        userService.newUser(userDto);
+//        UserDto userRegisterResponse = userService.newUser(userDto);
+//        return ResponseEntity.ok(userRegisterResponse);
     }
 
     @GetMapping("getUserNameFromToken")

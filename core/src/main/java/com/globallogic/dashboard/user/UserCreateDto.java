@@ -12,8 +12,6 @@ public class UserCreateDto implements Serializable{
     private String password;
     private String email;
     private Long teamId;
-    @JsonIgnore
-    private String teamName;
     private String roleName;
 
     public Long getId() {
@@ -62,14 +60,6 @@ public class UserCreateDto implements Serializable{
 
     public void setTeamId(Long teamId) {
         this.teamId = teamId;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
     }
 
     public String getRoleName() {
