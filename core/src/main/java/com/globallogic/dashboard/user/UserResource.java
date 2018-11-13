@@ -87,7 +87,7 @@ public class UserResource {
 
     @PutMapping("/{id}")
     public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserCreateDto userDto){
-        userService.updateUserData(userDto,id);
+        userFacade.updateUser(userDto,id);
     }
 
     @GetMapping("{userId}")

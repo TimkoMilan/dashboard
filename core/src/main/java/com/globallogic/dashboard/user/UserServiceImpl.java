@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         String role = userDto.getRoleName();
         user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
-        userFacade.setRole(role,user);
+//        userFacade.setRole(role,user);
         return null;
     }
 
@@ -78,20 +78,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDto updateUserData(UserCreateDto userDto, Long id) {
+    public void updateUserData(UserCreateDto userDto, Long id) {
         Optional<User> users =  userRepository.findById(id);
         if (users.isPresent()){
             User user = users.get();
             user.setFirstName(userDto.getFirstName());
             user.setLastName(userDto.getLastName());
-            user.setPassword(userDto.getPassword());
+            user.setPassword(encoder.encode(userDto.getPassword()));
             user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
             user.setEmail(userDto.getEmail());
 
             String role=userDto.getRoleName();
-            userFacade.setRole(role,user);
+//            userFacade.setRole(role,user);
         }
-        return null;
     }
 
     @Override
