@@ -3,7 +3,6 @@ package com.globallogic.dashboard.user;
 import com.globallogic.dashboard.common.ApiResponse;
 import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.payload.LoginResponse;
-import com.globallogic.dashboard.user.payload.UpdateTeamRequestDto;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +17,11 @@ import com.globallogic.dashboard.security.SecurityException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
 public class UserResource {
-
 
     @Autowired
     private UserRepository userRepository;
@@ -36,14 +35,16 @@ public class UserResource {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserFacade userFacade;
 
     @PostMapping("login")
-    public ResponseEntity<LoginResponse> login(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public ResponseEntity<LoginResponse> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
-            User user = (User) authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password)).getPrincipal();
+            User user = (User) authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password)).getPrincipal();
             LoginResponse response =
                     new LoginResponse(jwtTokenProvider
-                            .createToken(user, new ArrayList<>(userRepository.findByUsername(username).getRoles())));
+                            .createToken(user, new ArrayList<>(userRepository.findByEmail(email).getRoles())));
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
             throw new SecurityException("Invalid username/password supplied");
@@ -51,31 +52,15 @@ public class UserResource {
     }
 
     @PostMapping("addRegularUser")
-    public ResponseEntity<?> addRegularUser(@RequestBody UserDto userDto){
-        if(userRepository.existsByUsername(userDto.getUsername())) {
-            return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
-                    "exists. Select another username."),
-                    HttpStatus.BAD_REQUEST);
-        }
-
+    public ResponseEntity addRegularUser(@RequestBody UserCreateDto userDto){
         if(userRepository.existsByEmail(userDto.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "A user with the same email already" +
+            return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
                     "exists. Select another email."),
                     HttpStatus.BAD_REQUEST);
         }
+        userFacade.createUser(userDto);
         UserDto userRegisterResponse = userService.newUser(userDto);
         return ResponseEntity.ok(userRegisterResponse);
-    }
-
-    @PostMapping("updateUserTeam")
-    public ResponseEntity<?> updateUserTeam(@RequestBody UpdateTeamRequestDto updateTeamRequestDto){
-        if(userService.updateTeam(updateTeamRequestDto.getUserId(), updateTeamRequestDto.getTeamId()))
-        {
-            return ResponseEntity.ok(new ApiResponse(true, "User updated"));
-        }
-        else{
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed updating user"));
-        }
     }
 
     @GetMapping("getUserNameFromToken")
@@ -96,5 +81,24 @@ public class UserResource {
         return ResponseEntity.ok(new UserInTokenResponse(jwtTokenProvider.getUsername(token),
                                                         jwtTokenProvider.getEmail(token)));
     }
-    
+
+    @DeleteMapping("/{id}")
+    public void removeUser(@PathVariable(value = "id") Long id){
+         userService.removeUser(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserUpdateDto userDto){
+    userFacade.updateUser(userDto, id);
+    }
+
+    @GetMapping("{userId}")
+    public UserDto getUserById(@PathVariable(value = "userId") Long userId){
+        return userService.findById(userId);
+    }
+
+    @GetMapping("getAll")
+    public List<UserDto> getAllUser(){
+        return userService.getAll();
+    }
 }

@@ -3,19 +3,18 @@ package com.globallogic.dashboard.sprint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
+@SequenceGenerator(name="seqSprint", initialValue=1000, allocationSize=1,sequenceName ="seqsprint" )
+
 public class Sprint implements Serializable {
 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqSprint")
     @Id
-    @GeneratedValue
     private Long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start;

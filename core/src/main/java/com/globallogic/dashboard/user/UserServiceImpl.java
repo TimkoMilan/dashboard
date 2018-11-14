@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -21,27 +21,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
     private TeamRepository teamRepository;
 
-    @Autowired
-    private PasswordEncoder encoder;
-
     @Override
-    public UserDto newUser(UserDto userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(encoder.encode(userDto.getPassword()));
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                .orElseThrow(() -> new ServiceException("User Role has not been set."));
-        user.setRoles(Collections.singleton(userRole));
-        user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
-
-        User result = userRepository.save(user);
-        return UserUtil.convertUserToUserDto(result);
+    public UserDto newUser(UserCreateDto userDto) {
+        return null;
     }
 
     @Override
@@ -55,10 +39,34 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return true;
     }
 
+    @Override
+    public UserDto findById(Long userId) {
+        User user=userRepository.getOne(userId);
+        return UserUtil.convertUserToUserDto(user);
+
+    }
+
+    @Override
+    public List<UserDto> getAll() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(UserUtil::convertUserToUserDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public void removeUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUserData(UserCreateDto userDto, Long id) {
+
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        final User byUsername = userRepository.findByUsername(username);
+
+        User user=userRepository.findByEmail(username);
+        final User byUsername = userRepository.findByEmail(user.getEmail());
         if (byUsername == null) {
             throw new UsernameNotFoundException("User not found for username:" + username);
         }

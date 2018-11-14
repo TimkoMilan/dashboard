@@ -45,8 +45,12 @@ public class JwtTokenProvider {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("email",user.getEmail());
+
         if (user.getCurrentTeam()!=null){
             claims.put("teamId",user.getCurrentTeam().getId());
+            claims.put("teamName",user.getCurrentTeam().getName());
+        }else {
+            claims.put("teamName","NULL");
         }
         claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getName().name())).filter(Objects::nonNull).collect(Collectors.toList()));
 

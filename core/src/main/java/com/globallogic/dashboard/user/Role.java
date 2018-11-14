@@ -7,10 +7,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@SequenceGenerator(name="seqRole", initialValue=1000, allocationSize=1,sequenceName ="seqrole" )
 public class Role implements Serializable  , GrantedAuthority {
 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqRole")
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)

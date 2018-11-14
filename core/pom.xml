@@ -8,10 +8,10 @@
         <groupId>com.globallogic</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
     <properties>
         <querydsl.version>4.2.1</querydsl.version>
-    </properties>+
+    </properties>
+
 
     <artifactId>core</artifactId>
 

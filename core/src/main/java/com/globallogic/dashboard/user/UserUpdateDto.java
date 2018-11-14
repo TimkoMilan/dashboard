@@ -3,41 +3,15 @@ package com.globallogic.dashboard.user;
 import java.io.Serializable;
 import java.util.Set;
 
-public class UserDto implements Serializable {
+public class UserUpdateDto implements Serializable{
 
-    private Long id;
     private String firstName;
     private String lastName;
     private String password;
     private String email;
     private Long teamId;
     private String teamName;
-    private Set<Role> roles;
-
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
+    private String roleName;
 
     public String getFirstName() {
         return firstName;
@@ -77,5 +51,21 @@ public class UserDto implements Serializable {
 
     public void setTeamId(Long teamId) {
         this.teamId = teamId;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

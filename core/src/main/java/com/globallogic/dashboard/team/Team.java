@@ -11,10 +11,12 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
+@SequenceGenerator(name="seqTeam", initialValue=1000, allocationSize=1,sequenceName ="seqteam" )
 public class Team implements Serializable {
 
+
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqTeam")
     @Id
-    @GeneratedValue
     private Long id;
 
     private String name;
