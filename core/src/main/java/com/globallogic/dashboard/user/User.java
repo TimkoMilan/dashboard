@@ -12,10 +12,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
+@SequenceGenerator(name="seqUser", initialValue=1000, allocationSize=1,sequenceName ="ssequser" )
 public class User implements Serializable, UserDetails {
 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqUser")
     @Id
-    @GeneratedValue
     private Long id;
 
     private String firstName;

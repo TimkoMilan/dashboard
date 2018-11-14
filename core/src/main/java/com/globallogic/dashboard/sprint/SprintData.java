@@ -2,18 +2,16 @@ package com.globallogic.dashboard.sprint;
 
 import com.globallogic.dashboard.team.Team;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
+@SequenceGenerator(name="seqSprintData", initialValue=1000, allocationSize=1,sequenceName ="seqsprintdata" )
 public class SprintData implements Serializable {
 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqSprintData")
     @Id
-    @GeneratedValue
     private Long id;
 
     private float storyPointsTaken;

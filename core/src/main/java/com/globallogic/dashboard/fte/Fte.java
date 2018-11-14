@@ -7,10 +7,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@SequenceGenerator(name="seqFte", initialValue=1000, allocationSize=1,sequenceName ="seqfte" )
 public class Fte implements Serializable {
 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqFte")
     @Id
-    @GeneratedValue
     private Long id;
 
     @JsonIgnore

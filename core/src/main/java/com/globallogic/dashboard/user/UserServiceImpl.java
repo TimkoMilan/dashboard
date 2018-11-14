@@ -9,13 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -24,28 +21,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
     private TeamRepository teamRepository;
 
-    @Autowired
-    private PasswordEncoder encoder;
-
     @Override
-    public UserDto newUser(UserDto userDto) {
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(encoder.encode(userDto.getPassword()));
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)//TODO fasada
-                .orElseThrow(() -> new ServiceException("User Role has not been set."));
-        user.setRoles(Collections.singleton(userRole));
-        user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
-
-        User result = userRepository.save(user);
-        return UserUtil.convertUserToUserDto(result);
+    public UserDto newUser(UserCreateDto userDto) {
+        return null;
     }
 
     @Override
@@ -78,17 +58,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void updateUserData(UserDto userDto, Long id) {
-        Optional<User> users =  userRepository.findById(id);
-        if (users.isPresent()){
-            User user = users.get();
-            user.setFirstName(userDto.getFirstName());
-            user.setLastName(userDto.getLastName());
-            user.setPassword(userDto.getPassword());
-            user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
-            user.setEmail(userDto.getEmail());
-            userRepository.save(user);
-        }
+    public void updateUserData(UserCreateDto userDto, Long id) {
+
     }
 
     @Override
