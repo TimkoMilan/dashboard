@@ -26,7 +26,7 @@ public class UserFacade {
     private RoleService roleService;
 
     @Transactional
-    public void updateUser(UserCreateDto userDto, Long id) {
+    public void updateUser(UserUpdateDto userDto, Long id) {
         Optional<User> users = userRepository.findById(id);
         if (users.isPresent()) {
             User user = users.get();
