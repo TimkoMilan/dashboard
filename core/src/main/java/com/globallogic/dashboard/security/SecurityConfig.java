@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .antMatchers(ADMIN_ENDPOINTS)
                         .hasRole("ADMIN")
-                    .anyRequest().hasAnyRole("ADMIN","USER")
+                    .anyRequest().hasAnyRole("ADMIN","USER","TEAMLEADER")
                     .and()
                     .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
                     .and().headers().frameOptions().disable()
