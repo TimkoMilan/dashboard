@@ -14,9 +14,9 @@ public class SprintData implements Serializable {
     @Id
     private Long id;
 
-    private float storyPointsTaken;
+    private Float storyPointsTaken;
 
-    private float storyPointsClosed;
+    private Float storyPointsClosed;
 
     @ManyToOne
     private Team team;

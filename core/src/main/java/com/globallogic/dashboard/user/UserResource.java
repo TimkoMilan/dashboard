@@ -5,6 +5,7 @@ import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.payload.LoginResponse;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +39,7 @@ public class UserResource {
     @Autowired
     private UserFacade userFacade;
 
+    @Role(1)
     @PostMapping("login")
     public ResponseEntity<LoginResponse> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
@@ -49,6 +51,7 @@ public class UserResource {
         } catch (AuthenticationException e) {
             throw new SecurityException("Invalid username/password supplied");
         }
+
     }
 
     @PostMapping("addRegularUser")
