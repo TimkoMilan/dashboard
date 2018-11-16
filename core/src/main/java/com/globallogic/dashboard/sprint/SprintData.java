@@ -14,9 +14,9 @@ public class SprintData implements Serializable {
     @Id
     private Long id;
 
-    private Float storyPointsTaken;
+    private Double storyPointsTaken;
 
-    private Float storyPointsClosed;
+    private Double storyPointsClosed;
 
     @ManyToOne
     private Team team;
@@ -37,19 +37,19 @@ public class SprintData implements Serializable {
         this.id = id;
     }
 
-    public float getStoryPointsTaken() {
+    public Double getStoryPointsTaken() {
         return storyPointsTaken;
     }
 
-    public void setStoryPointsTaken(float storyPointsTaken) {
+    public void setStoryPointsTaken(Double storyPointsTaken) {
         this.storyPointsTaken = storyPointsTaken;
     }
 
-    public float getStoryPointsClosed() {
+    public Double getStoryPointsClosed() {
         return storyPointsClosed;
     }
 
-    public void setStoryPointsClosed(float storyPointsClosed) {
+    public void setStoryPointsClosed(Double storyPointsClosed) {
         this.storyPointsClosed = storyPointsClosed;
     }
 
