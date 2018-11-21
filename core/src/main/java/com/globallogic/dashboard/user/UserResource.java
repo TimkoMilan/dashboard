@@ -5,8 +5,10 @@ import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.payload.LoginResponse;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -38,6 +40,7 @@ public class UserResource {
     @Autowired
     private UserFacade userFacade;
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("login")
     public ResponseEntity<LoginResponse> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
@@ -49,6 +52,7 @@ public class UserResource {
         } catch (AuthenticationException e) {
             throw new SecurityException("Invalid username/password supplied");
         }
+
     }
 
     @PostMapping("addRegularUser")
@@ -81,7 +85,12 @@ public class UserResource {
         return ResponseEntity.ok(new UserInTokenResponse(jwtTokenProvider.getUsername(token),
                                                         jwtTokenProvider.getEmail(token)));
     }
+    @GetMapping("{userId}")
+    public UserDto getUserById(@PathVariable(value = "userId") Long userId){
+        return userService.findById(userId);
+    }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void removeUser(@PathVariable(value = "id") Long id){
          userService.removeUser(id);
@@ -90,11 +99,6 @@ public class UserResource {
     @PutMapping("/{id}")
     public void updateUserData(@PathVariable(value = "id") Long id ,@RequestBody UserUpdateDto userDto){
     userFacade.updateUser(userDto, id);
-    }
-
-    @GetMapping("{userId}")
-    public UserDto getUserById(@PathVariable(value = "userId") Long userId){
-        return userService.findById(userId);
     }
 
     @GetMapping("getAll")

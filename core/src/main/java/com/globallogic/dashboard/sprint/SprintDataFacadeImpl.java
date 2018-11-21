@@ -37,8 +37,8 @@ public class SprintDataFacadeImpl implements SprintDataFacade {
             List<SprintDataDto> sprints = sprintDataService.findAllBySprint_NameAndTeamName(teamName, sprintName);
             if (sprints.isEmpty()) {
                 SprintData sprintData = new SprintData();
-                sprintData.setStoryPointsTaken(sprintDatum.getTaken());
-                sprintData.setStoryPointsClosed(sprintDatum.getCompleted());
+                sprintData.setStoryPointsTaken((double) sprintDatum.getTaken());
+                sprintData.setStoryPointsClosed((double) sprintDatum.getCompleted());
                 String sprintsName = sprintDatum.getName();
                 Sprint allBySprint_name = sprintService.findByName(sprintName);
                 if (allBySprint_name == null) {

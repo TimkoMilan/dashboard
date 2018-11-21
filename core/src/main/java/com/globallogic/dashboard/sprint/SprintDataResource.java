@@ -38,7 +38,7 @@ public class SprintDataResource {
         Integer memberTeamId=jwtTokenProvider.getTeamId(token);
 
         for (Role role : user.getRoles()) {
-            if (role.getAuthority().equals("ROLE_ADMIN")){
+            if (role.getAuthority().equals("ROLE_ADMIN") || role.getAuthority().equals("ROLE_TEAMLEADER")){
                 sprintDataFilterDto.setTeamId(teamId);
                 return sprintDataFacade.getAllSprintData(sprintDataFilterDto);
             }

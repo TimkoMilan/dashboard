@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 public class SprintDataDto implements Serializable {
 
-    private float storyPointsTaken;
+    private Double storyPointsTaken;
 
-    private float storyPointsClosed;
+    private Double storyPointsClosed;
 
     private Long teamId;
 
@@ -38,14 +38,6 @@ public class SprintDataDto implements Serializable {
         this.sprintDto = sprintDto;
     }
 
-    public void setStoryPointsTaken(Long storyPointsTaken) {
-        this.storyPointsTaken = storyPointsTaken;
-    }
-
-    public void setStoryPointsClosed(Long storyPointsClosed) {
-        this.storyPointsClosed = storyPointsClosed;
-    }
-
     public Long getSprintId() {
         return sprintId;
     }
@@ -70,19 +62,19 @@ public class SprintDataDto implements Serializable {
         this.teamId = teamId;
     }
 
-    public float getStoryPointsTaken() {
+    public Double getStoryPointsTaken() {
         return storyPointsTaken;
     }
 
-    public void setStoryPointsTaken(float storyPointsTaken) {
+    public void setStoryPointsTaken(Double storyPointsTaken) {
         this.storyPointsTaken = storyPointsTaken;
     }
 
-    public float getStoryPointsClosed() {
+    public Double getStoryPointsClosed() {
         return storyPointsClosed;
     }
 
-    public void setStoryPointsClosed(float storyPointsClosed) {
+    public void setStoryPointsClosed(Double storyPointsClosed) {
         this.storyPointsClosed = storyPointsClosed;
     }
 }

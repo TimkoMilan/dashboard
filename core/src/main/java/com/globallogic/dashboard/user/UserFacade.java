@@ -32,9 +32,7 @@ public class UserFacade {
             User user = users.get();
             user.setFirstName(userDto.getFirstName());
             user.setLastName(userDto.getLastName());
-            if (userDto.getPassword()!=null){
-                user.setPassword(encoder.encode(userDto.getPassword()));
-            }
+
             if (userDto.getTeamId()!=null){
                 user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
             }
