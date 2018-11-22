@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@SequenceGenerator(name="seqSprintData", initialValue=1000, allocationSize=1,sequenceName ="seqsprintdata" )
+@SequenceGenerator(name="seqSprintData", initialValue=41000, allocationSize=1,sequenceName ="seqsprintdata" )
 public class SprintData implements Serializable {
 
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqSprintData")
