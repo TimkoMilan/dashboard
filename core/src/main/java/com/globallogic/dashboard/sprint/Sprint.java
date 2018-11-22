@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@SequenceGenerator(name="seqSprint", initialValue=1000, allocationSize=1,sequenceName ="seqsprint" )
+@SequenceGenerator(name="seqSprint", initialValue=3000, allocationSize=1,sequenceName ="seqsprint" )
 
 public class Sprint implements Serializable {
 
