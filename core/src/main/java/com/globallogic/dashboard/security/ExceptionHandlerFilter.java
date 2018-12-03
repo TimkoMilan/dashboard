@@ -3,7 +3,6 @@ package com.globallogic.dashboard.security;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.globallogic.dashboard.common.ApiResponse;
-import com.globallogic.dashboard.security.SecurityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

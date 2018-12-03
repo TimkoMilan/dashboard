@@ -45,6 +45,7 @@ public class JwtTokenProvider {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("email",user.getEmail());
+        claims.put("firstName",user.getFirstName());
 
         if (user.getCurrentTeam()!=null){
             claims.put("teamId",user.getCurrentTeam().getId());
