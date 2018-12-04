@@ -13,7 +13,6 @@ public class DashboardApplication {
         SpringApplication.run(DashboardApplication.class, args);
         Flyway flyway = Flyway.configure().dataSource("jdbc:h2:./dashboardGL2;DB_CLOSE_ON_EXIT=FALSE", "sa", null).load();
 
-       // Start the migration
        flyway.migrate();
    }
 

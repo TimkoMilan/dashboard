@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OrderBy;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,9 +47,10 @@ public class SprintDataServiceImpl implements SprintDataService {
             BooleanBuilder booleanBuilderSprintId = new BooleanBuilder();
             if (sprintDataFilterDto.getSprintId() != null) {
                 for (String splitSpringId : sprintDataFilterDto.getSprintId().split(",")) {
-                    booleanBuilderSprintId.or(QSprintData.sprintData.sprint.id.eq(Long.valueOf(splitSpringId)));
+                    booleanBuilderSprintId.or( QSprintData.sprintData.sprint.id.eq(Long.valueOf(splitSpringId)));
                 }
             }
+
             Predicate queryPredicate = booleanBuilderSprintId.and(booleanBuilderTeamId.getValue()).getValue();
             return SprintDataUtil.convertToListdto(sprintDataRepository.findAll(queryPredicate));
         }

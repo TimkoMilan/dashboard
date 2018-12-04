@@ -58,6 +58,7 @@ public class GoogleDataLoader implements DataLoader {
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
+
     @Override
     public List<VacationData> loadVacationData() {
         String spreadSheetIdconfig = googleDataLoaderConfig.getSpreadsheetId();
@@ -70,7 +71,6 @@ public class GoogleDataLoader implements DataLoader {
         );
         return vacationData;
     }
-
 
     private List<VacationData> loadVacationDataByYear(String year, String range, final String spreadSheetIdconfig,
                                                       final Integer offset){

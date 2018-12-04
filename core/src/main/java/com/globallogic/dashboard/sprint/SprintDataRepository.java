@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.sprint;
 
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,11 +15,12 @@ import java.util.List;
 @Repository
 public interface SprintDataRepository extends QuerydslPredicateExecutor<SprintData>, QuerydslBinderCustomizer<QSprintData>, JpaRepository<SprintData, Long> {
 
-    List<SprintData> findAllBySprint_Name(String sprintName);
 
     List<SprintData> findAllByTeam_Name(String teamName);
 
     List<SprintData> findAllByTeam_NameAndSprint_Name(String teamName, String sprintId);
+
+//    List<SprintData> findOrOrderBySprintStartDate(Predicate queryPredicate);
 
     @Override
     default void customize(QuerydslBindings bindings, QSprintData root) {

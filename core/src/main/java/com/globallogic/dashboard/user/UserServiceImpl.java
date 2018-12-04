@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public UserDto newUser(UserCreateDto userDto) {
@@ -54,8 +59,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void removeUser(Long id) {
-        userRepository.deleteById(id);
+
+        Optional<User> users=userRepository.findById(id);
+        if (users.isPresent()){
+            User user = users.get();
+            Set<Role> roles = user.getRoles();
+            for (Role role1 : roles) {
+                if (role1.getName().toString().equals("ROLE_ADMIN")){
+                    Optional<Role> userRoles = roleRepository.findByName(RoleName.ROLE_ADMIN);
+                    if (userRoles.isPresent()){
+                        Role role = userRoles.get();
+                        if (userRepository.countAllByRoles(role)>1){
+                            userRepository.deleteById(id);
+                        }
+                    }
+                }else {
+                    userRepository.deleteById(id);
+                }
+            }
+        }
     }
+
 
     @Override
     public void updateUserData(UserCreateDto userDto, Long id) {
