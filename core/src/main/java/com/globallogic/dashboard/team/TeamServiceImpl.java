@@ -54,6 +54,11 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public String teamTest() {
+        return "teamTest";
+    }
+
+    @Override
     public Optional<Team> findById(Long id) {
         return teamRepository.findById(id);
     }

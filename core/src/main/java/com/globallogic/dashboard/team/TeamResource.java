@@ -12,6 +12,8 @@ public class TeamResource {
     @Autowired
     private TeamService teamService;
 
+
+
     @GetMapping()
     public List<TeamDto> allTeam(){
         return teamService.findAll();
@@ -31,5 +33,10 @@ public class TeamResource {
         return  teamService.getTeamName();
     }
 
+
+    @GetMapping("/test")
+    public String teamTest(){
+        return teamService.teamTest();
+    }
 
 }
