@@ -49,9 +49,8 @@ public class UserResource {
         } catch (AuthenticationException e) {
             throw new SecurityException("Invalid username/password supplied");
         }
-
     }
-    
+
     @Secured("ROLE_ADMIN")
     @PostMapping("addRegularUser")
     public ResponseEntity addRegularUser(@RequestBody UserCreateDto userDto){
