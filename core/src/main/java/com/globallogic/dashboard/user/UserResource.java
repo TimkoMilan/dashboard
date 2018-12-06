@@ -2,10 +2,10 @@ package com.globallogic.dashboard.user;
 
 import com.globallogic.dashboard.common.ApiResponse;
 import com.globallogic.dashboard.security.JwtTokenProvider;
+import com.globallogic.dashboard.security.SecurityException;
 import com.globallogic.dashboard.user.payload.LoginResponse;
 import com.globallogic.dashboard.user.payload.UserInTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -13,8 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
-import com.globallogic.dashboard.security.SecurityException;
-
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +38,6 @@ public class UserResource {
     @Autowired
     private UserFacade userFacade;
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("login")
     public ResponseEntity<LoginResponse> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
@@ -52,9 +49,9 @@ public class UserResource {
         } catch (AuthenticationException e) {
             throw new SecurityException("Invalid username/password supplied");
         }
-
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("addRegularUser")
     public ResponseEntity addRegularUser(@RequestBody UserCreateDto userDto){
         if(userRepository.existsByEmail(userDto.getEmail())) {
