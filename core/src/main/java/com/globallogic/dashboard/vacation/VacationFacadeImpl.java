@@ -12,7 +12,6 @@ import com.globallogic.dashboard.team.Team;
 import com.globallogic.dashboard.team.TeamService;
 import com.globallogic.dashboard.team.TeamUtil;
 import com.google.common.base.Strings;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
