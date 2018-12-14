@@ -17,4 +17,6 @@ public interface TeamService {
 
     List<TeamNameDto> getTeamName();
 
+    String teamTest();
+
 }
