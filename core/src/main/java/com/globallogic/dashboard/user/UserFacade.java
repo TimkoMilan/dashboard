@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserFacade {
@@ -24,6 +25,10 @@ public class UserFacade {
     private PasswordEncoder encoder;
     @Autowired
     private RoleService roleService;
+//    @Autowired
+//    private SendEmailService sendEmailService;
+
+
 
     @Transactional
     public void updateUser(UserUpdateDto userDto, Long id) {
@@ -32,7 +37,6 @@ public class UserFacade {
             User user = users.get();
             user.setFirstName(userDto.getFirstName());
             user.setLastName(userDto.getLastName());
-
             if (userDto.getTeamId()!=null){
                 user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
             }
@@ -41,12 +45,14 @@ public class UserFacade {
 
             user.setRoles(Collections.singleton(roleService.setRole(role)));
 
+
+
         }
     }
 
     @Transactional
     public void createUser(UserCreateDto userDto){
-        User user = new User();
+        User user = new User();//TODO utilita
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
@@ -56,5 +62,9 @@ public class UserFacade {
         String role = userDto.getRoleName();
         user.setRoles(Collections.singleton(roleService.setRole(role)));
         userRepository.save(user);
+//        sendEmailService.sendEmail(userDto);
+        final String uuid = UUID.randomUUID().toString();
+        System.out.println(uuid);
+
     }
 }

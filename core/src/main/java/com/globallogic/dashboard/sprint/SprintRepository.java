@@ -21,6 +21,7 @@ public interface SprintRepository extends QuerydslPredicateExecutor<Sprint>, Que
     @Query("SELECT s FROM Sprint s where s.start between ?1 AND ?2 OR s.end between ?1 AND ?2 ")
     List<Sprint> findSprintsByStartOrEndIsBetween(Date startDate, Date endDate);
 
+
     @Override
     default void customize(QuerydslBindings bindings, QSprint root) {
         bindings.bind(String.class).first((SingleValueBinding<StringPath, String>) StringExpression::containsIgnoreCase);

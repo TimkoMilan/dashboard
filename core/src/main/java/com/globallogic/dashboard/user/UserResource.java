@@ -61,6 +61,7 @@ public class UserResource {
         }
         userFacade.createUser(userDto);
         UserDto userRegisterResponse = userService.newUser(userDto);
+
         return ResponseEntity.ok(userRegisterResponse);
     }
 
@@ -102,4 +103,5 @@ public class UserResource {
     public List<UserDto> getAllUser(){
         return userService.getAll();
     }
+
 }

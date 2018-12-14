@@ -9,6 +9,7 @@ public class MonthEventListener implements EventListener<String> {
     public static final int DECEMBER_OFFSET = 30;
     private int start;
     private int end;
+
     private String monthName;
 
     private List<String> data = new ArrayList<>();
@@ -18,6 +19,18 @@ public class MonthEventListener implements EventListener<String> {
     public List<MonthData> getMonthData() {
         return monthData;
     }
+
+    public List<String> getData(){
+        return data;
+    }
+
+    public int getEnd (){
+        return end;
+    }
+    public int getStart(){
+        return start;
+    }
+
 
     public void fireEvent(Event<String> event) {
         if (event instanceof StartEvent) {

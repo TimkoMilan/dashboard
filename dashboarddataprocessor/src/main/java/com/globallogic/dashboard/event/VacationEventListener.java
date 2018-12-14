@@ -5,10 +5,9 @@ import com.google.common.base.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 
 public class VacationEventListener implements EventListener<String>{
+
     private int start;
     boolean isHalfDay = false;
     private Integer offset;
