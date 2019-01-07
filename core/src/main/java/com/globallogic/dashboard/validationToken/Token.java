@@ -3,6 +3,7 @@ package com.globallogic.dashboard.validationToken;
 import com.globallogic.dashboard.user.User;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
@@ -12,7 +13,8 @@ import java.util.Date;
 public class Token implements Serializable {
 
     @Id
-    private Integer id;
+    @GeneratedValue
+    private Long id;
 
     @ManyToOne
     private User user;
@@ -22,11 +24,11 @@ public class Token implements Serializable {
 
     private Date expirationDate;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

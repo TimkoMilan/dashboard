@@ -1,8 +1,8 @@
 package com.globallogic.dashboard.user;
 
+import com.globallogic.dashboard.email.SendEmailService;
 import com.globallogic.dashboard.team.TeamRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.globallogic.dashboard.validationToken.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,6 @@ import java.util.UUID;
 @Service
 public class UserFacade {
 
-    private static final Logger log = LoggerFactory.getLogger(UserFacade.class);
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -25,8 +23,10 @@ public class UserFacade {
     private PasswordEncoder encoder;
     @Autowired
     private RoleService roleService;
-//    @Autowired
-//    private SendEmailService sendEmailService;
+    @Autowired
+    private SendEmailService sendEmailService;
+    @Autowired
+    private TokenService tokenService;
 
 
 
@@ -44,27 +44,38 @@ public class UserFacade {
             String role = userDto.getRoleName();
 
             user.setRoles(Collections.singleton(roleService.setRole(role)));
-
-
-
         }
     }
 
     @Transactional
     public void createUser(UserCreateDto userDto){
-        User user = new User();//TODO utilita
+        String type = "registration";
+        User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(encoder.encode(userDto.getPassword()));
-
         user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
         String role = userDto.getRoleName();
         user.setRoles(Collections.singleton(roleService.setRole(role)));
+        user.setStatus(false);
         userRepository.save(user);
-//        sendEmailService.sendEmail(userDto);
-        final String uuid = UUID.randomUUID().toString();
-        System.out.println(uuid);
 
+        User user2 = userRepository.findByEmail(userDto.getEmail());
+        final String uuid = UUID.randomUUID().toString();
+        sendEmailService.sendEmail(uuid,user2,type);
+        tokenService.newToken(uuid,user);
+    }
+
+    public void resetPassword(String email) {
+        String type = "reset";
+        final String uuid = UUID.randomUUID().toString();
+
+        User user =userRepository.findByEmail(email);
+        sendEmailService.sendEmail(uuid,user,type);
+        tokenService.newToken(uuid,user);
+    }
+    public void changePassword(User user,String password){
+        User user1 = userRepository.findByEmail(user.getEmail());
+        user1.setPassword(encoder.encode(password));
     }
 }
