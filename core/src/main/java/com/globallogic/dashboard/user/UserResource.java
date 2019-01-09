@@ -89,6 +89,7 @@ public class UserResource {
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void removeUser(@PathVariable(value = "id") Long id) {
+        userFacade.removeTokenByUserId(id);
         userService.removeUser(id);
     }
 

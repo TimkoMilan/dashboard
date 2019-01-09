@@ -78,4 +78,8 @@ public class UserFacade {
         User user1 = userRepository.findByEmail(user.getEmail());
         user1.setPassword(encoder.encode(password));
     }
+
+    public void removeTokenByUserId(Long id) {
+        tokenService.removeTokenByUserId(id);
+    }
 }

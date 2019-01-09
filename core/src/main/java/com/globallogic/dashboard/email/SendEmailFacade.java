@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.email;
 
+import com.globallogic.dashboard.common.CheckDateUtil;
 import com.globallogic.dashboard.user.User;
 import com.globallogic.dashboard.user.UserActivationDto;
 import com.globallogic.dashboard.user.UserFacade;
@@ -32,19 +33,19 @@ public class SendEmailFacade {
     @Autowired
     private UserFacade userFacade;
 
-    public ResponseEntity activation(UserActivationDto dto,String token) {
+    public void activation(UserActivationDto dto,String token) {
         Token token1 = tokenRepository.findByToken(token);
         
         Date expDate = token1.getExpirationDate();
 
         if (CheckDateUtil.checkDateValidation(expDate)) {
             userService.removeUser(token1.getUser().getId());
-            return (ResponseEntity) ResponseEntity.status(403);
+//            return (ResponseEntity) ResponseEntity.status(403);
         } else {
             token1.getUser().setStatus(true);
             token1.getUser().setPassword(encoder.encode(dto.getPassword()));
             tokenService.removeToken(token);
-            return ResponseEntity.ok(200);
+//            return ResponseEntity.ok(200);
         }
     }
 
