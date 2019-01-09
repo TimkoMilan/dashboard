@@ -9,7 +9,6 @@ public class UserCreateDto implements Serializable{
     private Long id;
     private String firstName;
     private String lastName;
-    private String password;
     private String email;
     private Long teamId;
     private String roleName;
@@ -36,14 +35,6 @@ public class UserCreateDto implements Serializable{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {

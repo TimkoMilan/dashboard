@@ -1,6 +1,9 @@
 package com.globallogic.dashboard.sprint;
 
 import com.querydsl.core.BooleanBuilder;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,10 +63,9 @@ public class SprintServiceImpl implements SprintService {
             return sprints.stream().map(SprintUtil::convertToDto).collect(Collectors.toList());
         } else {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
-
             if (sprintFilterDto.getSprintId() != null) {
                 for (String sprintId : sprintFilterDto.getSprintId().split(",")) {
-                    booleanBuilder.or(QSprint.sprint.sprintData.any().sprint.id.eq(Long.parseLong(sprintId)));
+                    booleanBuilder.or( QSprint.sprint.sprintData.any().sprint.id.eq(Long.parseLong(sprintId)));
                 }
             }
             if (sprintFilterDto.getTeamId() != null) {
@@ -71,11 +73,8 @@ public class SprintServiceImpl implements SprintService {
                     booleanBuilder.and(QSprint.sprint.sprintData.any().team.id.eq(Long.parseLong(sprintTeamId)));
                 }
             }
-//            if (sprintFilterDto.getStartDate() != null)//TODO test filtering 
-//            {
-//                booleanBuilder.and(QSprint.sprint.start.between(sprintFilterDto.getStartDate(),sprintFilterDto.getEndDate()));
-//            }
-            return SprintUtil.convertToListDto(sprintRepository.findAll(booleanBuilder.getValue()));
+            final Pageable pageable = PageRequest.of(0,Integer.MAX_VALUE, Sort.by(Sort.Direction.ASC,"start"));
+            return SprintUtil.convertToListDto(sprintRepository.findAll(booleanBuilder.getValue(),pageable));
         }
     }
 }

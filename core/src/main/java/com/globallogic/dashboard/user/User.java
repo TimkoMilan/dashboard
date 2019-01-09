@@ -28,6 +28,9 @@ public class User implements Serializable, UserDetails {
 
     private String email;
 
+    private boolean status;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team currentTeam;
@@ -114,9 +117,16 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return status;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public Set<Role> getRoles() {
         return roles;

@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
     public Boolean updateTeam(Long userId, Long teamId) {
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new ServiceException("Team does not exist"));
@@ -59,7 +64,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void removeUser(Long id) {
-
         Optional<User> users=userRepository.findById(id);
         if (users.isPresent()){
             User user = users.get();
@@ -79,8 +83,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             }
         }
     }
-
-
     @Override
     public void updateUserData(UserCreateDto userDto, Long id) {
 

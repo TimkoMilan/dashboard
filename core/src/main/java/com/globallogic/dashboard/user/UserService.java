@@ -5,6 +5,7 @@ import java.util.List;
 public interface UserService {
 
     UserDto newUser(UserCreateDto userDto);
+    User findByEmail(String email);
     Boolean updateTeam(Long userId, Long teamId);
     UserDto findById(Long userId);
     List<UserDto> getAll();
