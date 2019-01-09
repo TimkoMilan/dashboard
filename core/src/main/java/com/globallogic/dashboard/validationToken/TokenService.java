@@ -1,5 +1,6 @@
 package com.globallogic.dashboard.validationToken;
 
+import com.globallogic.dashboard.common.CheckDateUtil;
 import com.globallogic.dashboard.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -31,5 +33,18 @@ public class TokenService implements Serializable {
     public void removeToken(String token) {
         tokenRepository.deleteTokenByToken(token);
         System.out.println("token removed ");
+    }
+
+    public void checkTokenValidation() {
+        List<Token>tokens = tokenRepository.findAll();
+        for (Token token : tokens) {
+            if (CheckDateUtil.checkDateValidation(token.getExpirationDate())){
+                tokenRepository.delete(token);
+            }
+        }
+    }
+
+    public void removeTokenByUserId(Long id) {
+        tokenRepository.deleteTokenByUserId(id);
     }
 }

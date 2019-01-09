@@ -64,8 +64,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void removeUser(Long id) {
         Optional<User> users=userRepository.findById(id);
+
         if (users.isPresent()){
             User user = users.get();
+
             Set<Role> roles = user.getRoles();
             for (Role role1 : roles) {
                 if (role1.getName().toString().equals("ROLE_ADMIN")){
