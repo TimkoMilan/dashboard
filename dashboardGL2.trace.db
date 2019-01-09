@@ -1,0 +1,4 @@
+2019-01-09 11:47:19 jdbc[15]: exception
+org.h2.jdbc.JdbcSQLException: Syntaktická chyba v SQL príkaze "SELECT * FROM TOKEN USER USER[*]"
+Syntax error in SQL statement "SELECT * FROM TOKEN USER USER[*]"; SQL statement:
+SELECT * FROM TOKEN USER USER [42000-197]
