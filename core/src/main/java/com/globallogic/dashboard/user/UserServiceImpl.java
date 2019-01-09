@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDto findById(Long userId) {
         User user=userRepository.getOne(userId);
         return UserUtil.convertUserToUserDto(user);
-
     }
 
     @Override
