@@ -14,8 +14,8 @@ public class SendEmailResource {
 
 
     @PostMapping("/activation/{token}")
-    public void sendingEmail(@PathVariable(value = "token") String token,@RequestBody UserActivationDto dto) {
-         sendEmailFacade.activation(dto,token);
+    public ResponseEntity sendingEmail(@PathVariable(value = "token") String token,@RequestBody UserActivationDto dto) {
+          return sendEmailFacade.activation(dto,token);
     }
 
     @PostMapping("/reset")
