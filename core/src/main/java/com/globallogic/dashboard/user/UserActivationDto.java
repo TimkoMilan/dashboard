@@ -4,16 +4,7 @@ import java.io.Serializable;
 
 public class UserActivationDto implements Serializable {
 
-    private String token;
     private String password;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public String getPassword() {
         return password;

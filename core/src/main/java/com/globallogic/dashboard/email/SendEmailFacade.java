@@ -32,8 +32,8 @@ public class SendEmailFacade {
     @Autowired
     private UserFacade userFacade;
 
-    public ResponseEntity activation(UserActivationDto dto) {
-        Token token1 = tokenRepository.findByToken(dto.getToken());
+    public ResponseEntity activation(UserActivationDto dto,String token) {
+        Token token1 = tokenRepository.findByToken(token);
         
         Date expDate = token1.getExpirationDate();
 
@@ -43,7 +43,7 @@ public class SendEmailFacade {
         } else {
             token1.getUser().setStatus(true);
             token1.getUser().setPassword(encoder.encode(dto.getPassword()));
-            tokenService.removeToken(dto.getToken());
+            tokenService.removeToken(token);
             return ResponseEntity.ok(200);
         }
     }

@@ -31,6 +31,5 @@ public class TokenService implements Serializable {
     public void removeToken(String token) {
         tokenRepository.deleteTokenByToken(token);
         System.out.println("token removed ");
-
     }
 }
