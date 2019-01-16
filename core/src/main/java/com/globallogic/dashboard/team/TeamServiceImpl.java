@@ -30,7 +30,7 @@ public class TeamServiceImpl implements TeamService {
     }
     @Override
     public List<TeamDto> findAll() {
-        List<Team>teams = teamRepository.findAll();
+        List<Team>teams = teamRepository.findAllByOrderByNameAsc();
         return teams.stream().map(TeamUtil::convertToDto).collect(Collectors.toList());
     }
 
@@ -48,7 +48,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<TeamNameDto> getTeamName() {
-        List<Team>teams = teamRepository.findAll();
+        List<Team>teams = teamRepository.findAllByOrderByNameAsc();
         return teams.stream().map(TeamUtil::convertToTeamNameDto).collect(Collectors.toList());
 
     }
