@@ -6,6 +6,8 @@ import com.globallogic.dashboard.team.Team;
 
 import com.globallogic.dashboard.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +29,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     public UserDto newUser(UserCreateDto userDto) {
@@ -51,7 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDto findById(Long userId) {
-        User user=userRepository.getOne(userId);
+        User user = userRepository.getOne(userId);
         return UserUtil.convertUserToUserDto(user);
     }
 
@@ -62,41 +66,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void removeUser(Long id) {
-        Optional<User> users=userRepository.findById(id);
-
-        if (users.isPresent()){
-            User user = users.get();
-
-            Set<Role> roles = user.getRoles();
-            for (Role role1 : roles) {
-                if (role1.getName().toString().equals("ROLE_ADMIN")){
-                    Optional<Role> userRoles = roleRepository.findByName(RoleName.ROLE_ADMIN);
-                    if (userRoles.isPresent()){
-                        Role role = userRoles.get();
-                        if (userRepository.countAllByRoles(role)>1){
-                            userRepository.deleteById(id);
-                        }
-                    }
-                }else {
-                    userRepository.deleteById(id);
-                }
-            }
-        }
-    }
-    @Override
     public void updateUserData(UserCreateDto userDto, Long id) {
 
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    @Cacheable(value = "users")
+    public UserDetails loadUserByUsername(String email) {
 
-        User user=userRepository.findByEmail(username);
-        final User byUsername = userRepository.findByEmail(user.getEmail());
-        if (byUsername == null) {
-            throw new UsernameNotFoundException("User not found for username:" + username);
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found for email:" + email);
         }
-        return byUsername;
+        return user;
     }
 }
