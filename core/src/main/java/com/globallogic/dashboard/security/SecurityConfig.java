@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(AUTH_WHITELIST)
                 .permitAll()
-                .antMatchers("/**/users/login/**")
+                .antMatchers("/**/users/login/**","/**/token/reset/**","/**/users/reset/**","/**/token/activation/**")
                 .permitAll()
                 .antMatchers(ADMIN_ENDPOINTS)
                 .hasRole("ADMIN")
