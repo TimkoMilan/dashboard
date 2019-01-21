@@ -9,6 +9,5 @@ public interface UserService {
     Boolean updateTeam(Long userId, Long teamId);
     UserDto findById(Long userId);
     List<UserDto> getAll();
-    void removeUser(Long id);
     void updateUserData(UserCreateDto userDto,Long id);
 }

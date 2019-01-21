@@ -1,16 +1,18 @@
 package com.globallogic.dashboard.user;
 
+import com.globallogic.dashboard.common.ServiceException;
 import com.globallogic.dashboard.email.SendEmailService;
 import com.globallogic.dashboard.team.TeamRepository;
 import com.globallogic.dashboard.validationToken.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -30,8 +32,11 @@ public class UserFacade {
     private TokenService tokenService;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private CacheManager cacheManager;
 
     @Transactional
+    @CacheEvict(value = "users", key = "#userDto.email")
     public void updateUser(UserUpdateDto userDto, Long id) {
         Optional<User> users = userRepository.findById(id);
         if (users.isPresent()) {
@@ -42,25 +47,49 @@ public class UserFacade {
                 user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
             }
             user.setEmail(userDto.getEmail());
-            Optional<Role> userRoles = roleRepository.findByName(RoleName.ROLE_ADMIN);
-                Set<Role> userRole = user.getRoles();
-            for (Role role : userRole) {
-                RoleName userROleName = role.getName();
-                if (!userROleName.equals("ROLE_ADMIN")) {
-                    if (userRoles.isPresent()) {
-                        Role role2 = userRoles.get();
-                        if (userRepository.countAllByRoles(role2) > 1) {
-                            user.setRoles(Collections.singleton(roleService.setRole(userDto.getRoleName())));
-                        } else {
-                            System.out.println("Only one Admin in DB");
-                        }
+
+            if (isAdmin(user)) {
+                if (isUpdatedAsUser(userDto)) {
+                    if (isAdminToUserChangeAllowed()) {
+                        user.setRoles(Collections.singleton(roleService.setRole(userDto.getRoleName())));
+                    } else {
+                        throw new ServiceException("Userrole cannot be changed to USER");
                     }
-                } else {
-                    user.setRoles(Collections.singleton(roleService.setRole(userDto.getRoleName())));
+                }
+
+            }
+        }
+    }
+    public void removeUser(Long id) {
+        Optional<User> users = userRepository.findById(id);
+        if (users.isPresent()) {
+            User user = users.get();
+            cacheManager.getCache("users").evict(user.getEmail());
+            if (isAdmin(user)){
+                if (isAtLeastOneAdminInApplication()){
+                    userRepository.delete(user);
                 }
             }
         }
     }
+
+    private boolean isAdmin(User user) {
+        return user.getRoles().stream().anyMatch(role -> role.getName().equals(RoleName.ROLE_ADMIN));
+    }
+
+    private boolean isUpdatedAsUser(UserUpdateDto userDto) {
+        return RoleName.ROLE_USER.equals(userDto.getRoleName());
+    }
+
+    private boolean isAdminToUserChangeAllowed() {
+        return isAtLeastOneAdminInApplication();
+    }
+
+    private boolean isAtLeastOneAdminInApplication() {
+        return userRepository.countAllByRoles(null) > 1;
+    }
+
+
 
     @Transactional
     public void createUser(UserCreateDto userDto) {

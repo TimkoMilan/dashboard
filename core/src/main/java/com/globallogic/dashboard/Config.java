@@ -4,6 +4,9 @@ import com.globallogic.dashboard.loader.DataLoader;
 import com.globallogic.dashboard.loader.GoogleDataLoader;
 import com.globallogic.dashboard.loader.SprintDataLoader;
 import com.globallogic.dashboard.loader.SprintLoader;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -15,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
+@EnableCaching
 @EnableScheduling
 public class Config {
 
@@ -31,9 +35,14 @@ public class Config {
     public DataLoader dataLoader(GoogleDataLoaderConfigSpring googleDataLoaderConfigSpring) {
         return new GoogleDataLoader(googleDataLoaderConfigSpring);
     }
+
     @Bean
-    public SprintLoader sprintLoader(){
+    public SprintLoader sprintLoader() {
         return new SprintDataLoader();
     }
 
+    @Bean
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("users");
+    }
 }

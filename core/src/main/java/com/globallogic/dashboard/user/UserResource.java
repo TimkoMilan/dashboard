@@ -34,7 +34,6 @@ public class UserResource {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
     @PostMapping("login")
     public ResponseEntity<LoginResponse> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
@@ -90,7 +89,7 @@ public class UserResource {
     @DeleteMapping("/{id}")
     public void removeUser(@PathVariable(value = "id") Long id) {
         userFacade.removeTokenByUserId(id);
-        userService.removeUser(id);
+        userFacade.removeUser(id);
     }
 
     @PutMapping("/{id}")
@@ -107,4 +106,5 @@ public class UserResource {
     public void resetPassword(@PathVariable(value = "email") String email) {
         userFacade.resetPassword(email);
     }
+
 }
