@@ -57,7 +57,6 @@ public class UserResource {
         }
         userFacade.createUser(userDto);
         UserDto userRegisterResponse = userService.newUser(userDto);
-
         return ResponseEntity.ok(userRegisterResponse);
     }
 
