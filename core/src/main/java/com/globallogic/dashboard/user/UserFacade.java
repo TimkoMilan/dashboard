@@ -31,8 +31,6 @@ public class UserFacade {
     @Autowired
     private TokenService tokenService;
     @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
     private CacheManager cacheManager;
 
     @Transactional
@@ -53,20 +51,22 @@ public class UserFacade {
                     if (isAdminToUserChangeAllowed()) {
                         user.setRoles(Collections.singleton(roleService.setRole(userDto.getRoleName())));
                     } else {
-                        throw new ServiceException("Userrole cannot be changed to USER");
+                        throw new ServiceException("UserRole cannot be changed to USER");
                     }
+                } else {
+                    user.setRoles(Collections.singleton(roleService.setRole(userDto.getRoleName())));
                 }
-
             }
         }
     }
+
     public void removeUser(Long id) {
         Optional<User> users = userRepository.findById(id);
         if (users.isPresent()) {
             User user = users.get();
             cacheManager.getCache("users").evict(user.getEmail());
-            if (isAdmin(user)){
-                if (isAtLeastOneAdminInApplication()){
+            if (isAdmin(user)) {
+                if (isAtLeastOneAdminInApplication()) {
                     userRepository.delete(user);
                 }
             }
@@ -88,7 +88,6 @@ public class UserFacade {
     private boolean isAtLeastOneAdminInApplication() {
         return userRepository.countAllByRoles(null) > 1;
     }
-
 
 
     @Transactional

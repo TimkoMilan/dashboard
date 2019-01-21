@@ -40,7 +40,7 @@ public class SendEmailFacade {
         Date expDate = token1.getExpirationDate();
 
         if (CheckDateUtil.checkDateValidation(expDate)) {
-            userService.removeUser(token1.getUser().getId());
+            userFacade.removeUser(token1.getUser().getId());
             return (ResponseEntity) ResponseEntity.status(403);
         } else {
             token1.getUser().setStatus(true);
