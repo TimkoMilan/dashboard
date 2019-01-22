@@ -4,15 +4,16 @@ import com.globallogic.dashboard.fte.FteFacade;
 import com.globallogic.dashboard.fte.FteService;
 import com.globallogic.dashboard.publicHoliday.PublicHolidayLoader;
 import com.globallogic.dashboard.team.TeamService;
-import com.globallogic.dashboard.vacation.Vacation;
 import com.globallogic.dashboard.vacation.VacationDto;
 import com.globallogic.dashboard.vacation.VacationFilterDto;
 import com.globallogic.dashboard.vacation.VacationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +38,7 @@ public class StatisticFacade {
 
     public List<StatisticDto> getStatistic(String year, String month, String teamId) {
         if (teamId.equals("-1")){
-            teamId="44,45,46,47,48";
+            teamId="1,2,3,4,5";
         }
 
         String[] years = year.split(",");
@@ -98,7 +99,7 @@ public class StatisticFacade {
     public List<StatisticDto> getStatisticByDateRange(Date startDate, Date endDate, String teamId){
         List<StatisticDto> statisticDtoList = new ArrayList<>();
         if (teamId.equals("-1")){
-            teamId="44,45,46,47,48";
+            teamId="1,2,3,4,5";
         }
         String[] teamIds = teamId.split(",");
         for(String tId : teamIds){
