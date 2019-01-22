@@ -37,8 +37,8 @@ public class StatisticFacade {
     }
 
     public List<StatisticDto> getStatistic(String year, String month, String teamId) {
-        if (teamId.equals("-1")){
-            teamId="1,2,3,4,5";
+        if (teamId.equals("-1")) {
+            teamId = "1,2,3,4,5";
         }
 
         String[] years = year.split(",");
@@ -84,9 +84,9 @@ public class StatisticFacade {
                 byte monthByte = (byte) monthInt;
                 Long teamIdLong = new Long(teamInt);
                 Double fte = fteFacade.findFteByTeamAndMonthAndYear(monthByte, teamIdLong, yearInt);
-                if (fte!=null){
+                if (fte != null) {
                     statisticDto.setFte(fte);
-                }else {
+                } else {
                     statisticDto.setFte(0.0);
                 }
                 statisticDtos.add(statisticDto);
@@ -96,13 +96,13 @@ public class StatisticFacade {
     }
 
     //TODO refactor this method
-    public List<StatisticDto> getStatisticByDateRange(Date startDate, Date endDate, String teamId){
+    public List<StatisticDto> getStatisticByDateRange(Date startDate, Date endDate, String teamId) {
         List<StatisticDto> statisticDtoList = new ArrayList<>();
-        if (teamId.equals("-1")){
-            teamId="1,2,3,4,5";
+        if (teamId.equals("-1")) {
+            teamId = "1,2,3,4,5";
         }
         String[] teamIds = teamId.split(",");
-        for(String tId : teamIds){
+        for (String tId : teamIds) {
             VacationFilterDto vacationFilterDto = new VacationFilterDto();
             vacationFilterDto.setTeamId(tId);
             vacationFilterDto.setStart(startDate);
@@ -112,19 +112,18 @@ public class StatisticFacade {
             Calendar finishCalendar = Calendar.getInstance();
             beginCalendar.setTime(startDate);
             finishCalendar.setTime(endDate);
-            while (beginCalendar.before(finishCalendar)){
+            while (beginCalendar.before(finishCalendar)) {
                 StatisticDto statisticDto = new StatisticDto();
                 Integer yearInt = beginCalendar.get(Calendar.YEAR);
                 Integer monthInt = beginCalendar.get(Calendar.MONTH);
                 statisticDto.setWorkingDays(publicHolidayLoader.getWorkingDaysInMonth(
-                        yearInt, monthInt+1));
+                        yearInt, monthInt + 1));
                 Long teamIdLong = new Long(tId);
                 Double fteForMonth = fteFacade.findFteByTeamAndMonthAndYear(
-                         monthInt.byteValue(), teamIdLong, yearInt);
-                if(fteForMonth!=null){
+                        monthInt.byteValue(), teamIdLong, yearInt);
+                if (fteForMonth != null) {
                     statisticDto.setFte(fteForMonth);
-                }
-                else{
+                } else {
                     statisticDto.setFte(0.0);
                 }
                 statisticDto.setMonth(monthInt);
@@ -135,8 +134,8 @@ public class StatisticFacade {
                 nextMonth.add(Calendar.MONTH, 1);
                 List<VacationDto> vacationForMonth = vacations.stream().filter(
                         vacation -> vacation.getFrom().after(beginCalendar.getTime()) &&
-                            vacation.getFrom().before(nextMonth.getTime())
-                        ).collect(Collectors.toList());
+                                vacation.getFrom().before(nextMonth.getTime())
+                ).collect(Collectors.toList());
                 statisticDto.setVacationDto(vacationForMonth);
                 statisticDtoList.add(statisticDto);
                 beginCalendar.add(Calendar.MONTH, 1);
