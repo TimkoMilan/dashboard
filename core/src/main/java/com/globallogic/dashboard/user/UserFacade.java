@@ -120,6 +120,7 @@ public class UserFacade {
         tokenService.newToken(uuid, user);
     }
 
+    @CacheEvict(value = "users", key = "#user.email")
     public void changePassword(User user, String password) {
         User user1 = userRepository.findByEmail(user.getEmail());
         user1.setPassword(encoder.encode(password));

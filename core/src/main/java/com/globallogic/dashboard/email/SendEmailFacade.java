@@ -65,5 +65,7 @@ public class SendEmailFacade {
             ResponseEntity.ok(200);
         }
         return null;
-        }
+
+    }
+
 }
