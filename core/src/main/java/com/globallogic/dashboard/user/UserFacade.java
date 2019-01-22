@@ -69,6 +69,8 @@ public class UserFacade {
                 if (isAtLeastOneAdminInApplication()) {
                     userRepository.delete(user);
                 }
+            }else {
+                userRepository.delete(user);
             }
         }
     }
