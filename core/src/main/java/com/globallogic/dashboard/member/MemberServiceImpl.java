@@ -46,15 +46,15 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findMemberByNameIsLike(name);
     }
 
-    @Override
-    public Member findMemberBySearchString(String searchString) {
-        return null;
-    }
-
 //    @Override
 //    public Member findMemberBySearchString(String searchString) {
-//        return memberRepository.findMemberBySearchStringIsLike(searchString);
+//        return null;
 //    }
+
+    @Override
+    public Member findMemberBySearchString(String searchString) {
+        return memberRepository.findMemberBySearchStringIsLike(searchString);
+    }
 
 
 }
