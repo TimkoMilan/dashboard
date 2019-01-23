@@ -59,10 +59,13 @@ public class UserFacade {
                 } else {
                     user.setRoles(Collections.singleton(roleService.setRole(userDto.getRoleName())));
                 }
+            } else {
+                user.setRoles(Collections.singleton(roleService.setRole(userDto.getRoleName())));
+
             }
         }
     }
-
+    @CacheEvict(value = "users", key = "#userDto.email")
     public void removeUser(Long id) {
         Optional<User> users = userRepository.findById(id);
         Optional<Role> userRoles = roleRepository.findByName(RoleName.ROLE_ADMIN);
@@ -73,7 +76,7 @@ public class UserFacade {
                 if (userRoles.isPresent()) {
                     Role role2 = userRoles.get();
                     System.out.println(userRepository.countAllByRoles(role2));
-                    if (userRepository.countAllByRoles(role2)>1){
+                    if (userRepository.countAllByRoles(role2) > 1) {
                         userRepository.delete(user);
                     }
                 }
