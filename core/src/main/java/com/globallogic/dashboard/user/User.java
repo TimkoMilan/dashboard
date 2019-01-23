@@ -31,7 +31,7 @@ public class User implements Serializable, UserDetails {
     private boolean status;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
     private Team currentTeam;
 
