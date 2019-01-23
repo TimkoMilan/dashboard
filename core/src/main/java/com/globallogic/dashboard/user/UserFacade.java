@@ -32,6 +32,8 @@ public class UserFacade {
     private TokenService tokenService;
     @Autowired
     private CacheManager cacheManager;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Transactional
     @CacheEvict(value = "users", key = "#userDto.email")
@@ -41,6 +43,7 @@ public class UserFacade {
             User user = users.get();
             user.setFirstName(userDto.getFirstName());
             user.setLastName(userDto.getLastName());
+            cacheManager.getCache("users").evict(user.getEmail());
             if (userDto.getTeamId() != null) {
                 user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
             }
@@ -62,14 +65,19 @@ public class UserFacade {
 
     public void removeUser(Long id) {
         Optional<User> users = userRepository.findById(id);
+        Optional<Role> userRoles = roleRepository.findByName(RoleName.ROLE_ADMIN);
         if (users.isPresent()) {
             User user = users.get();
             cacheManager.getCache("users").evict(user.getEmail());
             if (isAdmin(user)) {
-                if (isAtLeastOneAdminInApplication()) {
-                    userRepository.delete(user);
+                if (userRoles.isPresent()) {
+                    Role role2 = userRoles.get();
+                    System.out.println(userRepository.countAllByRoles(role2));
+                    if (userRepository.countAllByRoles(role2)>1){
+                        userRepository.delete(user);
+                    }
                 }
-            }else {
+            } else {
                 userRepository.delete(user);
             }
         }
@@ -88,6 +96,7 @@ public class UserFacade {
     }
 
     private boolean isAtLeastOneAdminInApplication() {
+        System.out.println("count of admin " + userRepository.countAllByRoles(null));
         return userRepository.countAllByRoles(null) > 1;
     }
 
