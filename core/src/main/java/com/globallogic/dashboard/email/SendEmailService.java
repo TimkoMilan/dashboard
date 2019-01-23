@@ -20,6 +20,7 @@ public class SendEmailService {
         if ((user.getEmail() ==null)){
             throw new UsernameNotFoundException("User with this email doesn´t exis");
         }
+
         mail.setTo(user.getEmail());
         mail.setFrom("milan.timko@akademiasovy.sk");
         if (type.equals("registration")) {
