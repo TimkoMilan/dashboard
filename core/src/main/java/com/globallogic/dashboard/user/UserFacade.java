@@ -69,7 +69,7 @@ public class UserFacade {
                 if (isAtLeastOneAdminInApplication()) {
                     userRepository.delete(user);
                 }
-            } else {
+            }else {
                 userRepository.delete(user);
             }
         }
@@ -90,7 +90,6 @@ public class UserFacade {
     private boolean isAtLeastOneAdminInApplication() {
         return userRepository.countAllByRoles(null) > 1;
     }
-
 
     @Transactional
     public void createUser(UserCreateDto userDto) {

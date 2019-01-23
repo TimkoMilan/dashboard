@@ -19,7 +19,6 @@ public class FteFacadeImpl implements FteFacade {
     @Autowired
     private FteService fteService;
 
-
     @Override
     public FteResponseDto createFte(FteCreateDto fteCreateDto) {
         Optional<Team> optionalTeam = teamService.findById(fteCreateDto.getTeamId());
