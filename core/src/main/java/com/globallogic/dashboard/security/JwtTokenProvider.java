@@ -2,13 +2,11 @@ package com.globallogic.dashboard.security;
 
 import com.globallogic.dashboard.user.Role;
 import com.globallogic.dashboard.user.User;
-import com.globallogic.dashboard.user.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -46,14 +44,14 @@ public class JwtTokenProvider {
     public String createToken(User user, List<Role> roles) {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
-        claims.put("email",user.getEmail());
-        claims.put("firstName",user.getFirstName());
+        claims.put("email", user.getEmail());
+        claims.put("firstName", user.getFirstName());
 
-        if (user.getCurrentTeam()!=null){
-            claims.put("teamId",user.getCurrentTeam().getId());
-            claims.put("teamName",user.getCurrentTeam().getName());
-        }else {
-            claims.put("teamName","NULL");
+        if (user.getCurrentTeam() != null) {
+            claims.put("teamId", user.getCurrentTeam().getId());
+            claims.put("teamName", user.getCurrentTeam().getName());
+        } else {
+            claims.put("teamName", "NULL");
         }
         claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getName().name())).filter(Objects::nonNull).collect(Collectors.toList()));
 
@@ -77,10 +75,11 @@ public class JwtTokenProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String getEmail(String token){
+    public String getEmail(String token) {
         return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");
     }
-    public Integer getTeamId(String token){
+
+    public Integer getTeamId(String token) {
         return (Integer) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("teamId");
     }
 

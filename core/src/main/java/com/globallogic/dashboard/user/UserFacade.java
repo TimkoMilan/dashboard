@@ -61,11 +61,10 @@ public class UserFacade {
                 }
             } else {
                 user.setRoles(Collections.singleton(roleService.setRole(userDto.getRoleName())));
-
             }
         }
     }
-    @CacheEvict(value = "users", key = "#userDto.email")
+
     public void removeUser(Long id) {
         Optional<User> users = userRepository.findById(id);
         Optional<Role> userRoles = roleRepository.findByName(RoleName.ROLE_ADMIN);
@@ -75,9 +74,10 @@ public class UserFacade {
             if (isAdmin(user)) {
                 if (userRoles.isPresent()) {
                     Role role2 = userRoles.get();
-                    System.out.println(userRepository.countAllByRoles(role2));
                     if (userRepository.countAllByRoles(role2) > 1) {
                         userRepository.delete(user);
+                    } else {
+                        throw new ServiceException("Last Admin cannot be deleted");
                     }
                 }
             } else {
@@ -99,23 +99,17 @@ public class UserFacade {
     }
 
     private boolean isAtLeastOneAdminInApplication() {
-        System.out.println("count of admin " + userRepository.countAllByRoles(null));
         return userRepository.countAllByRoles(null) > 1;
     }
 
     @Transactional
     public void createUser(UserCreateDto userDto) {
         String type = "registration";
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
+        User user = UserUtil.convertUserDtoToUser(userDto);
         String role = userDto.getRoleName();
-        user.setRoles(Collections.singleton(roleService.setRole(role)));
         user.setStatus(false);
+        user.setRoles(Collections.singleton(roleService.setRole(role)));
         userRepository.save(user);
-
         User user2 = userRepository.findByEmail(userDto.getEmail());
         final String uuid = UUID.randomUUID().toString();
         sendEmailService.sendEmail(uuid, user2, type);
@@ -125,7 +119,6 @@ public class UserFacade {
     public void resetPassword(String email) {
         String type = "reset";
         final String uuid = UUID.randomUUID().toString();
-
         User user = userRepository.findByEmail(email);
         sendEmailService.sendEmail(uuid, user, type);
         tokenService.newToken(uuid, user);

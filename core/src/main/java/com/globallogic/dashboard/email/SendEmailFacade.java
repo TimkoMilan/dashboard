@@ -4,7 +4,6 @@ import com.globallogic.dashboard.common.CheckDateUtil;
 import com.globallogic.dashboard.user.User;
 import com.globallogic.dashboard.user.UserActivationDto;
 import com.globallogic.dashboard.user.UserFacade;
-import com.globallogic.dashboard.user.UserService;
 import com.globallogic.dashboard.validationToken.Token;
 import com.globallogic.dashboard.validationToken.TokenRepository;
 import com.globallogic.dashboard.validationToken.TokenService;
@@ -23,9 +22,6 @@ public class SendEmailFacade {
 
     @Autowired
     private TokenService tokenService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private PasswordEncoder encoder;

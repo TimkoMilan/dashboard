@@ -28,7 +28,7 @@ public class SendEmailService {
             mail.setText("Click to confirm registration: http://172.17.114.22/enableUser/" + uuid);
         } else {
             mail.setSubject("Reset password Email");
-            mail.setText("Click to change your password:  http://localhost:8080/token/reset/" + uuid);
+            mail.setText("Click to change your password: http://172.17.114.22/token/reset/" + uuid);
         }
         javaMailSender.send(mail);
     }
