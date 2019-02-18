@@ -4,9 +4,7 @@ import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.Role;
 import com.globallogic.dashboard.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +42,7 @@ public class VacationResource {
                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                   Date endDate,
                                           ServletRequest req
-    ) {//
+    ) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VacationFilterDto vacationFilterDto = new VacationFilterDto();
         vacationFilterDto.setMemberId(memberId);

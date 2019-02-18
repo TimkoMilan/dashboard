@@ -5,7 +5,6 @@ import com.globallogic.dashboard.common.ServiceException;
 import com.globallogic.dashboard.team.Team;
 import com.globallogic.dashboard.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,11 +22,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private TeamRepository teamRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private CacheManager cacheManager;
 
     @Override
     public UserDto newUser(UserCreateDto userDto) {
@@ -61,7 +55,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<User> users = userRepository.findAll();
         return users.stream().map(UserUtil::convertUserToUserDto).collect(Collectors.toList());
     }
-
 
     @Override
     @Cacheable(value = "users")

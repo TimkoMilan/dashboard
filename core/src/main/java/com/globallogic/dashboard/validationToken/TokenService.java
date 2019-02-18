@@ -32,13 +32,12 @@ public class TokenService implements Serializable {
 
     public void removeToken(String token) {
         tokenRepository.deleteTokenByToken(token);
-        System.out.println("token removed ");
     }
 
     public void checkTokenValidation() {
-        List<Token>tokens = tokenRepository.findAll();
+        List<Token> tokens = tokenRepository.findAll();
         for (Token token : tokens) {
-            if (CheckDateUtil.checkDateValidation(token.getExpirationDate())){
+            if (CheckDateUtil.checkDateValidation(token.getExpirationDate())) {
                 tokenRepository.delete(token);
             }
         }

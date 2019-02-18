@@ -23,14 +23,15 @@ public class TeamServiceImpl implements TeamService {
         Team team = TeamUtil.createTeamFromTeamCreateDto(teamCreateDto);
         String teamName = teamCreateDto.getName();
         team.setFocus(teamCreateDto.getFocus());
-        if (teamRepository.findTeamByNameIgnoreCase(teamName)==null){
+        if (teamRepository.findTeamByNameIgnoreCase(teamName) == null) {
             return teamRepository.save(team);
         }
         return teamRepository.findTeamByNameIgnoreCase(teamName);
     }
+
     @Override
     public List<TeamDto> findAll() {
-        List<Team>teams = teamRepository.findAllByOrderByNameAsc();
+        List<Team> teams = teamRepository.findAllByOrderByNameAsc();
         return teams.stream().map(TeamUtil::convertToDto).collect(Collectors.toList());
     }
 
@@ -48,14 +49,14 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<TeamNameDto> getTeamName() {
-        List<Team>teams = teamRepository.findAllByOrderByNameAsc();
+        List<Team> teams = teamRepository.findAllByOrderByNameAsc();
         return teams.stream().map(TeamUtil::convertToTeamNameDto).collect(Collectors.toList());
 
     }
 
     @Override
     public String teamTest() {
-        return "teamTest";
+        return null;
     }
 
     @Override

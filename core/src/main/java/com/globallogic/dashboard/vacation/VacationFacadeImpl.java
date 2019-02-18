@@ -56,10 +56,9 @@ public class VacationFacadeImpl implements VacationFacade {
         for (VacationData vacationDatum : vacationData) {
             String name = vacationDatum.getName();
             Member member = memberService.findMemberBySearchString(MemberUtil.toSearchString(name));
-            if(member == null){
+            if (member == null) {
                 member = createNewMember(vacationDatum);
-            }
-            else{
+            } else {
                 checkForChange(member, vacationDatum);
             }
             Vacation v = new Vacation();
@@ -78,7 +77,7 @@ public class VacationFacadeImpl implements VacationFacade {
         String teamName = TeamUtil.processTeamNameString(vacationDatum.getTeamName());
         Team teamByName = teamService.findByTeamName(teamName);
 
-        if(teamByName == null){
+        if (teamByName == null) {
             System.out.println();
         }
 
@@ -91,16 +90,15 @@ public class VacationFacadeImpl implements VacationFacade {
     private void checkForChange(Member member, VacationData vacationDatum) {
         Boolean hasChanged = false;
         if (!Strings.isNullOrEmpty(vacationDatum.getPosition()) &&
-                !vacationDatum.getPosition().equals(member.getPosition())){
+                !vacationDatum.getPosition().equals(member.getPosition())) {
             member.setPosition(vacationDatum.getPosition());
             hasChanged = true;
         }
-        if(!Objects.equals(vacationDatum.getTeamName(), member.getTeam().getName())){
+        if (!Objects.equals(vacationDatum.getTeamName(), member.getTeam().getName())) {
             hasChanged = true;
         }
-        if(hasChanged){
+        if (hasChanged) {
             memberRepository.save(member);
         }
     }
-//
 }
