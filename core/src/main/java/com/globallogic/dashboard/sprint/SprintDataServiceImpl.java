@@ -38,22 +38,21 @@ public class SprintDataServiceImpl implements SprintDataService {
             List<SprintData> sprintData = sprintDataRepository.findAll();
             return sprintData.stream().map(SprintDataUtil::convertToDto).collect(Collectors.toList());
         } else {
-            BooleanBuilder booleanBuilderTeamId = new BooleanBuilder();
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
             if (sprintDataFilterDto.getTeamId() != null) {
                 for (String splitTeamId : sprintDataFilterDto.getTeamId().split(",")) {
-                    booleanBuilderTeamId.or(QSprintData.sprintData.team.id.eq(Long.valueOf(splitTeamId)));
+                    booleanBuilder.or(QSprintData.sprintData.team.id.eq(Long.valueOf(splitTeamId)));
                 }
             }
 
-            BooleanBuilder booleanBuilderSprintId = new BooleanBuilder();
             if (sprintDataFilterDto.getSprintId() != null) {
                 for (String splitSpringId : sprintDataFilterDto.getSprintId().split(",")) {
-                    booleanBuilderSprintId.or( QSprintData.sprintData.sprint.id.eq(Long.valueOf(splitSpringId)));
+                    booleanBuilder.and( QSprintData.sprintData.sprint.id.eq(Long.valueOf(splitSpringId)));
                 }
             }
 
             final Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.by(Sort.Direction.ASC, "sprint.start"));
-            return SprintDataUtil.convertToListDto(sprintDataRepository.findAll(booleanBuilderSprintId.getValue(), pageable));
+            return SprintDataUtil.convertToListDto(sprintDataRepository.findAll(booleanBuilder.getValue(), pageable));
         }
     }
 
