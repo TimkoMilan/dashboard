@@ -52,13 +52,14 @@ public class UserResource {
     public ResponseEntity addRegularUser(@RequestBody UserCreateDto userDto) {
         if (userRepository.existsByEmail(userDto.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "A user with the same username already" +
-                    "exists. Select another email."),
+                    "exists. Select anot;her email."),
                     HttpStatus.BAD_REQUEST);
         }
         userFacade.createUser(userDto);
         UserDto userRegisterResponse = userService.newUser(userDto);
         return ResponseEntity.ok(userRegisterResponse);
     }
+
 
     @GetMapping("getUserNameFromToken")
     public String getUserNameFromToken(ServletRequest req) {
@@ -78,6 +79,7 @@ public class UserResource {
         return ResponseEntity.ok(new UserInTokenResponse(jwtTokenProvider.getUsername(token),
                 jwtTokenProvider.getEmail(token)));
     }
+
 
     @GetMapping("{userId}")
     public UserDto getUserById(@PathVariable(value = "userId") Long userId) {

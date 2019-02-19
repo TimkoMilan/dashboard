@@ -1,10 +1,11 @@
 package com.globallogic.dashboard.sprint;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.OrderBy;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,8 +52,8 @@ public class SprintDataServiceImpl implements SprintDataService {
                 }
             }
 
-            Predicate queryPredicate = booleanBuilderSprintId.and(booleanBuilderTeamId.getValue()).getValue();
-            return SprintDataUtil.convertToListdto(sprintDataRepository.findAll(queryPredicate));
+            final Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.by(Sort.Direction.ASC, "sprint.start"));
+            return SprintDataUtil.convertToListDto(sprintDataRepository.findAll(booleanBuilderSprintId.getValue(), pageable));
         }
     }
 

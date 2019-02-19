@@ -65,7 +65,7 @@ public class SprintServiceImpl implements SprintService {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
             if (sprintFilterDto.getSprintId() != null) {
                 for (String sprintId : sprintFilterDto.getSprintId().split(",")) {
-                    booleanBuilder.or( QSprint.sprint.sprintData.any().sprint.id.eq(Long.parseLong(sprintId)));
+                    booleanBuilder.or(QSprint.sprint.sprintData.any().sprint.id.eq(Long.parseLong(sprintId)));
                 }
             }
             if (sprintFilterDto.getTeamId() != null) {
@@ -73,8 +73,8 @@ public class SprintServiceImpl implements SprintService {
                     booleanBuilder.and(QSprint.sprint.sprintData.any().team.id.eq(Long.parseLong(sprintTeamId)));
                 }
             }
-            final Pageable pageable = PageRequest.of(0,Integer.MAX_VALUE, Sort.by(Sort.Direction.ASC,"start"));
-            return SprintUtil.convertToListDto(sprintRepository.findAll(booleanBuilder.getValue(),pageable));
+            final Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.by(Sort.Direction.ASC, "start"));
+            return SprintUtil.convertToListDto(sprintRepository.findAll(booleanBuilder.getValue(), pageable));
         }
     }
 }

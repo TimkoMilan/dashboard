@@ -5,8 +5,6 @@ import com.globallogic.dashboard.common.ServiceException;
 import com.globallogic.dashboard.team.Team;
 import com.globallogic.dashboard.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,11 +22,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private TeamRepository teamRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private CacheManager cacheManager;
 
     @Override
     public UserDto newUser(UserCreateDto userDto) {
@@ -64,14 +57,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void updateUserData(UserCreateDto userDto, Long id) {
-
-    }
-
-    @Override
     @Cacheable(value = "users")
     public UserDetails loadUserByUsername(String email) {
-
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User not found for email:" + email);

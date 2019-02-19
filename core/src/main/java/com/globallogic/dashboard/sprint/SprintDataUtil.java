@@ -27,4 +27,11 @@ class SprintDataUtil {
         }
         return sprintDataDtos;
     }
+    static List<SprintDataDto> convertToListDto(Iterable<SprintData> sprints){
+        List <SprintDataDto> sprintDataDtos = new ArrayList<>();
+        for (SprintData sprint : sprints) {
+            sprintDataDtos.add(convertToDto(sprint));
+        }
+        return sprintDataDtos;
+    }
 }

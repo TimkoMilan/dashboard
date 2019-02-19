@@ -1,11 +1,10 @@
 package com.globallogic.dashboard.sprint;
 
-import com.globallogic.dashboard.member.Member;
 import com.globallogic.dashboard.security.JwtTokenProvider;
 import com.globallogic.dashboard.user.Role;
 import com.globallogic.dashboard.user.User;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +47,7 @@ public class SprintDataResource {
         }
         return sprintDataFacade.getAllSprintData(sprintDataFilterDto);
     }
-
+    @Secured("ROLE_ADMIN")
     @GetMapping("/loadData")//loading data from excel
     public void loadData() {
         sprintDataFacade.loadSprintData();
