@@ -108,6 +108,7 @@ public class UserFacade {
         User user = UserUtil.convertUserDtoToUser(userDto);
         String role = userDto.getRoleName();
         user.setStatus(false);
+        user.setCurrentTeam(teamRepository.findTeamById(userDto.getTeamId()));
         user.setRoles(Collections.singleton(roleService.setRole(role)));
         userRepository.save(user);
         User user2 = userRepository.findByEmail(userDto.getEmail());
