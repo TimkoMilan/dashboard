@@ -47,7 +47,7 @@ public class SprintDataServiceImpl implements SprintDataService {
 
             if (sprintDataFilterDto.getSprintId() != null) {
                 for (String splitSpringId : sprintDataFilterDto.getSprintId().split(",")) {
-                    booleanBuilder.and( QSprintData.sprintData.sprint.id.eq(Long.valueOf(splitSpringId)));
+                    booleanBuilder.or( QSprintData.sprintData.sprint.id.eq(Long.valueOf(splitSpringId)));
                 }
             }
 
